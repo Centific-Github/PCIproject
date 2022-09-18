@@ -22,17 +22,44 @@ namespace PCIapi.Controllers
         {
             return manageUsers.getUsers();
         }
+        [HttpGet("{id}")]
+        public userType get(int id)
+        {
+            return manageUsers.getUsers(id);
+        }
         [HttpPost]
-        public userType validateLogin(userType _userType)
+        public userType Post([FromBody] userType _userType)
+        {
+            if (ModelState.IsValid)
+            {
+                if (manageUsers.getUsers(_userType) == null)
+                {
+                    userType ouserType = new userType();
+                    return ouserType;
+                }
+
+                else
+                    return manageUsers.getUsers(_userType);
+            }
+            else
+                return null;
+        }
+
+        [HttpPut("{id}")]
+        public bool Put(int id, [FromBody] userType _userType)
         {
             if (manageUsers.getUsers(_userType) == null)
             {
-                userType ouserType = new userType();
-                return ouserType;
-            }
+                // update statement
 
-            else
-                return manageUsers.getUsers(_userType);
+            }
+            return true;
+        }
+
+        [HttpDelete("{id}")]
+        public bool Delete(int id)
+        {
+            return true;
         }
     }
 }

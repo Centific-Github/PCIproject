@@ -18,13 +18,22 @@ namespace PCIapi.Model
                 return dbConnection.Query<userType>(sQuery);
             }
         }
+        public userType getUsers(int id)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName from MstLogintbl where LoginID=@_LoginId";
+                dbConnection.Open();
+                return dbConnection.Query<userType>(sQuery, new { _LoginId = id }).FirstOrDefault();
+            }
+        }
         public userType getUsers(userType _userType)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sQuery = @"SELECT LoginID, EmailID, UserName from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
                 dbConnection.Open();
-                return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.LoginID , _strPassword = _userType.Password }).FirstOrDefault();
+                return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.LoginID, _strPassword = _userType.Password }).FirstOrDefault();
             }
         }
 
