@@ -19,7 +19,7 @@ namespace PCIapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //Written by Rajib -----------------------------------
+            //Swagger code -----------------------------------
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "PCI project APIs", Version = "V1" });
@@ -31,7 +31,7 @@ namespace PCIapi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //Written by rajib ---------------------------------
+            //Swagger code ---------------------------------
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
