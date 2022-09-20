@@ -11,11 +11,6 @@ namespace PCIapi.Model
     /// </summary>
     public class ManageMstCompliance : DBconnection
     {
-        //internal static object getComplianceDetails(mstComplaince mstComplaince)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public IEnumerable<mstCompliance> getMstComplianceDetails()
         {
             using (IDbConnection dbConnection = Connection)
