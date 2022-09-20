@@ -8,6 +8,7 @@ namespace PCIapi.Model
     /// Following code was written by: Sumalatha
     /// Date:20-Sept-2022
     /// </summary>
+    /// 
     public class ManageAglMtyHeading : DBconnection
     {
         public IEnumerable<aglMtyHeading> getHeadingDetails()
