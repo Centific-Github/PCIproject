@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace PCIapi.Controllers
 {
+    /// <summary>
+    /// Following code has been written by: raib Basu
+    /// date: 19-Sept-2022
+    /// </summary>
+    /// 
     [Route("api/[controller]")]
     [ApiController]
     public class ManageUserController : ControllerBase

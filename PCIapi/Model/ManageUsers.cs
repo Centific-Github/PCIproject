@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace PCIapi.Model
 {
+/// <summary>
+/// Following code has been written by: raib Basu
+/// date: 19-Sept-2022
+/// </summary>
     public class ManageUsers : DBconnection
     {
         public IEnumerable<userType> getUsers()
