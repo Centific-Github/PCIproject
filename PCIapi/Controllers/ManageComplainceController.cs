@@ -5,6 +5,10 @@ using static PCIapi.Model.ManageMstCompliance;
 
 namespace PCIapi.Controllers
 {
+    /// <summary>
+    /// following code has written by velpula Pushpa
+    /// date 20/09/2022
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ManageComplianceController : Controller

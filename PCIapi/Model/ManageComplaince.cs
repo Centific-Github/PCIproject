@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace PCIapi.Model
 {
+    /// <summary>
+    /// following code has written by velpula Pushpa
+    /// date 20/09/2022
+    /// </summary>
     public class ManageMstCompliance : DBconnection
     {
         //internal static object getComplianceDetails(mstComplaince mstComplaince)
