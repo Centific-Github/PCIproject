@@ -9,7 +9,7 @@ namespace PCIapi.Model
     public class ManageProjectMaster : DBconnection
     {
 
-        public IEnumerable<projectMaster> getProjectDetails(string manager)
+        public IEnumerable<projectMaster> getProjectDetails()
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -19,10 +19,7 @@ namespace PCIapi.Model
             }
         }
 
-        internal IEnumerable<projectMaster> getProjectDetails()
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public IEnumerable<projectMaster> getProjectDetails(int id)
         {
@@ -46,9 +43,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT INTO MstProjectMaster (ProjectCode,ProjectManager )  values(@_strProjectCode,@_strProjectManager)";
+                string sQuery = @"INSERT INTO MstProjectMaster (ProjectID,ProjectCode,ProjectManager )  values(@_ProjectID,@_strProjectCode,@_strProjectManager)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new {_strProjectCode = _projectMaster.ProjectCode, _strProjectManager = _projectMaster.ProjectManager });
+                var affectedRows = dbConnection.Execute(sQuery, new { _ProjectID = _projectMaster.ProjectID, _strProjectCode = _projectMaster.ProjectCode, _strProjectManager = _projectMaster.ProjectManager });
                 return affectedRows;
 
 
