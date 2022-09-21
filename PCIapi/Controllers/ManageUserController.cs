@@ -30,7 +30,6 @@ namespace PCIapi.Controllers
         }
         
         [HttpPost]
-        [Route("insert")]
         public userType Post([FromBody] userType _userType)
         {
             if (ModelState.IsValid)
@@ -49,6 +48,33 @@ namespace PCIapi.Controllers
             }
             else
                 return null;
+        }
+
+        [HttpPost]
+        [Route("insert")]
+        public int Insert([FromBody] userType _userType)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_userType == null)
+                {
+                    //userType ouserType = new userType();
+                    return 0;
+                }
+
+
+
+                else
+                {
+
+
+
+                    var affectedRows = manageUsers.insertUsers(_userType);
+                    return affectedRows;
+                }
+            }
+            else
+                return 0;
         }
 
         [HttpPut("{id}")]

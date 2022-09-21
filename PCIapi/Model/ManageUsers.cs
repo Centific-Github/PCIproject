@@ -38,7 +38,21 @@ namespace PCIapi.Model
                 return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
         }
-       
+
+        public int insertUsers(userType _userType)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,Password) values(@_strEmailID,@_strUserName,@_strPassword)";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userType.EmailID, _strUserName = _userType.UserName, _strPassword = _userType.Password });
+                return affectedRows;
+            }
+
+
+
+        }
+
 
 
     }
