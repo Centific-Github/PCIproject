@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace PCIapi.Model
 {
+/// <summary>
+/// Following code has been written by: raib Basu
+/// date: 19-Sept-2022
+/// </summary>
     public class ManageUsers : DBconnection
     {
         public IEnumerable<userType> getUsers()
@@ -33,7 +37,7 @@ namespace PCIapi.Model
             {
                 string sQuery = @"SELECT LoginID, EmailID, UserName from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
                 dbConnection.Open();
-                return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.LoginID, _strPassword = _userType.Password }).FirstOrDefault();
+                return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
         }
 

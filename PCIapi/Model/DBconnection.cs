@@ -1,5 +1,8 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
+using Azure.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace PCIapi.Model
 {
@@ -8,8 +11,15 @@ namespace PCIapi.Model
         private string connectionString;
         public DBconnection()
         {
-            //connectionString = @"Persist Security Info=False;User ID=sa;password=sa;Initial Catalog=PYT; Data Source=RAJIBBASU-PC\SQLEXPRESS;Connection Timeout=100000;";
-            connectionString = @"Persist Security Info=False;User ID=pcidb;password=pc1@DB@#!!;Initial Catalog=pciDB; Data Source=pciproject.database.windows.net;Connection Timeout=100000;";
+            //connectionString = @"Persist Security Info=False;User ID=pcidb;password=pc1@DB@#!!;Initial Catalog=pciDB; Data Source=pciproject.database.windows.net;Connection Timeout=100000;";
+
+
+
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
+            connectionString = configuration.GetConnectionString("PCIDBconnection");
 
         }
 
@@ -21,4 +31,16 @@ namespace PCIapi.Model
             }
         }
     }
+
+    public class Settings
+    {
+        public string AppName { get; set; }
+        public double Version { get; set; }
+        public long RefreshRate { get; set; }
+        public long FontSize { get; set; }
+        public string Language { get; set; }
+        public string Messages { get; set; }
+        public string BackgroundColor { get; set; }
+    }
+
 }

@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 namespace PCIapi.Controllers
 {
+    /// <summary>
+    /// Following code has been written by: raib Basu
+    /// date: 19-Sept-2022
+    /// </summary>
+    /// 
     [Route("api/[controller]")]
     [ApiController]
     public class ManageUserController : ControllerBase
@@ -28,14 +33,17 @@ namespace PCIapi.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (manageUsers.getUsers(_userType) == null)
+                if (_userType == null)
                 {
                     userType ouserType = new userType();
                     return ouserType;
                 }
 
                 else
-                    return manageUsers.getUsers(_userType);
+                {
+                    _userType = manageUsers.getUsers(_userType);
+                    return _userType;
+                }
             }
             else
                 return null;
