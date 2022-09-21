@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
 namespace PCIapi.Model
@@ -11,16 +12,15 @@ namespace PCIapi.Model
         private string connectionString;
         public DBconnection()
         {
-            //connectionString = @"Persist Security Info=False;User ID=pcidb;password=pc1@DB@#!!;Initial Catalog=pciDB; Data Source=pciproject.database.windows.net;Connection Timeout=100000;";
+            string kvURL = "https://pcidbconnection.vault.azure.net/";
+            string tenantId = "9b415834-803a-4da0-afdc-fe6b1d52d649";
+            string clientId = "14d7f64e-9171-48ac-8aed-372db04b8c69";
+            string ClientSecret = "fVW8Q~zLTy_KRf4NfrF5I6eVPw75HbosP6NXbcIl";
 
-
-
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build();
-            connectionString = configuration.GetConnectionString("PCIDBconnection");
-
+            var credential = new ClientSecretCredential(tenantId, clientId, ClientSecret);
+            var client = new SecretClient(new Uri(kvURL), credential);
+            string strsecretkey = client.GetSecret("ConnectionStrings--PCIDBconnection").Value.Value;
+            connectionString = @strsecretkey;
         }
 
         public IDbConnection Connection
