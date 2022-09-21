@@ -42,16 +42,39 @@ namespace PCIapi.Model
                 return dbConnection.Query<projectMaster>(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectManager = _projectMaster.ProjectManager });
             }
         }
-    }
+        public int insertProjectDetails(projectMaster _projectMaster)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"INSERT INTO MstProjectMaster (ProjectCode,ProjectManager )  values(@_strProjectCode,@_strProjectManager)";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new {_strProjectCode = _projectMaster.ProjectCode, _strProjectManager = _projectMaster.ProjectManager });
+                return affectedRows;
 
 
-    public class projectMaster
 
-    {
+            }
 
-        public int ProjectID { get; set; }
-        public string ProjectCode { get; set; }
-        public string ProjectManager { get; set; }
+
+
+
+
+
+        }
+
+
+
+
+
+
+        public class projectMaster
+
+        {
+
+            public int ProjectID { get; set; }
+            public string ProjectCode { get; set; }
+            public string ProjectManager { get; set; }
+        }
     }
 }
 

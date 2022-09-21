@@ -1,16 +1,14 @@
 ﻿using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PCIapi.Model
 {
-/// <summary>
-/// Following code has been written by: raib Basu
-/// date: 19-Sept-2022
-/// </summary>
+    /// <summary>
+    /// Following code has been written by: raib Basu
+    /// date: 19-Sept-2022
+    /// </summary>
     public class ManageUsers : DBconnection
     {
         public IEnumerable<userType> getUsers()
@@ -40,6 +38,8 @@ namespace PCIapi.Model
                 return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
         }
+       
+
 
     }
 
@@ -50,5 +50,6 @@ namespace PCIapi.Model
         public string Password { get; set; }
         public string UserName { get; set; }
     }
+
 
 }
