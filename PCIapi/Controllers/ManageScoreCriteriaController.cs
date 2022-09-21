@@ -28,7 +28,7 @@ namespace PCIapi.Controllers
         [HttpGet("{id}")]
         public IEnumerable<scoreCriteria> get(int id)
         {
-            return manageScoreCriteria.getscoreCriteriaDetails(id);
+            return manageScoreCriteria.getScoreCriteriaDetails(id);
         }
 
     }
