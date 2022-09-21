@@ -21,21 +21,6 @@ namespace PCIapi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((context, config) =>
-            {
-                var builtConfiguration = config.Build();
-
-                string kvURL = builtConfiguration["KeyVaultConfig:kvUrl"];
-                string tenantId = builtConfiguration["KeyVaultConfig:TenantId"];
-                string clientId = builtConfiguration["KeyVaultConfig:ClientId"];
-               
-                string ClientSecret = builtConfiguration["KeyVaultConfig:ClientSecretId"];
-
-                var credential = new ClientSecretCredential(tenantId, clientId, ClientSecret);
-
-                var client = new SecretClient(new Uri(kvURL), credential);
-                config.AddAzureKeyVault(client, new AzureKeyVaultConfigurationOptions());
-            })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

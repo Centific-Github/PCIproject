@@ -11,7 +11,7 @@ namespace PCIapi.Model
         private string connectionString;
         public DBconnection()
         {
-            connectionString = @"Persist Security Info=False;User ID=pcidb;password=pc1@DB@#!!;Initial Catalog=pciDB; Data Source=pciproject.database.windows.net;Connection Timeout=100000;";
+            //connectionString = @"Persist Security Info=False;User ID=pcidb;password=pc1@DB@#!!;Initial Catalog=pciDB; Data Source=pciproject.database.windows.net;Connection Timeout=100000;";
 
 
 
@@ -31,4 +31,16 @@ namespace PCIapi.Model
             }
         }
     }
+
+    public class Settings
+    {
+        public string AppName { get; set; }
+        public double Version { get; set; }
+        public long RefreshRate { get; set; }
+        public long FontSize { get; set; }
+        public string Language { get; set; }
+        public string Messages { get; set; }
+        public string BackgroundColor { get; set; }
+    }
+
 }
