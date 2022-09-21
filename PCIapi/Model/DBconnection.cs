@@ -22,7 +22,6 @@ namespace PCIapi.Model
             string strsecretkey = client.GetSecret("ConnectionStrings--PCIDBconnection").Value.Value;
             connectionString = @strsecretkey;
         }
-
         public IDbConnection Connection
         {
             get
