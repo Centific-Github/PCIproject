@@ -23,7 +23,7 @@ namespace PCIapi.Model
 
         
 
-        public IEnumerable<scoreCriteria> getscoreCriteriaDetails(int id)
+        public IEnumerable<scoreCriteria> getScoreCriteriaDetails(int id)
         {
             using (IDbConnection dbConnection = Connection)
             {

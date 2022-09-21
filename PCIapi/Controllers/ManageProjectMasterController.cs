@@ -12,17 +12,22 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageProjectMasterController : Controller
     {
-        ManageProjectMaster oManageProjectMaster = new ManageProjectMaster();
+        private readonly ManageProjectMaster manageProjectMaster;
 
+
+        public ManageProjectMasterController()
+        {
+            manageProjectMaster = new ManageProjectMaster();
+        }
         [HttpGet]
         public IEnumerable<projectMaster> get()
         {
-            return oManageProjectMaster.getProjectDetails();
+            return manageProjectMaster.getProjectDetails();
         }
         [HttpGet("{id}")]
         public IEnumerable<projectMaster> get(int id)
         {
-            return oManageProjectMaster.getProjectDetails(id);
+            return manageProjectMaster.getProjectDetails(id);
         }
 
 

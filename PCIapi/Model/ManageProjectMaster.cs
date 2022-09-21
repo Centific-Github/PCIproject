@@ -19,11 +19,7 @@ namespace PCIapi.Model
             }
         }
 
-        internal IEnumerable<projectMaster> getProjectDetails()
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public IEnumerable<projectMaster> getProjectDetails(int id)
         {
             using (IDbConnection dbConnection = Connection)
