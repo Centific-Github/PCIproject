@@ -4,6 +4,10 @@ using System.Data;
 
 namespace PCIapi.Model
 {
+    /// <summary>
+    /// This code has been written by Rajib Basu
+    /// Date: 19-Sept-2022
+    /// </summary>
     public class ManagePciCmp : DBconnection
     {
         public IEnumerable<pciCmp> getPciDetails()

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 namespace PCIapi.Controllers
 {
+    /// <summary>
+    /// This code has been written by Rajib Basu
+    /// Date: 19-Sept-2022
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ManagePciCmpController : Controller

@@ -37,7 +37,7 @@ namespace PCIapi.Model
             {
                 string sQuery = @"SELECT LoginID, EmailID, UserName from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
                 dbConnection.Open();
-                return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.LoginID, _strPassword = _userType.Password }).FirstOrDefault();
+                return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
         }
 
