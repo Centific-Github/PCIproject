@@ -28,7 +28,9 @@ namespace PCIapi.Controllers
         {
             return manageUsers.getUsers(id);
         }
+        
         [HttpPost]
+        [Route("insert")]
         public userType Post([FromBody] userType _userType)
         {
             if (ModelState.IsValid)
