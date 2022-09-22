@@ -14,10 +14,7 @@ namespace PCIapi.Controllers
     public class ManageKeyAreasController : Controller
     {
         ManageKeyAreas oManageKeyAreas = new ManageKeyAreas();
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+       
         [HttpGet]
         public IEnumerable<keyAreas> get()
         {
