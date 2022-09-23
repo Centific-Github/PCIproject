@@ -43,9 +43,12 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT INTO MstProjectMaster (ProjectID,ProjectCode,ProjectManager )  values(@_ProjectID,@_strProjectCode,@_strProjectManager)";
+                string sQuery = "SELECT max(ProjectID) FROM MstProjectMaster";
+                Int32 maxProjectID = dbConnection.ExecuteScalar<Int32>(sQuery);
+
+                sQuery = @"INSERT INTO MstProjectMaster (ProjectID,ProjectCode,ProjectManager )  values(@_ProjectID,@_strProjectCode,@_strProjectManager)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _ProjectID = _projectMaster.ProjectID, _strProjectCode = _projectMaster.ProjectCode, _strProjectManager = _projectMaster.ProjectManager });
+                var affectedRows = dbConnection.Execute(sQuery, new { _ProjectID = maxProjectID+1, _strProjectCode = _projectMaster.ProjectCode, _strProjectManager = _projectMaster.ProjectManager });
                 return affectedRows;
 
 
