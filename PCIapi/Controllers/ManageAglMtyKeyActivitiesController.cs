@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PCIapi.Model;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Controllers
 {
@@ -12,14 +14,17 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageAglMtyKeyActivitiesController : Controller
     {
-       
-            private readonly ManageAglMtyKeyActivities manageAglMtyKeyActivities;
+
+        private readonly ManageAglMtyKeyActivities manageAglMtyKeyActivities;
 
 
-            public ManageAglMtyKeyActivitiesController()
-            {
-            manageAglMtyKeyActivities = new ManageAglMtyKeyActivities();
-            }
+        private IConfiguration _configuration;
+        public ManageAglMtyKeyActivitiesController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            manageAglMtyKeyActivities = new ManageAglMtyKeyActivities(_configuration);
+        }
+
         [HttpGet]
         public IEnumerable<AglMtyKeyActivities> get()
         {

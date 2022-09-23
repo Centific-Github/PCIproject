@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 {
@@ -11,6 +13,10 @@ namespace PCIapi.Model
     /// </summary>
     public class ManageMstCompliance : DBconnection
     {
+        public ManageMstCompliance(IConfiguration configuration) : base(configuration)
+        {
+
+        }
         public IEnumerable<mstCompliance> getMstComplianceDetails()
         {
             using (IDbConnection dbConnection = Connection)

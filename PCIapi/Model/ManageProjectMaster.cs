@@ -2,12 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 
 {
     public class ManageProjectMaster : DBconnection
     {
+        public ManageProjectMaster(IConfiguration configuration) : base(configuration)
+        {
+
+        }
 
         public IEnumerable<projectMaster> getProjectDetails()
         {

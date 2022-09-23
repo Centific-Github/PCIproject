@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using PCIapi.Model;
 using System.Collections.Generic;
 using static PCIapi.Model.ManageGovKeyActivity;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Controllers
 {
@@ -14,7 +16,15 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageGovKeyActivityController : Controller
     {
-        ManageGovKeyActivity oManageGovKeyActivity = new ManageGovKeyActivity();
+        private IConfiguration _configuration;
+        private ManageGovKeyActivity oManageGovKeyActivity;
+        public ManageGovKeyActivityController(IConfiguration configuration)
+        {
+            _configuration=configuration;
+            oManageGovKeyActivity = new ManageGovKeyActivity(_configuration);
+
+        }
+
         [HttpGet] public IEnumerable<GovKeyActivity> get() 
         {
             return oManageGovKeyActivity.getGovKeyActivityDetails();

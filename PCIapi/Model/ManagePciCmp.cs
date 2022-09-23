@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 {
@@ -10,6 +12,10 @@ namespace PCIapi.Model
     /// </summary>
     public class ManagePciCmp : DBconnection
     {
+        public ManagePciCmp(IConfiguration configuration) : base(configuration)
+        {
+
+        }
         public IEnumerable<pciCmp> getPciDetails()
         {
             using (IDbConnection dbConnection = Connection)

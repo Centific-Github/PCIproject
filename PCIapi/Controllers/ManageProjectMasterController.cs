@@ -2,6 +2,8 @@
 using PCIapi.Model;
 using System.Collections.Generic;
 using static PCIapi.Model.ManageProjectMaster;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Controllers
 {
@@ -13,13 +15,15 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageProjectMasterController : Controller
     {
+        private IConfiguration _configuration;
 
         private readonly ManageProjectMaster manageProjectMaster;
 
 
-        public ManageProjectMasterController()
+        public ManageProjectMasterController(IConfiguration configuration)
         {
-            manageProjectMaster = new ManageProjectMaster();
+            _configuration = configuration;
+            manageProjectMaster = new ManageProjectMaster(_configuration);
         }
 
         [HttpGet]

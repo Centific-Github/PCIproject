@@ -2,6 +2,8 @@
 using PCIapi.Model;
 using System.Collections.Generic;
 using static PCIapi.Model.ManageMstCompliance;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Controllers
 {
@@ -13,7 +15,14 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageComplianceController : Controller
     {
-        ManageMstCompliance oManageMstCompliance = new ManageMstCompliance();
+
+        private IConfiguration _configuration;
+        private ManageMstCompliance oManageMstCompliance;
+        public ManageComplianceController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+             oManageMstCompliance = new ManageMstCompliance(_configuration);
+        }
 
         [HttpGet]
         public IEnumerable<mstCompliance> get()

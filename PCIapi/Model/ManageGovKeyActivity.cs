@@ -2,6 +2,8 @@
 using Dapper;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 {
@@ -11,6 +13,10 @@ namespace PCIapi.Model
     /// </summary>
     public class ManageGovKeyActivity : DBconnection
     {
+        public ManageGovKeyActivity(IConfiguration configuration) : base(configuration)
+        {
+
+        }
         public IEnumerable<GovKeyActivity> getGovKeyActivityDetails()
         {
             using (IDbConnection dbConnection = Connection) 

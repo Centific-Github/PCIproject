@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PCIapi.Model;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Controllers
 {
@@ -13,11 +15,15 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageUserController : ControllerBase
     {
+        private IConfiguration _configuration;
+
         private readonly ManageUsers manageUsers;
-        public ManageUserController()
+        public ManageUserController(IConfiguration configuration)
         {
-            manageUsers = new ManageUsers();
+            _configuration = configuration;
+            manageUsers = new ManageUsers(_configuration);
         }
+
         [HttpGet]
         public IEnumerable<userType> get()
         {

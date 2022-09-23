@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PCIapi.Model;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Controllers
 {
@@ -12,10 +14,13 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManagePciCmpController : Controller
     {
+        private IConfiguration _configuration;
+
+      
         private readonly ManagePciCmp managePciCmp;
         public ManagePciCmpController()
         {
-            managePciCmp = new ManagePciCmp();
+            managePciCmp = new ManagePciCmp(_configuration);
         }
 
         [HttpGet]

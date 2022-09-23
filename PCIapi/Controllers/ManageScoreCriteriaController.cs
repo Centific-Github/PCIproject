@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PCIapi.Model;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Controllers
 {
@@ -13,11 +15,13 @@ namespace PCIapi.Controllers
     public class ManageScoreCriteriaController : Controller
     {
         private readonly ManageScoreCriteria manageScoreCriteria;
+        private IConfiguration _configuration;
 
-       
-        public ManageScoreCriteriaController()
+
+        public ManageScoreCriteriaController(IConfiguration configuration)
         {
-            manageScoreCriteria  = new ManageScoreCriteria();
+            _configuration = configuration;
+            manageScoreCriteria  = new ManageScoreCriteria(_configuration);
         }
 
         [HttpGet]

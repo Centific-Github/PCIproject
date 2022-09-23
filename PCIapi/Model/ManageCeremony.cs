@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using Dapper;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 {
@@ -11,7 +13,10 @@ namespace PCIapi.Model
     /// </summary>
     public class ManageCeremony : DBconnection
     {
-        
+        public ManageCeremony(IConfiguration configuration) : base(configuration)
+        {
+
+        }
             public IEnumerable<mstCeremony> getMstComplianceDetails()
             {
                 using (IDbConnection dbConnection = Connection)

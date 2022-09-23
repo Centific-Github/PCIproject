@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 {
@@ -10,6 +12,10 @@ namespace PCIapi.Model
     /// </summary>
     public class ManageAglMtyKeyActivities :DBconnection
     {
+        public ManageAglMtyKeyActivities(IConfiguration configuration) :base(configuration)
+        {
+
+        }
         public IEnumerable<AglMtyKeyActivities> getAglMtyKeyActivitiesDetails()
         {
             using (IDbConnection dbConnection = Connection)

@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 {
@@ -11,6 +13,10 @@ namespace PCIapi.Model
     /// 
     public class ManageAglMtyHeading : DBconnection
     {
+        public ManageAglMtyHeading(IConfiguration configuration) :base(configuration)
+        {
+
+        }
         public IEnumerable<aglMtyHeading> getHeadingDetails()
         {
             using (IDbConnection dbConnection = Connection)

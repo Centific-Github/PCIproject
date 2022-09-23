@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 {
@@ -11,6 +13,10 @@ namespace PCIapi.Model
     /// </summary>
     public class ManageScoreCriteria : DBconnection
     {
+        public ManageScoreCriteria(IConfiguration configuration) : base(configuration)
+        {
+
+        }
         public IEnumerable<scoreCriteria> getScoreCriteriaDetails()
         {
             using (IDbConnection dbConnection = Connection)

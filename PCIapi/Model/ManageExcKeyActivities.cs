@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace PCIapi.Model
 {
@@ -10,6 +11,10 @@ namespace PCIapi.Model
     /// </summary>
     public class ManageExcKeyActivities : DBconnection
     {
+        public ManageExcKeyActivities(IConfiguration configuration) : base(configuration)
+        {
+
+        }
         public IEnumerable<excKeyActivities> getExcKeyActivitiesDetails()
         {
             using (IDbConnection dbConnection = Connection)

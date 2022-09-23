@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PCIapi.Model;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Controllers
 {
@@ -12,10 +14,12 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageAglMtyHeadingController : Controller
     {
+        private IConfiguration _configuration;
         private readonly ManageAglMtyHeading manageAglMtyHeading;
-        public ManageAglMtyHeadingController()
+        public ManageAglMtyHeadingController(IConfiguration configuration)
         {
-            manageAglMtyHeading = new ManageAglMtyHeading();
+            _configuration = configuration;
+            manageAglMtyHeading = new ManageAglMtyHeading(_configuration);
         }
         [HttpGet]
         public IEnumerable<aglMtyHeading> get()

@@ -10,13 +10,20 @@ namespace PCIapi.Model
     public class DBconnection
     {
         private string connectionString;
-        public DBconnection()
-        {
-            string kvURL = "https://pcidbconnection.vault.azure.net/";
-            string tenantId = "9b415834-803a-4da0-afdc-fe6b1d52d649";
-            string clientId = "14d7f64e-9171-48ac-8aed-372db04b8c69";
-            string ClientSecret = "fVW8Q~zLTy_KRf4NfrF5I6eVPw75HbosP6NXbcIl";
+        private IConfiguration _configuration;
 
+        public DBconnection(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            //string kvURL = "https://pcidbconnection.vault.azure.net/";
+            //string tenantId = "9b415834-803a-4da0-afdc-fe6b1d52d649";
+            //string clientId = "14d7f64e-9171-48ac-8aed-372db04b8c69";
+            //string ClientSecret = "fVW8Q~zLTy_KRf4NfrF5I6eVPw75HbosP6NXbcIl";
+
+            string kvURL = _configuration["AzureDBconnection:kvURL"];
+            string tenantId = _configuration["AzureDBconnection:tenantId"]; ;
+            string clientId = _configuration["AzureDBconnection:clientId"]; ;
+            string ClientSecret = _configuration["AzureDBconnection:ClientSecret"]; ;
             var credential = new ClientSecretCredential(tenantId, clientId, ClientSecret);
             var client = new SecretClient(new Uri(kvURL), credential);
             string strsecretkey = client.GetSecret("ConnectionStrings--PCIDBconnection").Value.Value;

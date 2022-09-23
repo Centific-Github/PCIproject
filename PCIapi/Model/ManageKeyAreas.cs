@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 {
@@ -11,6 +13,10 @@ namespace PCIapi.Model
   
     public class ManageKeyAreas : DBconnection
     {
+        public ManageKeyAreas(IConfiguration configuration) : base(configuration)
+        {
+
+        }
         public IEnumerable<keyAreas> getKeyAreaDeatails()
         {
             using (IDbConnection dbConnection = Connection)

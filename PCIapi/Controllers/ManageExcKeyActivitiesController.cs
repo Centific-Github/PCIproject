@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PCIapi.Model;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Controllers
 {
@@ -13,7 +15,15 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageExcKeyActivitiesController : Controller
     {
-        ManageExcKeyActivities oManageExcKeyActivities = new ManageExcKeyActivities();
+        private IConfiguration _configuration;
+        private ManageExcKeyActivities oManageExcKeyActivities;
+
+        public ManageExcKeyActivitiesController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            oManageExcKeyActivities = new ManageExcKeyActivities(_configuration);
+        }
+         
 
         [HttpGet]
         public IEnumerable<excKeyActivities> get()

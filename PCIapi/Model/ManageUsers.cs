@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
+
 
 namespace PCIapi.Model
 {
@@ -11,6 +13,10 @@ namespace PCIapi.Model
     /// </summary>
     public class ManageUsers : DBconnection
     {
+        public ManageUsers(IConfiguration configuration) : base(configuration)
+        {
+
+        }
         public IEnumerable<userType> getUsers()
         {
             using (IDbConnection dbConnection = Connection)
