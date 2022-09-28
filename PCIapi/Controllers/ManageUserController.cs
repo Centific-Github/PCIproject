@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using PCIapi.Model;
 using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
-
 
 namespace PCIapi.Controllers
 {
     /// <summary>
-    /// Following code has been written by: raib Basu
+    /// Following code has been written by: rajib Basu
     /// date: 19-Sept-2022
     /// </summary>
-    /// 
     [Route("api/[controller]")]
     [ApiController]
     public class ManageUserController : ControllerBase
@@ -23,7 +21,6 @@ namespace PCIapi.Controllers
             _configuration = configuration;
             manageUsers = new ManageUsers(_configuration);
         }
-
         [HttpGet]
         public IEnumerable<userType> get()
         {
@@ -34,7 +31,6 @@ namespace PCIapi.Controllers
         {
             return manageUsers.getUsers(id);
         }
-        
         [HttpPost]
         public userType Post([FromBody] userType _userType)
         {
@@ -45,7 +41,6 @@ namespace PCIapi.Controllers
                     userType ouserType = new userType();
                     return ouserType;
                 }
-
                 else
                 {
                     _userType = manageUsers.getUsers(_userType);
@@ -55,7 +50,6 @@ namespace PCIapi.Controllers
             else
                 return null;
         }
-
         [HttpPost]
         [Route("insert")]
         public int Insert([FromBody] userType _userType)
@@ -67,14 +61,8 @@ namespace PCIapi.Controllers
                     //userType ouserType = new userType();
                     return 0;
                 }
-
-
-
                 else
                 {
-
-
-
                     var affectedRows = manageUsers.insertUsers(_userType);
                     return affectedRows;
                 }
@@ -89,7 +77,6 @@ namespace PCIapi.Controllers
             if (manageUsers.getUsers(_userType) == null)
             {
                 // update statement
-
             }
             return true;
         }
@@ -101,3 +88,4 @@ namespace PCIapi.Controllers
         }
     }
 }
+

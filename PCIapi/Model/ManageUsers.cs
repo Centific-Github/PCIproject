@@ -1,20 +1,21 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
-
 
 namespace PCIapi.Model
 {
     /// <summary>
-    /// Following code has been written by: raib Basu
+    /// Following code has been written by: rajib Basu
     /// date: 19-Sept-2022
     /// </summary>
     public class ManageUsers : DBconnection
     {
         public ManageUsers(IConfiguration configuration) : base(configuration)
         {
+
+
 
         }
         public IEnumerable<userType> getUsers()
@@ -44,7 +45,6 @@ namespace PCIapi.Model
                 return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
         }
-
         public int insertUsers(userType _userType)
         {
             using (IDbConnection dbConnection = Connection)
@@ -55,21 +55,15 @@ namespace PCIapi.Model
                 return affectedRows;
             }
 
-
-
         }
-
-
-
     }
 
     public class userType
     {
-        public string LoginID { get; set; }
+        public int LoginID { get; set; }
         public string EmailID { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
     }
-
 
 }
