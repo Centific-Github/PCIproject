@@ -5,6 +5,10 @@ using System.Data;
 
 namespace PCIapi.Model
 {
+    /// <summary>
+    /// Following code was written by: Sumalatha
+    /// Date:20-Sept-2022
+    /// </summary>
     public class ManageSubActivityMaster : DBconnection
     {
         public ManageSubActivityMaster(IConfiguration configuration) : base(configuration)
