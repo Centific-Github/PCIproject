@@ -49,7 +49,7 @@ namespace PCIapi.Model
             public int KeyActivitiesID { get; set; }
             public int ActivityID { get; set; }
             public int ScoreID { get; set; }
-            public int ScoreValue { get; set; }
+            public decimal ScoreValue { get; set; }
         }
 }
 

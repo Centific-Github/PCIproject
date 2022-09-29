@@ -1,12 +1,10 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Microsoft.Extensions.Configuration;
-
 
 namespace PCIapi.Model
-
 {
     public class ManageProjectMaster : DBconnection
     {
@@ -14,24 +12,20 @@ namespace PCIapi.Model
         {
 
         }
-
         public IEnumerable<projectMaster> getProjectDetails()
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectManager FROM MstProjectMaster ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager FROM MstProjectMaster ";
                 dbConnection.Open();
                 return dbConnection.Query<projectMaster>(sQuery);
             }
         }
-
-       
-
         public IEnumerable<projectMaster> getProjectDetails(int id)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectManager FROM MstProjectMaster WHERE ProjectID=@_Projectid ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectNmae,ProjectManager FROM MstProjectMaster WHERE ProjectID=@_Projectid ";
                 dbConnection.Open();
                 return dbConnection.Query<projectMaster>(sQuery, new { _Projectid = id });
             }
@@ -40,9 +34,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectManager FROM MstProjectMaster WHERE ProjectCode=@_strProjectCode AND ProjectManager=@_strProjectManager ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager FROM MstProjectMaster WHERE ProjectCode=@_strProjectCode AND ProjectName=@_strProjectName AND ProjectManager=@_strProjectManager ";
                 dbConnection.Open();
-                return dbConnection.Query<projectMaster>(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectManager = _projectMaster.ProjectManager });
+                return dbConnection.Query<projectMaster>(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName=_projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager });
             }
         }
         public int insertProjectDetails(projectMaster _projectMaster)
@@ -52,35 +46,26 @@ namespace PCIapi.Model
                 string sQuery = "SELECT max(ProjectID) FROM MstProjectMaster";
                 Int32 maxProjectID = dbConnection.ExecuteScalar<Int32>(sQuery);
 
-                sQuery = @"INSERT INTO MstProjectMaster (ProjectID,ProjectCode,ProjectManager )  values(@_ProjectID,@_strProjectCode,@_strProjectManager)";
+
+
+                sQuery = @"INSERT INTO MstProjectMaster (ProjectID,ProjectCode,ProjectName,ProjectManager )  values(@_ProjectID,@_strProjectCode,@_strProjectName,@_strProjectManager)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _ProjectID = maxProjectID+1, _strProjectCode = _projectMaster.ProjectCode, _strProjectManager = _projectMaster.ProjectManager });
+                var affectedRows = dbConnection.Execute(sQuery, new { _ProjectID = maxProjectID + 1, _strProjectCode = _projectMaster.ProjectCode,_strProjectName=_projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager });
                 return affectedRows;
-
-
 
             }
 
-
-
-
-
-
         }
 
-
-
-
-
-
-        public class projectMaster
-
-        {
-
-            public int ProjectID { get; set; }
-            public string ProjectCode { get; set; }
-            public string ProjectManager { get; set; }
-        }
+        
+    }
+    public class projectMaster
+    {
+        public int ProjectID { get; set; }
+        public string ProjectCode { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
     }
 }
+
 
