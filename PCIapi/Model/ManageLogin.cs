@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Net.Mail;
 using System.Text;
@@ -66,8 +67,39 @@ namespace PCIapi.Model
                 return "Invalid EmailID"
  ;           }
         }
-
-       
+        public int CheckingUser(string Username,string password)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("Username",Username);
+                p.Add("Password", password);
+                p.Add("LoginStatus", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                dbConnection.Query<int>("IsValidUser", p, commandType: CommandType.StoredProcedure);
+                int Status = p.Get<int>("LoginStatus");
+                return Status;
+            }
+        }
+        public string IsUserValid(string Username,string password)
+        {
+            var IsValid = CheckingUser(Username, password);
+           if(IsValid == 2)
+            {
+                return "Invalid Username";
+            }
+           else if(IsValid == 3)
+            {
+                return "Invali Password";
+            }
+           else if(IsValid == 4)
+            {
+                return "User Is Blocked";
+            }
+            else
+            {
+                return "Valid";
+            }
+        }
 
 
 
