@@ -7,22 +7,20 @@ using Microsoft.Extensions.Configuration;
 namespace PCIapi.Controllers
 {
     /// <summary>
-    /// This code has been written by Rajib Basu
-    /// Date: 19-Sept-2022
+    /// Following code was written by: Rajib Basu
+    /// Date:20-Sept-2022
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ManagePciCmpController : Controller
     {
         private IConfiguration _configuration;
-
-      
         private readonly ManagePciCmp managePciCmp;
-        public ManagePciCmpController()
+        public ManagePciCmpController(IConfiguration configuration)
         {
+            _configuration = configuration;
             managePciCmp = new ManagePciCmp(_configuration);
         }
-
         [HttpGet]
         public IEnumerable<pciCmp> get()
         {

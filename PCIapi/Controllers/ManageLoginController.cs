@@ -12,7 +12,6 @@ namespace PCIapi.Controllers
     public class ManageLoginController : Controller
     {
         private IConfiguration _configuration;
-
         private readonly ManageLogin manageLogin;
         public ManageLoginController(IConfiguration configuration)
         {
@@ -43,8 +42,8 @@ namespace PCIapi.Controllers
 
         }
         [HttpPost]
-        [Route("reset")]
-        public string reset([FromBody] UserReset userReset)
+        [Route("Reset")]
+        public string Reset([FromBody] UserReset userReset)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +58,20 @@ namespace PCIapi.Controllers
             }
             else
                 return "Invalid Model";
+        }
+        [HttpPost]
+        [Route("Login")]
+        public string Login([FromBody] UserLogin userLogin)
+        {
+            if (ModelState.IsValid)
+            {
+                return manageLogin.IsUserValid(userLogin.Username, userLogin.Password);
+            }
+            else
+            {
+                return "Invalid Model";
+            }
+
         }
     }
 }
