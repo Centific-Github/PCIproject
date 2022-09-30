@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PCIapi.Model;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace PCIapi.Controllers
             _configuration = configuration;
             manageUsers = new ManageUsers(_configuration);
         }
+        [Authorize]
+
         [HttpGet]
         public IEnumerable<userType> get()
         {

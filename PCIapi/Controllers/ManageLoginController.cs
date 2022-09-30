@@ -11,6 +11,14 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageLoginController : Controller
     {
+        //jwt
+        //private IUserRepository _userRepository;
+        //private ItokenHandler _tokenHandler;
+        //public AuthController(IUserRepository userRepository, ItokenHandler itokenHandler)
+        //{
+        //    _userRepository = userRepository;
+        //    _tokenHandler = itokenHandler;
+        //}
         private IConfiguration _configuration;
         private readonly ManageLogin manageLogin;
         public ManageLoginController(IConfiguration configuration)

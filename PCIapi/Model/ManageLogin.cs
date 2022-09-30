@@ -1,9 +1,13 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Text;
 
 namespace PCIapi.Model
@@ -80,6 +84,30 @@ namespace PCIapi.Model
                 return Status;
             }
         }
+        public string CreateToken(UserModel users)
+        {
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"]));
+
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, users.UserName));
+            claims.Add(new Claim(ClaimTypes.Email, users.EmailId));
+
+
+
+
+
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                 _configuration["jwt:Issuer"],
+                _configuration["jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(15),
+                signingCredentials: credentials);
+
+            return (new JwtSecurityTokenHandler().WriteToken(token));
+        }
         public string IsUserValid(string Username,string password)
         {
             var IsValid = CheckingUser(Username, password);
@@ -97,10 +125,20 @@ namespace PCIapi.Model
             }
             else
             {
-                return "Valid";
+                var result = getUsers(Username,password);
+                return CreateToken(result);
+            }
+           
+        }
+        public UserModel getUsers( string UserName,  string Password)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT  EmailID, UserName,IsReset,IsBlocked from MstLogintbl Where UserName=@_strUsername AND Password=@_strPassword";
+                dbConnection.Open();
+                return dbConnection.Query<UserModel>(sQuery, new { _strUsername= UserName, _strPassword = Password }).FirstOrDefault();
             }
         }
-
 
 
 
