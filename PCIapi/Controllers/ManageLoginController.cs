@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PCIapi.Model;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace PCIapi.Controllers
             manageLogin = new ManageLogin(_configuration);
         }
 
-
+        [Authorize]
         [HttpGet]
         [Route("Send")]
         public int sentmail()
@@ -68,6 +69,7 @@ namespace PCIapi.Controllers
             else
                 return "Invalid Model";
         }
+        [Authorize]
         [HttpPost]
         [Route("Login")]
         public string Login([FromBody] UserLogin userLogin)
@@ -82,7 +84,7 @@ namespace PCIapi.Controllers
             }
 
         }
-
+        [Authorize]
         [HttpPut]
         [Route("NewPassword")]
         public string NewPassword([FromBody] UpdateResetPassword resetPassword)
