@@ -81,7 +81,30 @@ namespace PCIapi.Controllers
             }
 
         }
-    }
+        [HttpPut]
+        [Route("NewPassword")]
+        public string NewPassword([FromBody] UpdateResetPassword resetPassword)
+        {
+            if (ModelState.IsValid)
+            {
+                if (resetPassword == null)
+                {
+                    return "Please enter the Password";
+                }
+                else
+                {
+                    return manageLogin.UpdateNewPassword(resetPassword.EmailID, resetPassword.Password, resetPassword.OldPassword);
+                   
+                }
+            }
+            else
+                return "Invalid Model";
+        }
+
+
+
+
+        }
 }
 
 

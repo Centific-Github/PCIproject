@@ -12,4 +12,18 @@
         public string Password { get; set; }
 
     }
+    public class ResetPassword
+    {
+        public string EmailID { get; set; }
+        public string Password { get; set; }
+        
+
+    }
+    public class UpdateResetPassword
+    {
+        public string EmailID { get; set; }
+        public string Password { get; set; }
+        public string OldPassword { get; set; }
+
+    }
 }

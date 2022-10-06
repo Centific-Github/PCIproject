@@ -44,6 +44,23 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
             }      
 
         }
+        public string UpdateNewPassword(string emailID, string password,string oldpassword)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"UPDATE MstLogintbl SET Password = @_strPassword,IsReset = 0 where EmailID = @_strEmailID AND Password =@_strOldPassword";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = emailID, _strPassword = password,_strOldPassword = oldpassword });
+                if (affectedRows > 0)
+                    return "New Password updated succesfully";
+                else
+                    return "Invalid old password";
+                
+            }
+
+        }
+
+
         public string getUserByEmailId(string emailID)
         {
             using (IDbConnection dbConnection = Connection)
