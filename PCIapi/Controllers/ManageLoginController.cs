@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PCIapi.Model;
+using System.Collections.Generic;
 using System.Net.Mail;
+using PCIapi.Model;
+
 
 namespace PCIapi.Controllers
 {
@@ -11,14 +14,7 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageLoginController : Controller
     {
-        //jwt
-        //private IUserRepository _userRepository;
-        //private ItokenHandler _tokenHandler;
-        //public AuthController(IUserRepository userRepository, ItokenHandler itokenHandler)
-        //{
-        //    _userRepository = userRepository;
-        //    _tokenHandler = itokenHandler;
-        //}
+        
         private IConfiguration _configuration;
         private readonly ManageLogin manageLogin;
         public ManageLoginController(IConfiguration configuration)
@@ -80,6 +76,13 @@ namespace PCIapi.Controllers
                 return "Invalid Model";
             }
 
+        }
+
+
+        [HttpGet("{UserName}")]
+        public IEnumerable<loginTbl> get(string UserName)
+        {
+            return manageLogin.getLoginDetails(UserName);
         }
     }
 }
