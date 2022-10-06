@@ -1,6 +1,6 @@
 ﻿namespace PCIapi.Model
 {
-    public class UserReset
+    public class UserEmailID
     {
         public string EmailID { get; set; }
 

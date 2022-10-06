@@ -51,7 +51,7 @@ namespace PCIapi.Controllers
         }
         [HttpPost]
         [Route("Reset")]
-        public string Reset([FromBody] UserReset userReset)
+        public string Reset([FromBody] UserEmailID userReset)
         {
             if (ModelState.IsValid)
             {
@@ -81,6 +81,7 @@ namespace PCIapi.Controllers
             }
 
         }
+
         [HttpPut]
         [Route("NewPassword")]
         public string NewPassword([FromBody] UpdateResetPassword resetPassword)
@@ -100,11 +101,27 @@ namespace PCIapi.Controllers
             else
                 return "Invalid Model";
         }
-
-
-
-
+        
+        [HttpPut]
+        [Route("UnBlocked")]
+        public string UnBlocked([FromBody] UserEmailID userUnblocked)
+        {
+            if (ModelState.IsValid)
+            {
+                if (userUnblocked == null)
+                {
+                    return "Unblocking successfull";
+                }
+                else
+                {
+                    return manageLogin.getUserUnblockedByEmailID(userUnblocked.EmailID);
+                }
+            }
+            else
+                return "Unblocked unsuccessful";
         }
+    }
 }
+
 
 
