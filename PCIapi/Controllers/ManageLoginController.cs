@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PCIapi.Model;
+using System.Collections.Generic;
 using System.Net.Mail;
 
 namespace PCIapi.Controllers
@@ -120,7 +121,18 @@ namespace PCIapi.Controllers
             else
                 return "Unblocked unsuccessful";
         }
+
+
+
+
+        [HttpGet("{UserName}")]
+        public IEnumerable<loginTbl> get(string UserName)
+        {
+            return manageLogin.getLoginDetails(UserName);
+        }
     }
+
+   
 }
 
 

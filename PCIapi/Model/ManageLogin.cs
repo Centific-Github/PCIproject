@@ -196,8 +196,24 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
             }
         }
 
+        public IEnumerable<loginTbl> getLoginDetails(string UserName)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT EmailID,IsReset FROM MstLogintbl WHERE UserName=@_LogintblUserName";
+                dbConnection.Open();
+                return dbConnection.Query<loginTbl>(sQuery, new { _loginTblUserName = UserName });
+            }
+        }
 
 
-
+       
     }
+    public class loginTbl
+    {
+        public string EmailID { get; set; }
+        public bool IsReset { get; set; }
+    }
+
 }
+
