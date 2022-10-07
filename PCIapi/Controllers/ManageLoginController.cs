@@ -69,7 +69,7 @@ namespace PCIapi.Controllers
             else
                 return "Invalid Model";
         }
-        [Authorize]
+      
         [HttpPost]
         [Route("Login")]
         public string Login([FromBody] UserLogin userLogin)
