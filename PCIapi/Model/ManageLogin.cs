@@ -200,7 +200,7 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT EmailID,IsReset FROM MstLogintbl WHERE UserName=@_LogintblUserName";
+                string sQuery = @"SELECT IsReset FROM MstLogintbl WHERE UserName=@_LogintblUserName OR EmailID = @_LogintblUserName";
                 dbConnection.Open();
                 return dbConnection.Query<loginTbl>(sQuery, new { _loginTblUserName = UserName });
             }
@@ -211,7 +211,6 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
     }
     public class loginTbl
     {
-        public string EmailID { get; set; }
         public bool IsReset { get; set; }
     }
 
