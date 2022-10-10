@@ -1,0 +1,28 @@
+<div class="box">
+  <div class="warning" *ngIf="loginState">Email Address or Password is incorrect.</div>
+  <h1>PCI Login</h1>
+  <form class="container" (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div>
+      <input required type="text" placeholder="Email Address (Required)*" email (input)="onInput($event)" name="emailID"
+        ngModel #email="ngModel">
+      <div class="help" *ngIf="!email.valid && email.touched">Please enter a valid email</div>
+    </div>
+    <br />
+    <input type="Password" placeholder="Password (Required)*" (input)="oninputPassword($event)" name="password" required
+      ngModel #password="ngModel">
+    <div class="help password-help" *ngIf="!password.valid && password.touched">
+      Password is required
+    </div>
+    <!-- <div *ngIf="isLoggedin && !password.valid" class="help password-help">Done</div> -->
+    <br />
+    <div>
+      <button type="submit" [disabled]="!f.valid" >Login</button>
+      
+    </div>
+  </form>
+  <label>
+    <p> <a class="reset-password" (click)="onReset()">Forgot Password?</a></p>
+  </label>
+  
+</div>
+

@@ -1,0 +1,58 @@
+<h2>Registered users</h2>
+<button class="add-user" [routerLink]="'register'">Add user</button>
+<div>
+
+    <table class="table table-striped">
+
+        <colgroup>
+
+            <col />
+
+            <col />
+
+            <col />
+
+        </colgroup>
+
+        <tr>
+
+            <th>Login ID</th>
+
+            <th>Username</th>
+
+            <th>Email ID</th>
+
+        </tr>
+
+        <tr *ngFor="let userData of usersData | paginate: { itemsPerPage: 8, currentPage: p }">
+
+            <td>{{ userData.loginID }}</td>
+
+            <td>{{ userData.userName }}</td>
+
+            <td>{{ userData.emailID }}</td>
+
+        </tr>
+
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+</div>
+
+<router-outlet></router-outlet>
+
+
+
+<!-- <div class="pop-container active" id="container">
+
+    <div class="popup">
+
+      <button id="close" [routerLink]="'/profile'">&times;</button>
+
+      <h1>This is a Popup</h1>
+
+      <p>Popup content!</p>
+
+    </div>
+
+  </div> -->
