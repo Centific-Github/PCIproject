@@ -127,8 +127,9 @@ namespace PCIapi.Controllers
 
 
 
-        [HttpGet("{UserName}")]
-        public IEnumerable<loginTbl> get(string UserName)
+        [HttpGet]
+        [Route("GetIsReset")]
+        public IEnumerable<loginTbl> GetIsReset(string UserName)
         {
             return manageLogin.getLoginDetails(UserName);
         }
