@@ -34,7 +34,7 @@ namespace PCIapi.Controllers
         {
             return manageUsers.getUsers(id);
         }
-        [HttpPost]
+        [HttpPost()]
         public userType Post([FromBody] userType _userType)
         {
             if (ModelState.IsValid)
