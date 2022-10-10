@@ -22,13 +22,13 @@ namespace PCIapi.Controllers
             manageAglMtyHeading = new ManageAglMtyHeading(_configuration);
         }
         [HttpGet]
-        public IEnumerable<aglMtyHeading> get()
+        public IEnumerable<agileMaturity> get()
         {
             return manageAglMtyHeading.getHeadingDetails();
         }
 
         [HttpGet("{id}")]
-        public IEnumerable<aglMtyHeading> get(int id)
+        public IEnumerable<agileMaturity> get(int id)
         {
             return manageAglMtyHeading.getHeadingDetails(id);
         }

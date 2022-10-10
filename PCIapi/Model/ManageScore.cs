@@ -35,9 +35,21 @@ namespace PCIapi.Model
                 return dbConnection.Query<mstScore>(sQuery, new { _strScoreCrdID = ID});
             }
         }
+        public IEnumerable<mstScore> getScoresByAreas(int ID)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT  ScoreCrdID, CeremID,AreasID,CompID,PcicmpID,HeadingID,ExcKeyActivityID,KeyActivitiesID,ActivityID,ScoreID,ScoreValue  from MstScore Where AreasID=@_strAreasID";
+                dbConnection.Open();
+                return dbConnection.Query<mstScore>(sQuery, new { _strAreasID = ID });
+            }
+        }
 
-    }    
-        public class mstScore
+
+
+
+    }
+    public class mstScore
         {
             public int ScoreCrdID { get; set; }
             public int CeremID { get; set; }

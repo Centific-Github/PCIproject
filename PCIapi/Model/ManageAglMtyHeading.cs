@@ -17,27 +17,27 @@ namespace PCIapi.Model
         {
 
         }
-        public IEnumerable<aglMtyHeading> getHeadingDetails()
+        public IEnumerable<agileMaturity> getHeadingDetails()
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sQuery = @"SELECT HeadingID, HeadingDesc FROM MstAglMtyHeading";
                 dbConnection.Open();
-                return dbConnection.Query<aglMtyHeading>(sQuery);
+                return dbConnection.Query<agileMaturity>(sQuery);
             }
         }
-        public IEnumerable<aglMtyHeading> getHeadingDetails(int id)
+        public IEnumerable<agileMaturity> getHeadingDetails(int id)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sQuery = @"SELECT HeadingID, HeadingDesc FROM MstAglMtyHeading WHERE HeadingID=@_HeadingID";
                 dbConnection.Open();
-                return dbConnection.Query<aglMtyHeading>(sQuery, new { _HeadingID = id });
+                return dbConnection.Query<agileMaturity>(sQuery, new { _HeadingID = id });
             }
         }
     }
 
-    public class aglMtyHeading
+    public class agileMaturity
     {
         public int HeadingID { get; set; }
         public string HeadingDesc { get; set; }
