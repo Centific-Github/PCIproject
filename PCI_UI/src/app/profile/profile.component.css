@@ -1,0 +1,122 @@
+.profile-entire-container {
+    width: 1366px;
+}
+
+.dashboard-title {
+    color: white;
+    position: absolute;
+    left: 320px;
+    top: -30px;
+}
+
+.profile-header {
+    background-color: #616161;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    padding: 25px 10px;
+    /* position: fixed; */
+} 
+
+/* .dashboard-title, .logout-container{
+    display: inline-block;
+} */
+
+.header-content-container {
+    display: flex;
+}
+
+.side-bar {
+    background-color: white;
+    display: flex;
+    /* flex-direction: column; */
+    justify-items: center;
+    /* align-items: center; */
+    gap: 20px;
+    min-height: 552px;
+    width: 250px;
+    
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    /* gap: 20px; */
+    min-width: 100%;
+}
+
+.profile-container {
+    width: 1300px;
+}
+
+.menu-components-container {
+    width: 1116px;
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    position: relative;
+    left: 145%;
+    margin: 20px 0 0 0;
+}
+
+.manage {
+    margin: 20px 0 0 0;
+}
+
+a.active,.register.active {
+    color: #03B003;
+    /* background-color: #03B003; */
+    background-color: #e9ecef;
+    border-radius: 5px;
+    padding: 10px 40px;
+    text-decoration: none;
+}
+
+a:link {
+    color: black;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+h1{
+    text-align: center;
+    margin-top: 50px;
+}
+p{
+    text-align: center;
+}
+.logout-container{
+    text-align: right;
+    position: relative;
+    right: 20px;
+}
+.logout{
+    color: white;
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 18px;
+}
+.register-project, .register{
+    /* color: blue; */
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.register{
+    margin: 20px;
+}
+
+.logo-container {
+    width: 100px;
+}
+
+img {
+    width: 300px;
+    height: 73px;
+    object-fit: cover;
+    position: absolute;
+    top: -1.3px;
+    left: 1px;
+}

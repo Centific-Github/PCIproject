@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.26-alpha">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>a2778169-9295-4f27-877b-7144d68b91c9</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupCommand>ng serve</StartupCommand>
+    <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
+    <StartupCommandWorkingDirectory>C:\Pactera edge\PCIproject-GIT\PCI_UI</StartupCommandWorkingDirectory>
+  </PropertyGroup>
+</Project>
