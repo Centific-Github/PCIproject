@@ -1,0 +1,47 @@
+h2, .add-project {
+    display: inline-block;
+    position: relative;
+}
+
+h2 {
+    left: -270px;
+}
+
+.add-project {
+    background-color: #0d6efd;
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    right: -300px;
+}
+
+table,
+th,
+td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    text-align: left;
+    border-left: none;
+    border-right: none;
+    padding: 8px 0 8px 10px;
+}
+
+colgroup {
+    width: 300px;
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    flex: content;
+    border-spacing: 2px;
+    width: 900px;
+    position: relative;
+    left: -30%;
+}
+
+tr:nth-child(odd) {
+    background-color: lightgrey;
+}

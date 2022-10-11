@@ -1,0 +1,49 @@
+<div class="profile-entire-container">
+    <div class="profile-header">
+        <!-- <div class="header-content-container"> -->
+        <!-- <h1 class="dashboard-title">PCI Dashboard</h1> -->
+        <div class="logout-container"><button class="logout" (click)="onLogout()">Logout</button></div>
+        <!-- </div> -->
+
+    </div>
+    <div class="logo-container">
+        <img src="https://user-images.githubusercontent.com/85378839/192097069-91fb1228-ddc1-4480-9e3a-60b2c5be98af.png" alt="">
+    </div>
+    <h1 class="dashboard-title">PCI Project</h1>
+    <div class="side-bar">
+        <div class="menu-container">
+            <div class="manage user-container">
+                <a class="register"
+                    routerLinkActive="active"
+                    [routerLink]="'manage-user'" 
+                    >Manage User
+                </a>
+            </div>
+            <div class="manage project-container">
+                <a class="register-project"
+                    routerLinkActive="active"
+                    [routerLink]="'manage-project'" 
+                    >Manage Project
+                </a>
+            </div>
+            <!-- <button [routerLink]="'manage-user'">Open popup</button> -->
+        </div>
+        <div class="menu-components-container">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+
+    <!-- (click)="onManageProject()"
+    [ngClass]="{'manage-user-active':isManageProjectActive}" -->
+
+    <!-- (click)="onManageUser()"
+                    [ngClass]="{'manage-user-active':isManageUserActive}" -->
+
+    <!-- </div>
+<div class="profile-container">
+<h1>Hi, {{userName}}!</h1>
+<p>You're logged.</p>
+<p>  </p>
+<p> </p>
+</div> -->

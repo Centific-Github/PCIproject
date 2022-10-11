@@ -1,4 +1,5 @@
 ﻿using Dapper;
+
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
@@ -40,9 +41,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, UserName from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
+                string sQuery = @"SELECT LoginID, EmailID, UserName from MstLogintbl Where UserName=@_strEmailID OR EmailID=@_strEmailID AND Password=@_strPassword";
                 dbConnection.Open();
-                return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
+                return dbConnection.Query<userType>(sQuery, new { _strUserName = _userType.EmailID, _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
         }
         public int insertUsers(userType _userType)
