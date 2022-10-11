@@ -33,7 +33,14 @@ namespace PCIapi.Controllers
             public IEnumerable<mstScore> get(int id)
             {
             return manageScoreController.getMstScoreDetails(id);
-        }        
+        }
+
+        [HttpGet]
+        [Route("ScoresByCeremony")]
+        public IEnumerable<mstScore> getScoresByCeremonyDetails(int id)
+        {
+            return manageScoreController.getScoresByCeremonyDetails(id);
+        }
     }
  }
 
