@@ -40,6 +40,13 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.getScoresByAreas(id);
         }
+        [HttpGet]
+        [Route("ScoresByCeremony")]
+        public IEnumerable<mstScore> getScoresByCeremonyDetails(int id)
+        {
+            return manageScoreController.getScoresByCeremonyDetails(id);
+        }
+
     }
- }
+}
 
