@@ -41,6 +41,13 @@ namespace PCIapi.Controllers
             return manageScoreController.getScoresByAreas(id);
         }
         [HttpGet]
+        [Route("ScoresByKeyactivityHeading")]
+        public IEnumerable<mstScore> getScoresByKeyactivityHeading(int id)
+        {
+            return manageScoreController.getScoresByKeyactivityHeading(id);
+        }
+
+        [HttpGet]
         [Route("ScoresByCeremony")]
         public IEnumerable<mstScore> getScoresByCeremonyDetails(int id)
         {
