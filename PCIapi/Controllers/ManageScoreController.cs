@@ -53,6 +53,14 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.getScoresByCeremonyDetails(id);
         }
+        
+        
+        [HttpGet]
+        [Route("ScoresByExcmat")]
+        public IEnumerable<excMaturity> getScoresByAreas(string Desc)
+        {
+            return manageScoreController.getScoresByAreas(Desc);
+        }
 
     }
 }

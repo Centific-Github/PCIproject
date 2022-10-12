@@ -14,7 +14,7 @@ namespace PCIapi.Model
         public ManageScore(IConfiguration configuration) : base(configuration)
         {
 
-        }    
+        }
 
         public IEnumerable<mstScore> getMstScoreDetails()
         {
@@ -32,7 +32,7 @@ namespace PCIapi.Model
             {
                 string sQuery = @"SELECT  ScoreCrdID, CeremID,AreasID,CompID,PcicmpID,HeadingID,ExcKeyActivityID,KeyActivitiesID,ActivityID,ScoreID,ScoreValue  from MstScore Where ScoreCrdID=@_strScoreCrdID";
                 dbConnection.Open();
-                return dbConnection.Query<mstScore>(sQuery, new { _strScoreCrdID = ID});
+                return dbConnection.Query<mstScore>(sQuery, new { _strScoreCrdID = ID });
             }
         }
         public IEnumerable<mstScore> getScoresByAreas(int ID)
@@ -62,9 +62,25 @@ namespace PCIapi.Model
                 return dbConnection.Query<mstScore>(sQuery, new { _strCeremID = ID });
             }
         }
+        public IEnumerable<excMaturity> getScoresByAreas(string Desc)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select mea.ExcKeyActivityDesc,mcp.CompValue,s.ScoreValue,msd.ScoreDesc
+                 from MstScore s  
+                 Join MstExcKeyActivities mea
+                 on s.ExcKeyActivityID=mea.ExcKeyActivityID                 
+                 Join MstCompliance mcp on
+                 s.CompID=mcp.CompID
+				 join MstScoreCriteria msd on
+				 s.ScoreID=msd.ScoreID";
+                dbConnection.Open();
+                return dbConnection.Query<excMaturity>(sQuery, new { _strExcKeyActivityDesc = Desc });
+            }
+        }
 
     }
-    public class mstScore
+        public class mstScore
         {
             public int ScoreCrdID { get; set; }
             public int CeremID { get; set; }
@@ -72,11 +88,21 @@ namespace PCIapi.Model
             public int CompID { get; set; }
             public int PcicmpID { get; set; }
             public int HeadingID { get; set; }
-            public int ExcKeyActivityID {get; set; }
+            public int ExcKeyActivityID { get; set; }
             public int KeyActivitiesID { get; set; }
             public int ActivityID { get; set; }
             public int ScoreID { get; set; }
             public decimal ScoreValue { get; set; }
         }
+        public class excMaturity
+        {
+            public int ScoreCrdID { get; set; }
+            public int AreasID { get; set; }
+            public int ExcKeyActivityID { get; set; }
+            public int CompID { get; set; }
+            public int ScoreID { get; set; }
+            public int ScoreValue { get; set; }
+        }
+    
 }
 
