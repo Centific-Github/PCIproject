@@ -14,7 +14,7 @@ namespace PCIapi.Model
         public ManageScore(IConfiguration configuration) : base(configuration)
         {
 
-        }    
+        }
 
         public IEnumerable<mstScore> getMstScoreDetails()
         {
@@ -32,7 +32,7 @@ namespace PCIapi.Model
             {
                 string sQuery = @"SELECT  ScoreCrdID, CeremID,AreasID,CompID,PcicmpID,HeadingID,ExcKeyActivityID,KeyActivitiesID,ActivityID,ScoreID,ScoreValue  from MstScore Where ScoreCrdID=@_strScoreCrdID";
                 dbConnection.Open();
-                return dbConnection.Query<mstScore>(sQuery, new { _strScoreCrdID = ID});
+                return dbConnection.Query<mstScore>(sQuery, new { _strScoreCrdID = ID });
             }
         }
         public IEnumerable<mstScore> getScoresByAreas(int ID)
@@ -62,21 +62,56 @@ namespace PCIapi.Model
                 return dbConnection.Query<mstScore>(sQuery, new { _strCeremID = ID });
             }
         }
+        public IEnumerable<agileMaturityIndex> getScoresByAmiDetails(string Desc,string Heading)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select ami.AreasDesc,amih.HeadingDesc,amid.KeyActivitiesDesc,amicp.CompValue,amisd.ScoreDesc,amis.ScoreValue
+                 from MstScore amis  
+                 Join MstKeyAreas ami
+                 on amis.AreasID=ami.AreasID
+                 Join MstAglMtyHeading amih
+                 on amis.HeadingID=amih.HeadingID
+                 Join MstAglMtyKeyActivities amid
+                 on amis.KeyActivitiesID=amid.KeyActivitiesID
+                 Join MstCompliance amicp on
+                 amis.CompID=amicp.CompID
+                 Join MstScoreCriteria amisd on
+                 amis.ScoreID = amisd.ScoreID
+                  WHERE              
+                AreasDesc = @_strAreasDesc AND
+                HeadingDesc = @_strHeadingDesc";
+
+                dbConnection.Open();
+                return dbConnection.Query<agileMaturityIndex>(sQuery, new { _strAreasDesc = Desc, _strHeadingDesc = Heading });
+            }
+        }
 
     }
     public class mstScore
-        {
-            public int ScoreCrdID { get; set; }
-            public int CeremID { get; set; }
-            public int AreasID { get; set; }
-            public int CompID { get; set; }
-            public int PcicmpID { get; set; }
-            public int HeadingID { get; set; }
-            public int ExcKeyActivityID {get; set; }
-            public int KeyActivitiesID { get; set; }
-            public int ActivityID { get; set; }
-            public int ScoreID { get; set; }
-            public decimal ScoreValue { get; set; }
-        }
+    {
+        public int ScoreCrdID { get; set; }
+        public int CeremID { get; set; }
+        public int AreasID { get; set; }
+        public int CompID { get; set; }
+        public int PcicmpID { get; set; }
+        public int HeadingID { get; set; }
+        public int ExcKeyActivityID { get; set; }
+        public int KeyActivitiesID { get; set; }
+        public int ActivityID { get; set; }
+        public int ScoreID { get; set; }
+        public decimal ScoreValue { get; set; }
+    }
+    public class agileMaturityIndex
+    {
+        public string AreasDesc { get; set; }
+        public string HeadingDesc { get; set; }
+        public string KeyActivitiesDesc { get; set; }
+        public string CompValue { get; set; }
+        public string ScoreDesc { get; set; }
+        public string ScoreCrdID { get; set; }
+        public string ScoreValue { get; set; }
+    }
 }
+
 
