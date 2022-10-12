@@ -117,7 +117,7 @@ namespace PCIapi.Model
             public int ExcKeyActivityID { get; set; }
             public int CompID { get; set; }
             public int ScoreID { get; set; }
-            public int ScoreValue { get; set; }
+            public decimal ScoreValue { get; set; }
         }
     
 }
