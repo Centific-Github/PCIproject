@@ -7,6 +7,8 @@
         public bool IsReset { get; set; }
         public bool IsBlocked { get; set; }
 
+
+
+
     }
 }
- 
