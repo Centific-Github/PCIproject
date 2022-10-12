@@ -24,25 +24,25 @@ namespace PCIapi.Controllers
             manageScoreController = new ManageScore(_configuration);
         }        
         [HttpGet]
-            public IEnumerable<mstScore> get()
+            public IEnumerable<MstScore> get()
             {
                 return manageScoreController.getMstScoreDetails();
             }       
 
         [HttpGet("{id}")]
-            public IEnumerable<mstScore> get(int id)
+            public IEnumerable<MstScore> get(int id)
             {
             return manageScoreController.getMstScoreDetails(id);
         }  
         [HttpGet]
         [Route("ScoresByAreas")]
-        public IEnumerable<mstScore>getScoresByAreas(int id)
+        public IEnumerable<MstScore>getScoresByAreas(int id)
         {
             return manageScoreController.getScoresByAreas(id);
         }
         [HttpGet]
         [Route("ScoresByKeyactivityHeading")]
-        public IEnumerable<mstScore> getScoresByKeyactivityHeading(int id)
+        public IEnumerable<MstScore> getScoresByKeyactivityHeading(int id)
         {
             return manageScoreController.getScoresByKeyactivityHeading(id);
         }
@@ -50,7 +50,7 @@ namespace PCIapi.Controllers
         
         [HttpGet]
         [Route("ScoresByCeremony")]
-        public IEnumerable<GetCeremony> getScoresByCeremonyDetails(int ID)
+        public IEnumerable<Ceremony> getScoresByCeremonyDetails(int ID)
         {
             return manageScoreController.getScoresByCeremonyDetails(ID);
         }
@@ -58,10 +58,30 @@ namespace PCIapi.Controllers
 
         [HttpGet]
         [Route("ScoresByExcmat")]
-        public IEnumerable<excMaturity> getScoresByAreas(string Desc)
+        public IEnumerable<ExeMaturity> getScoresByAreas(string Desc)
         {
             return manageScoreController.getScoresByAreas(Desc);
         }
+        [HttpPost]
+        [Route("MstScoreSave")]
+        public string Insert([FromBody] ScoreSave _scoreSave)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_scoreSave == null)
+                {
+                    return "please pass the parameter";
+                }
+                else
+                {
+                    var affectedRows = manageScoreController.ScoreSave(_scoreSave);
+                    return affectedRows;
+                }
+            }
+            else
+                return "Invalid model";
+        }
+
 
     }
 }

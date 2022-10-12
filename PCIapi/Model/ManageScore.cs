@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -16,45 +17,45 @@ namespace PCIapi.Model
 
         }
 
-        public IEnumerable<mstScore> getMstScoreDetails()
+        public IEnumerable<MstScore> getMstScoreDetails()
         {
             using (IDbConnection dbConnection = Connection)
             {
 
                 string sQuery = @"SELECT  ScoreCrdID, CeremID,AreasID,CompID,PcicmpID,HeadingID,ExcKeyActivityID,KeyActivitiesID,ActivityID,ScoreID,ScoreValue  from MstScore";
                 dbConnection.Open();
-                return dbConnection.Query<mstScore>(sQuery);
+                return dbConnection.Query<MstScore>(sQuery);
             }
         }
-        public IEnumerable<mstScore> getMstScoreDetails(int ID)
+        public IEnumerable<MstScore> getMstScoreDetails(int ID)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sQuery = @"SELECT  ScoreCrdID, CeremID,AreasID,CompID,PcicmpID,HeadingID,ExcKeyActivityID,KeyActivitiesID,ActivityID,ScoreID,ScoreValue  from MstScore Where ScoreCrdID=@_strScoreCrdID";
                 dbConnection.Open();
-                return dbConnection.Query<mstScore>(sQuery, new { _strScoreCrdID = ID });
+                return dbConnection.Query<MstScore>(sQuery, new { _strScoreCrdID = ID });
             }
         }
-        public IEnumerable<mstScore> getScoresByAreas(int ID)
+        public IEnumerable<MstScore> getScoresByAreas(int ID)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sQuery = @"SELECT  ScoreCrdID, CeremID,AreasID,CompID,PcicmpID,HeadingID,ExcKeyActivityID,KeyActivitiesID,ActivityID,ScoreID,ScoreValue  from MstScore Where AreasID=@_strAreasID";
                 dbConnection.Open();
-                return dbConnection.Query<mstScore>(sQuery, new { _strAreasID = ID });
+                return dbConnection.Query<MstScore>(sQuery, new { _strAreasID = ID });
             }
         }
-        public IEnumerable<mstScore> getScoresByKeyactivityHeading(int ID)
+        public IEnumerable<MstScore> getScoresByKeyactivityHeading(int ID)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sQuery = @"SELECT  ScoreCrdID, CeremID,AreasID,CompID,PcicmpID,HeadingID,ExcKeyActivityID,KeyActivitiesID,ActivityID,ScoreID,ScoreValue  from MstScore Where HeadingID=@_strHeadingID";
                 dbConnection.Open();
-                return dbConnection.Query<mstScore>(sQuery, new { _strHeadingID = ID });
+                return dbConnection.Query<MstScore>(sQuery, new { _strHeadingID = ID });
             }
         }
-        
-        public IEnumerable<GetCeremony> getScoresByCeremonyDetails(int ID)
+
+        public IEnumerable<Ceremony> getScoresByCeremonyDetails(int ID)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -67,11 +68,11 @@ namespace PCIapi.Model
                  Join MstCompliance mcp on
                  s.CompID=mcp.CompID";
                 dbConnection.Open();
-                return dbConnection.Query<GetCeremony>(sQuery, new { _strCeremID = ID });
+                return dbConnection.Query<Ceremony>(sQuery, new { _strCeremID = ID });
             }
         }
 
-        public IEnumerable<excMaturity> getScoresByAreas(string Desc)
+        public IEnumerable<ExeMaturity> getScoresByAreas(string Desc)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -84,41 +85,32 @@ namespace PCIapi.Model
 				 join MstScoreCriteria msd on
 				 s.ScoreID=msd.ScoreID";
                 dbConnection.Open();
-                return dbConnection.Query<excMaturity>(sQuery, new { _strExcKeyActivityDesc = Desc });
+                return dbConnection.Query<ExeMaturity>(sQuery, new { _strExcKeyActivityDesc = Desc });
             }
         }
-
-    }
-    public class mstScore
-    {
-        public int ScoreCrdID { get; set; }
-        public int CeremID { get; set; }
-        public int AreasID { get; set; }
-        public int CompID { get; set; }
-        public int PcicmpID { get; set; }
-        public int HeadingID { get; set; }
-        public int ExcKeyActivityID { get; set; }
-        public int KeyActivitiesID { get; set; }
-        public int ActivityID { get; set; }
-        public int ScoreID { get; set; }
-        public decimal ScoreValue { get; set; }
-    }
-    public class GetCeremony
-    {
-        public string ActivityDesc { get; set;}
-        public string CompValue { get; set;}
-      
-        public decimal ScoreValue { get; set; }
-    }
-        public class excMaturity
+        public string ScoreSave(ScoreSave _scoreSave)
         {
-            public int ScoreCrdID { get; set; }
-            public int AreasID { get; set; }
-            public int ExcKeyActivityID { get; set; }
-            public int CompID { get; set; }
-            public int ScoreID { get; set; }
-            public int ScoreValue { get; set; }
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"INSERT INTO MstScoreCalculation (ProjectID,PcicmpID,ScoreCrdID,CreatedDate,Date )  values(@_strProjectID,@_strPcicmpID,@_strScoreCrdID,GETDATE(),@_strDate)";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectID = _scoreSave.ProjectID, _strPcicmpID = _scoreSave.PcicmpID, _strScoreCrdID = _scoreSave.ScoreCrdID, _strDate = _scoreSave.Date });
+                if (affectedRows > 0)
+                {
+                    return " Saved Data Successful";
+
+                }
+                else
+                {
+                    return "Issuing Saving the Data";
+                }
+
+            }
         }
-    
+       
+       
+        
+       
+    }
 }
 
