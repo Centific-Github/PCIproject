@@ -88,13 +88,24 @@ namespace PCIapi.Controllers
                 return "Invalid model";
         }
         [HttpGet]
-        [Route("GetScore")]
-        public IEnumerable<Score> GetScore(int activityID,int complianceID)
+        [Route("GetScoreExm")]
+        public IEnumerable<Score> GetScoreExc(int activityID,int complianceID)
         {
-            return manageScoreController.GetScore(activityID, complianceID);
+            return manageScoreController.GetScoreExc(activityID, complianceID);
+        }
+        [HttpGet]
+        [Route("GetScoreAmi")]
+        public IEnumerable<Score> GetScoreAmi(int activityID, int complianceID)
+        {
+            return manageScoreController.GetScoreAmi(activityID, complianceID);
         }
 
-
+        [HttpGet]
+        [Route("GetScoreceremone")]
+        public IEnumerable<Score> GetScoreCeremone(int activityID, int complianceID)
+        {
+            return manageScoreController.GetScoreceremone(activityID, complianceID);
+        }
     }
 }
 

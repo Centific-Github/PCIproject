@@ -4,4 +4,5 @@
     {
         public decimal ScoreValue { get; set; }
     }
+    
 }

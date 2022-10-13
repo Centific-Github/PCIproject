@@ -137,7 +137,7 @@ namespace PCIapi.Model
 
             }
         }
-        public IEnumerable<Score> GetScore(int activityID, int complianceID)
+        public IEnumerable<Score> GetScoreExc(int activityID, int complianceID)
 
         {
             using (IDbConnection dbConnection = Connection)
@@ -148,10 +148,35 @@ namespace PCIapi.Model
             }
 
         }
-       
-       
-        
-       
+        public IEnumerable<Score> GetScoreAmi(int activityID, int complianceID)
+
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT  ScoreValue  from MstScore Where KeyActivitiesID=@_strKeyActivitiesID and CompID=@_strCompID";
+                dbConnection.Open();
+                return dbConnection.Query<Score>(sQuery, new { _strKeyActivitiesID = activityID, _strCompID = complianceID });
+            }
+
+        }
+        public IEnumerable<Score> GetScoreceremone(int activityID, int complianceID)
+
+
+
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT  ScoreValue  from MstScore Where ActivityID=@_strActivityID and CompID=@_strCompID";
+                dbConnection.Open();
+                return dbConnection.Query<Score>(sQuery, new { _strActivityID = activityID, _strCompID = complianceID });
+            }
+
+
+
+        }
+
+
+
     }
 }
 
