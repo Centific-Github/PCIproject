@@ -54,7 +54,7 @@ namespace PCIapi.Model
                 return dbConnection.Query<MstScore>(sQuery, new { _strHeadingID = ID });
             }
         }
-
+         
         public IEnumerable<ExeMaturity> getScoresByexcmat(int  ID)
         {
             using (IDbConnection dbConnection = Connection)
@@ -73,6 +73,33 @@ namespace PCIapi.Model
                 return dbConnection.Query<ExeMaturity>(sQuery, new { _strAreasID = ID });
             }
         }
+        public IEnumerable<agileMaturityIndex> getScoresByAmiDetails(int id, int Headingid)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select ami.AreasDesc,amih.HeadingDesc,amid.KeyActivitiesDesc,amicp.CompValue,amisd.ScoreDesc,amis.ScoreValue
+                 from MstScore amis  
+                 Join MstKeyAreas ami
+                 on amis.AreasID=ami.AreasID
+                 Join MstAglMtyHeading amih
+                 on amis.HeadingID=amih.HeadingID
+                 Join MstAglMtyKeyActivities amid
+                 on amis.KeyActivitiesID=amid.KeyActivitiesID
+                 Join MstCompliance amicp on
+                 amis.CompID=amicp.CompID
+                 Join MstScoreCriteria amisd on
+                 amis.ScoreID = amisd.ScoreID
+                  WHERE              
+                ami.AreasID = @_strAreasID AND
+                amih.HeadingID = @_strHeadingID";
+
+
+
+                dbConnection.Open();
+                return dbConnection.Query<agileMaturityIndex>(sQuery, new { _strAreasID = id, _strHeadingID = Headingid });
+            }
+        }
+        
 
         public string ScoreSave(ScoreSave _scoreSave)
         {
