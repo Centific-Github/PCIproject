@@ -62,6 +62,13 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.getScoresByAreas(Desc);
         }
+        [HttpGet]
+        [Route("ScoresByAmi")]
+        public IEnumerable<agileMaturityIndex> getScoresByAmiDetails(string Desc, string Heading)
+        {
+            return manageScoreController.getScoresByAmiDetails(Desc, Heading);
+        }
+
         [HttpPost]
         [Route("MstScoreSave")]
         public string Insert([FromBody] ScoreSave _scoreSave)
