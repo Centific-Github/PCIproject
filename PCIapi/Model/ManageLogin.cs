@@ -107,7 +107,7 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
                    "<tr>" +
                    " <td align=\"center\" bgcolor=\"#ffffff\" style=\"padding:30px\">" +
                    "<p style=\"text-align:left\">Hi " + getUserByEmailId(emailID) + ", <br><br> We received a request to reset the password for your account for this email address. To initiate the password reset process for your account, click the link below.\r\n </p>" +
-                   "<p>\r\n <a target=\"_blank\" style=\"text-decoration:none; background-color: black; border: black 1px solid; color: #fff; padding:10px 10px; display:block;\" href=\"https://google.com\">\r\n<strong>Reset Password</strong></a>\r\n</p>" +
+                   "<p>\r\n <a target=\"_blank\" style=\"text-decoration:none; background-color: black; border: black 1px solid; color: #fff; padding:10px 10px; display:block;\" href=\"http://localhost:4200/create-new-password\">\r\n<strong>Reset Password</strong></a>\r\n</p>" +
                    "  <p style=\"text-align:left\">Your requested 8 digit password is : " + password + "" +
                    "<p style=\"text-align:left\">\r\nSincerely,<br>The Website Team\r\n</p>" +
                    "</td>\r\n</tr>\r\n        </tbody>\r\n      </table>\r\n    </center>\r\n  </body>\r\n</html>";
