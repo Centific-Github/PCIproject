@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 
 namespace PCIapi.Model
 /// <summary>
@@ -119,6 +120,17 @@ namespace PCIapi.Model
                 }
 
             }
+        }
+        public IEnumerable<Score> GetScore(int activityID, int complianceID)
+
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT  ScoreValue  from MstScore Where ExcKeyActivityID=@_strExcKeyActivityID and CompID=@_strCompID";
+                dbConnection.Open();
+                return dbConnection.Query<Score>(sQuery, new { _strExcKeyActivityID = activityID, _strCompID=complianceID });
+            }
+
         }
        
        

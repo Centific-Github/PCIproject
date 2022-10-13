@@ -11,32 +11,32 @@ namespace PCIapi.Controllers
 /// </summary>
 {
     [Route("api/[controller]")]
-        [ApiController]
+    [ApiController]
     public class ManageScoreController : Controller
     {
         private IConfiguration _configuration;
 
 
         private readonly ManageScore manageScoreController;
-        public ManageScoreController(IConfiguration configuration)            
+        public ManageScoreController(IConfiguration configuration)
         {
             _configuration = configuration;
             manageScoreController = new ManageScore(_configuration);
-        }        
+        }
         [HttpGet]
-            public IEnumerable<MstScore> get()
-            {
-                return manageScoreController.getMstScoreDetails();
-            }       
+        public IEnumerable<MstScore> get()
+        {
+            return manageScoreController.getMstScoreDetails();
+        }
 
         [HttpGet("{id}")]
-            public IEnumerable<MstScore> get(int id)
-            {
+        public IEnumerable<MstScore> get(int id)
+        {
             return manageScoreController.getMstScoreDetails(id);
-        }  
+        }
         [HttpGet]
         [Route("ScoresByAreas")]
-        public IEnumerable<MstScore>getScoresByAreas(int id)
+        public IEnumerable<MstScore> getScoresByAreas(int id)
         {
             return manageScoreController.getScoresByAreas(id);
         }
@@ -47,7 +47,7 @@ namespace PCIapi.Controllers
             return manageScoreController.getScoresByKeyactivityHeading(id);
         }
 
-        
+
         [HttpGet]
         [Route("ScoresByCeremony")]
         public IEnumerable<Ceremony> GetScoresByCeremonyDetails(int ID)
@@ -80,6 +80,12 @@ namespace PCIapi.Controllers
             }
             else
                 return "Invalid model";
+        }
+        [HttpGet]
+        [Route("GetScore")]
+        public IEnumerable<Score> GetScore(int activityID,int complianceID)
+        {
+            return manageScoreController.GetScore(activityID, complianceID);
         }
 
 
