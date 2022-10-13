@@ -58,9 +58,9 @@ namespace PCIapi.Controllers
 
         [HttpGet]
         [Route("ScoresByExcmat")]
-        public IEnumerable<ExeMaturity> getScoresByAreas(string Desc)
+        public IEnumerable<ExeMaturity> getScoresByexcmat(int ID)
         {
-            return manageScoreController.getScoresByAreas(Desc);
+            return manageScoreController.getScoresByexcmat(ID);
         }
         [HttpPost]
         [Route("MstScoreSave")]

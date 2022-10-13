@@ -55,39 +55,25 @@ namespace PCIapi.Model
             }
         }
 
-        public IEnumerable<Ceremony> getScoresByCeremonyDetails(int ID)
+        public IEnumerable<ExeMaturity> getScoresByexcmat(int  ID)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"select mc.CeremDesc,mga.ActivityDesc,mcp.CompValue,s.ScoreValue
-                 from MstScore s  
-                 Join MstGovKeyActivity mga
-                 on s.ActivityID=mga.ActivityID
-                 Join MstCeremony mc
-                 on s.CeremID=mc.CeremID
-                 Join MstCompliance mcp on
-                 s.CompID=mcp.CompID";
-                dbConnection.Open();
-                return dbConnection.Query<Ceremony>(sQuery, new { _strCeremID = ID });
-            }
-        }
-
-        public IEnumerable<ExeMaturity> getScoresByAreas(string Desc)
-        {
-            using (IDbConnection dbConnection = Connection)
-            {
-                string sQuery = @"select mea.ExcKeyActivityDesc,mcp.CompValue,s.ScoreValue,msd.ScoreDesc
-                 from MstScore s  
+                string sQuery = @"select mka.AreasDesc,mea.ExcKeyActivityDesc,mcp.CompValue,msd.ScoreDesc,s.ScoreValue
+                 from MstScore s 
+				 join MstKeyAreas mka on
+				 s.AreasID = mka.AreasID
                  Join MstExcKeyActivities mea
-                 on s.ExcKeyActivityID=mea.ExcKeyActivityID                 
+                 on s.ExcKeyActivityID=mea.ExcKeyActivityID 				 
                  Join MstCompliance mcp on
                  s.CompID=mcp.CompID
 				 join MstScoreCriteria msd on
-				 s.ScoreID=msd.ScoreID";
+				 s.ScoreID=msd.ScoreID where s.AreasID=@_strAreasID";
                 dbConnection.Open();
-                return dbConnection.Query<ExeMaturity>(sQuery, new { _strExcKeyActivityDesc = Desc });
+                return dbConnection.Query<ExeMaturity>(sQuery, new { _strAreasID = ID });
             }
         }
+
         public string ScoreSave(ScoreSave _scoreSave)
         {
             using (IDbConnection dbConnection = Connection)

@@ -3,12 +3,10 @@
     public class ExeMaturity
     {
         
-            public int ScoreCrdID { get; set; }
-            public int AreasID { get; set; }
-            public int ExcKeyActivityID { get; set; }
-            public int CompID { get; set; }
-            public int ScoreID { get; set; }
-            public int ScoreValue { get; set; }
-        
+        public string AreasDesc { get; set; }
+        public string ExcKeyActivityDesc { get; set; }
+        public string CompValue { get; set; }
+        public string ScoreDesc { get; set; }
+        public decimal ScoreValue { get; set; }
     }
 }
