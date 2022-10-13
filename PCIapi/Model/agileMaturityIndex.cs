@@ -7,6 +7,6 @@
         public string KeyActivitiesDesc { get; set; }
         public string CompValue { get; set; }
         public string ScoreDesc { get; set; }
-        public string ScoreValue { get; set; }
+        public decimal  ScoreValue { get; set; }
     }
 }
