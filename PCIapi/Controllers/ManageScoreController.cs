@@ -50,7 +50,7 @@ namespace PCIapi.Controllers
         
         [HttpGet]
         [Route("ScoresByCeremony")]
-        public IEnumerable<Ceremony> getScoresByCeremonyDetails(int ID)
+        public IEnumerable<Ceremony> GetScoresByCeremonyDetails(int ID)
         {
             return manageScoreController.getScoresByCeremonyDetails(ID);
         }
@@ -62,13 +62,6 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.getScoresByexcmat(ID);
         }
-        [HttpGet]
-        [Route("ScoresByAmi")]
-        public IEnumerable<agileMaturityIndex> getScoresByAmiDetails(int id, int Headingid)
-        {
-            return manageScoreController.getScoresByAmiDetails(id, Headingid);
-        }
-
         [HttpPost]
         [Route("MstScoreSave")]
         public string Insert([FromBody] ScoreSave _scoreSave)

@@ -54,6 +54,25 @@ namespace PCIapi.Model
                 return dbConnection.Query<MstScore>(sQuery, new { _strHeadingID = ID });
             }
         }
+
+        public IEnumerable<ExeMaturity> getScoresByexcmat(int  ID)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select mka.AreasDesc,mea.ExcKeyActivityDesc,mcp.CompValue,msd.ScoreDesc,s.ScoreValue
+                 from MstScore s 
+				 join MstKeyAreas mka on
+				 s.AreasID = mka.AreasID
+                 Join MstExcKeyActivities mea
+                 on s.ExcKeyActivityID=mea.ExcKeyActivityID 				 
+                 Join MstCompliance mcp on
+                 s.CompID=mcp.CompID
+				 join MstScoreCriteria msd on
+				 s.ScoreID=msd.ScoreID where s.AreasID=@_strAreasID";
+                dbConnection.Open();
+                return dbConnection.Query<ExeMaturity>(sQuery, new { _strAreasID = ID });
+            }
+        }
         public IEnumerable<agileMaturityIndex> getScoresByAmiDetails(int id, int Headingid)
         {
             using (IDbConnection dbConnection = Connection)
@@ -74,37 +93,13 @@ namespace PCIapi.Model
                 ami.AreasID = @_strAreasID AND
                 amih.HeadingID = @_strHeadingID";
 
+
+
                 dbConnection.Open();
                 return dbConnection.Query<agileMaturityIndex>(sQuery, new { _strAreasID = id, _strHeadingID = Headingid });
             }
         }
-
-
-
-
-
-
-
-
-
-        public IEnumerable<ExeMaturity> getScoresByexcmat(int  ID)
-        {
-            using (IDbConnection dbConnection = Connection)
-            {
-                string sQuery = @"select mka.AreasDesc,mea.ExcKeyActivityDesc,mcp.CompValue,msd.ScoreDesc,s.ScoreValue
-                 from MstScore s 
-				 join MstKeyAreas mka on
-				 s.AreasID = mka.AreasID
-                 Join MstExcKeyActivities mea
-                 on s.ExcKeyActivityID=mea.ExcKeyActivityID 				 
-                 Join MstCompliance mcp on
-                 s.CompID=mcp.CompID
-				 join MstScoreCriteria msd on
-				 s.ScoreID=msd.ScoreID where s.AreasID=@_strAreasID";
-                dbConnection.Open();
-                return dbConnection.Query<ExeMaturity>(sQuery, new { _strAreasID = ID });
-            }
-        }
+        
 
         public string ScoreSave(ScoreSave _scoreSave)
         {
