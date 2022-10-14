@@ -76,7 +76,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"select mka.AreasDesc,mea.ExcKeyActivityDesc,mcp.CompValue,msd.ScoreDesc,s.ScoreValue
+                string sQuery = @"select mea.ExcKeyActivityID,mea.ExcKeyActivityDesc,msd.ScoreDesc
                  from MstScore s 
 				 join MstKeyAreas mka on
 				 s.AreasID = mka.AreasID
