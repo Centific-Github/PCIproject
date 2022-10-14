@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PCIapi.Model;
 using System.Collections.Generic;
+using static PCIapi.Model.ManageUsers;
 
 namespace PCIapi.Controllers
 {
@@ -82,6 +83,24 @@ namespace PCIapi.Controllers
                 // update statement
             }
             return true;
+        }
+        [HttpGet]
+        [Route("CheckEmailId")]
+        public string CheckEmailId( string CheckEmailId)
+        {
+          
+              return manageUsers.getcheckingEmailID(CheckEmailId);
+             
+               
+        }
+        [HttpGet]
+        [Route("CheckUserName")]
+        public string CheckUserName(string CheckUserName)
+        {
+
+            return manageUsers.getcheckingUserName(CheckUserName);
+
+
         }
 
         [HttpDelete("{id}")]

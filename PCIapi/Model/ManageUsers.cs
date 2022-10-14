@@ -49,21 +49,62 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,Password) values(@_strEmailID,@_strUserName,@_strPassword)";
+                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userType.EmailID, _strUserName = _userType.UserName, _strPassword = _userType.Password });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userType.EmailID, _strUserName = _userType.UserName, _strPassword = _userType.Password, _strFirsttName = _userType.FirstName, _strLastName = _userType.LastName });
                 return affectedRows;
+            }
+        }
+        public string getcheckingEmailID(string emailID)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select 1 from  MstLogintbl  where EmailID = @_strEmailID";
+                dbConnection.Open();
+                var result = dbConnection.Query<int>(sQuery, new { _strEmailID = emailID });
+                if (result.Count() > 0)
+                {
+                    return "EmailId exist";
+                }
+                else
+                {
+                    return "EmailId doesnot exist";
+                }
+
+
+
+
             }
 
         }
-    }
+        public string getcheckingUserName(string username)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select 1 from  MstLogintbl  where UserName = @_strUserName";
+                dbConnection.Open();
+                var result = dbConnection.Query<string>(sQuery, new { _strUserName = username });
+                if (result.Count() > 0)
+                {
+                    return "UserName exist";
+                }
+                else
+                {
+                    return "UserName doesnot exist";
+                }
 
-    public class userType
-    {
-        public int LoginID { get; set; }
-        public string EmailID { get; set; }
-        public string Password { get; set; }
-        public string UserName { get; set; }
-    }
+            }
+        }
 
+        public class userType
+        {
+
+            public string EmailID { get; set; }
+            public string Password { get; set; }
+            public string UserName { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+        }
+
+    }
 }

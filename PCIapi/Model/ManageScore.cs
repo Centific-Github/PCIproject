@@ -122,9 +122,18 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT INTO MstScoreCalculation (ProjectID,PcicmpID,ScoreCrdID,CreatedDate,Date )  values(@_strProjectID,@_strPcicmpID,@_strScoreCrdID,GETDATE(),@_strDate)";
-                dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectID = _scoreSave.ProjectID, _strPcicmpID = _scoreSave.PcicmpID, _strScoreCrdID = _scoreSave.ScoreCrdID, _strDate = _scoreSave.Date });
+                int affectedRows=0;
+                for (int i = 0; i < _scoreSave.ScoreCrdID.Length; i++)
+                {
+
+
+                    string sQuery = @"INSERT INTO TrnsProjectScore (ProjectID,ScoreCrdID,CreatedDate,CreatedOn,CreatedBy )  values(@_strProjectID,@_strScoreCrdID,@_strDate,GETDATE(),1)";
+
+                    dbConnection.Open();
+                     affectedRows += dbConnection.Execute(sQuery, new { _strProjectID = _scoreSave.ProjectID, _strScoreCrdID = _scoreSave.ScoreCrdID[i], _strDate = _scoreSave.Date });
+                    dbConnection.Close();
+                   
+                }
                 if (affectedRows > 0)
                 {
                     return " Saved Data Successful";
@@ -134,7 +143,6 @@ namespace PCIapi.Model
                 {
                     return "Issuing Saving the Data";
                 }
-
             }
         }
         public IEnumerable<Score> GetScoreExc(int activityID, int complianceID)
@@ -142,7 +150,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT  ScoreValue  from MstScore Where ExcKeyActivityID=@_strExcKeyActivityID and CompID=@_strCompID";
+                string sQuery = @"SELECT ScoreCrdID, ScoreValue  from MstScore Where ExcKeyActivityID=@_strExcKeyActivityID and CompID=@_strCompID ";
                 dbConnection.Open();
                 return dbConnection.Query<Score>(sQuery, new { _strExcKeyActivityID = activityID, _strCompID=complianceID });
             }
@@ -153,7 +161,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT  ScoreValue  from MstScore Where KeyActivitiesID=@_strKeyActivitiesID and CompID=@_strCompID";
+                string sQuery = @"SELECT ScoreCrdID, ScoreValue  from MstScore Where KeyActivitiesID=@_strKeyActivitiesID and CompID=@_strCompID";
                 dbConnection.Open();
                 return dbConnection.Query<Score>(sQuery, new { _strKeyActivitiesID = activityID, _strCompID = complianceID });
             }
@@ -166,7 +174,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT  ScoreValue  from MstScore Where ActivityID=@_strActivityID and CompID=@_strCompID";
+                string sQuery = @"SELECT ScoreCrdID, ScoreValue  from MstScore Where ActivityID=@_strActivityID and CompID=@_strCompID";
                 dbConnection.Open();
                 return dbConnection.Query<Score>(sQuery, new { _strActivityID = activityID, _strCompID = complianceID });
             }
