@@ -90,7 +90,7 @@ namespace PCIapi.Model
                 return dbConnection.Query<ExeMaturity>(sQuery, new { _strAreasID = ID });
             }
         }
-        public IEnumerable<agileMaturityIndex> getScoresByAmiDetails(int id, int Headingid)
+        public IEnumerable<agileMaturityIndex> getScoresByAmiDetails(int id)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -107,13 +107,13 @@ namespace PCIapi.Model
                  Join MstScoreCriteria amisd on
                  amis.ScoreID = amisd.ScoreID
                   WHERE              
-                ami.AreasID = @_strAreasID AND
-                amih.HeadingID = @_strHeadingID";
+                ami.AreasID = @_strAreasID AND";
+                
 
 
 
                 dbConnection.Open();
-                return dbConnection.Query<agileMaturityIndex>(sQuery, new { _strAreasID = id, _strHeadingID = Headingid });
+                return dbConnection.Query<agileMaturityIndex>(sQuery, new { _strAreasID = id});
             }
         }
         

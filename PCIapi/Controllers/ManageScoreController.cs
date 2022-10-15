@@ -56,9 +56,9 @@ namespace PCIapi.Controllers
         }
         [HttpGet]
         [Route("ScoresByAmi")]
-        public IEnumerable<agileMaturityIndex> getScoresByAmiDetails(int id, int Headingid)
+        public IEnumerable<agileMaturityIndex> getScoresByAmiDetails(int id)
         {
-            return manageScoreController.getScoresByAmiDetails(id, Headingid);
+            return manageScoreController.getScoresByAmiDetails(id);
         }
 
 
