@@ -106,6 +106,9 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.GetScoreceremone(activityID, complianceID);
         }
+        
+
+
     }
 }
 

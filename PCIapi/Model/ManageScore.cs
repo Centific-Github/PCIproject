@@ -107,7 +107,7 @@ namespace PCIapi.Model
                  Join MstScoreCriteria amisd on
                  amis.ScoreID = amisd.ScoreID
                   WHERE              
-                ami.AreasID = @_strAreasID AND";
+                ami.AreasID = @_strAreasID ";
                 
 
 
@@ -182,9 +182,12 @@ namespace PCIapi.Model
 
 
         }
+        
+     
+            }
+        }
 
 
+    
 
-    }
-}
 
