@@ -31,7 +31,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, Password, UserName from MstLogintbl where LoginID=@_LoginId";
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,FirstName,LastName,IsBlocked from MstLogintbl where LoginID=@_LoginId";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery, new { _LoginId = id }).FirstOrDefault();
             }
@@ -104,6 +104,7 @@ namespace PCIapi.Model
             public string UserName { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
+            public int IsBlocked { get; set; }
         }
 
     }

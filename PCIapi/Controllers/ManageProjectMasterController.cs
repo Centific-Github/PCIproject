@@ -21,12 +21,37 @@ namespace PCIapi.Controllers
         {
             return manageProjectMaster.getProjectDetails();
         }
+        [HttpGet]
+        [Route("CheckProjectCode")]
+        public string CheckProjectCode(string CheckProjectCode)
+        {
+
+
+
+            return manageProjectMaster.getcheckingProjectCode(CheckProjectCode);
+
+
+
+        }
+        [HttpGet]
+        [Route("CheckProjectName")]
+        public string CheckProjectName(string CheckProjectName)
+        {
+
+
+
+            return manageProjectMaster.getcheckingProjectNmae(CheckProjectName);
+
+
+
+        }
 
         [HttpGet("{id}")]
         public IEnumerable<projectMaster> get(int id)
         {
             return manageProjectMaster.getProjectDetails();
         }
+
         [HttpPost]
         [Route("insert")]
         public int Insert([FromBody] projectMaster _projectMaster)

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace PCIapi.Model
 {
@@ -51,6 +52,47 @@ namespace PCIapi.Model
             }
 
         }
+        public string getcheckingProjectCode(string ProjectCode)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select 1 from  MstProjectMaster  where ProjectCode = @_strProjectCode";
+                dbConnection.Open();
+                var result = dbConnection.Query<string>(sQuery, new { _strProjectCode = ProjectCode });
+                if (result.Count() > 0)
+                {
+                    return "ProjectCode exist";
+                }
+                else
+                {
+                    return "ProjectCode doesnot exist";
+                }
+
+
+
+            }
+        }
+        public string getcheckingProjectNmae(string ProjectName)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select 1 from  MstProjectMaster  where ProjectName = @_strProjectName";
+                dbConnection.Open();
+                var result = dbConnection.Query<string>(sQuery, new { _strProjectName = ProjectName });
+                if (result.Count() > 0)
+                {
+                    return "ProjectName exist";
+                }
+                else
+                {
+                    return "ProjectName doesnot exist";
+                }
+
+
+
+            }
+        }
+
 
 
     }
