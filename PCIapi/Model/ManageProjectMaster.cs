@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -42,9 +43,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT INTO MstProjectMaster (ProjectCode,ProjectName,ProjectManager )  values(@_strProjectCode,@_strProjectName,@_strProjectManager)";
+                string sQuery = @"INSERT INTO MstProjectMaster (ProjectCode,ProjectName,ProjectManager,StartDate,EndDate )  values(@_strProjectCode,@_strProjectName,@_strProjectManager,GETDATE(),@_strEndDate)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager, _strEndDate = _projectMaster.EndDate });
                 return affectedRows;
 
             }
@@ -59,5 +60,6 @@ namespace PCIapi.Model
         public string ProjectCode { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
+        public DateTime  EndDate { get; set; }
     }
 }
