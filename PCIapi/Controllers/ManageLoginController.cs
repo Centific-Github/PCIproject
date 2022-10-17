@@ -104,7 +104,24 @@ namespace PCIapi.Controllers
             else
                 return "Invalid Model";
         }
-        
+        [HttpPut]
+        [Route("IsBlocked")]
+        public string IsBlocked([FromBody] UserEmailID userUnblocked)
+        {
+            if (ModelState.IsValid)
+            {
+                if (userUnblocked == null)
+                {
+                    return "Blocking successfull";
+                }
+                else
+                {
+                    return manageLogin.getUserIsblockedByEmailID(userUnblocked.EmailID);
+                }
+            }
+            else
+                return "Blocked unsuccessful";
+        }
         [HttpPut]
         [Route("UnBlocked")]
         public string UnBlocked([FromBody] UserEmailID userUnblocked)

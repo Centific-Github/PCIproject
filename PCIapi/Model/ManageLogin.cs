@@ -71,6 +71,22 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
             }
 
         }
+        public string getUserIsblockedByEmailID(string emailID)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"UPDATE MstLogintbl set IsBlocked = 1 where EmailID = @_strEmailID";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = emailID });
+                if (affectedRows > 0)
+                    return "Blocking successfull";
+                else
+                    return " Blocking unsuccessfull ";
+
+
+            }
+
+        }
 
         public string getUserUnblockedByEmailID(string emailID)
         {
