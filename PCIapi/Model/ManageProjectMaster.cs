@@ -98,7 +98,7 @@ namespace PCIapi.Model
     }
     public class projectMaster
     {
-        public int ProjectID { get; set; }
+       
         public string ProjectCode { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
