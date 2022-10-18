@@ -127,10 +127,10 @@ namespace PCIapi.Model
                 {
 
 
-                    string sQuery = @"INSERT INTO TrnsProjectScore (ProjectID,ScoreCrdID,CreatedDate,CreatedOn,CreatedBy )  values(@_strProjectID,@_strScoreCrdID,@_strDate,GETDATE(),1)";
+                    string sQuery = @"INSERT INTO TrnsProjectScore (ProjectID,ScoreCrdID,CreatedDate,CreatedOn,CreatedBy,SaveType )  values(@_strProjectID,@_strScoreCrdID,@_strDate,GETDATE(),1,@_strSaveType)";
 
                     dbConnection.Open();
-                     affectedRows += dbConnection.Execute(sQuery, new { _strProjectID = _scoreSave.ProjectID, _strScoreCrdID = _scoreSave.ScoreCrdID[i], _strDate = _scoreSave.Date });
+                     affectedRows += dbConnection.Execute(sQuery, new { _strProjectID = _scoreSave.ProjectID, _strScoreCrdID = _scoreSave.ScoreCrdID[i], _strDate = _scoreSave.Date, _strSaveType = _scoreSave.SaveType });
                     dbConnection.Close();
                    
                 }
