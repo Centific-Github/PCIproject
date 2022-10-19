@@ -54,7 +54,7 @@ namespace PCIapi.Controllers
 
         [HttpPost]
         [Route("insert")]
-        public int Insert([FromBody] projectMaster _projectMaster)
+        public int Insert([FromBody] projectMasterDto _projectMaster)
         {
             if (ModelState.IsValid)
             {

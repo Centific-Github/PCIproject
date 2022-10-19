@@ -35,12 +35,12 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager FROM MstProjectMaster WHERE ProjectCode=@_strProjectCode AND ProjectName=@_strProjectName AND ProjectManager=@_strProjectManager ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate  FROM MstProjectMaster WHERE ProjectCode=@_strProjectCode AND ProjectName=@_strProjectName AND ProjectManager=@_strProjectManager ";
                 dbConnection.Open();
-                return dbConnection.Query<projectMaster>(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager });
+                return dbConnection.Query<projectMaster>(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager, _strStartDate = _projectMaster.StartDate, _strEndDate = _projectMaster.EndDate });
             }
         }
-        public int insertProjectDetails(projectMaster _projectMaster)
+        public int insertProjectDetails(projectMasterDto _projectMaster)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -96,7 +96,7 @@ namespace PCIapi.Model
 
 
     }
-    public class projectMaster
+    public class projectMasterDto
     {
        
         public string ProjectCode { get; set; }
@@ -105,4 +105,14 @@ namespace PCIapi.Model
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
+    public class projectMaster
+    {
+        public int ProjectID { get; set; }
+        public string ProjectCode { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+    }
+
 }

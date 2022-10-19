@@ -35,6 +35,7 @@ namespace PCIapi.Controllers
         {
             return manageUsers.getUsers(id);
         }
+        [Authorize]
         [HttpPost]
         public userType Post([FromBody] userType _userType)
         {
@@ -54,6 +55,7 @@ namespace PCIapi.Controllers
             else
                 return null;
         }
+        [Authorize]
         [HttpPost]
         [Route("insert")]
         public int Insert([FromBody] userType _userType)
@@ -74,6 +76,7 @@ namespace PCIapi.Controllers
             else
                 return 0;
         }
+        [Authorize]
 
         [HttpPut("{id}")]
         public bool Put(int id, [FromBody] userType _userType)
@@ -84,6 +87,7 @@ namespace PCIapi.Controllers
             }
             return true;
         }
+        [Authorize]
         [HttpGet]
         [Route("CheckEmailId")]
         public string CheckEmailId( string CheckEmailId)
@@ -93,7 +97,9 @@ namespace PCIapi.Controllers
              
                
         }
+        [Authorize]
         [HttpGet]
+
         [Route("CheckUserName")]
         public string CheckUserName(string CheckUserName)
         {
@@ -102,7 +108,7 @@ namespace PCIapi.Controllers
 
 
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {

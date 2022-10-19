@@ -22,7 +22,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, Password, UserName from MstLogintbl";
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,FirstName,LastName,IsBlocked from MstLogintbl";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery);
             }
