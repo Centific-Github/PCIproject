@@ -17,7 +17,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager FROM MstProjectMaster ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate FROM MstProjectMaster ";
                 dbConnection.Open();
                 return dbConnection.Query<projectMaster>(sQuery);
             }
@@ -26,7 +26,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectNmae,ProjectManager FROM MstProjectMaster WHERE ProjectID=@_Projectid ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectNmae,ProjectManager,StartDate,EndDate FROM MstProjectMaster WHERE ProjectID=@_Projectid ";
                 dbConnection.Open();
                 return dbConnection.Query<projectMaster>(sQuery, new { _Projectid = id });
             }
