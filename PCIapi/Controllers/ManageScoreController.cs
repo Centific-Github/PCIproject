@@ -106,7 +106,12 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.GetScoreceremone(activityID, complianceID);
         }
-        
+        [HttpGet]
+        [Route("Projectname")]
+        public IEnumerable<ScoreType> getAuditListDetails(string ProjectName)
+        {
+            return manageScoreController.getAuditListDetails(ProjectName);
+        }
 
 
     }

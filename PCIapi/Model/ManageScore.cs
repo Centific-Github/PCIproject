@@ -72,7 +72,7 @@ namespace PCIapi.Model
             }
         }
 
-        public IEnumerable<ExeMaturity> getScoresByexcmat(int  ID)
+        public IEnumerable<ExeMaturity> getScoresByexcmat(int ID)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -108,21 +108,21 @@ namespace PCIapi.Model
                  amis.ScoreID = amisd.ScoreID
                   WHERE              
                 ami.AreasID = @_strAreasID ";
-                
+
 
 
 
                 dbConnection.Open();
-                return dbConnection.Query<agileMaturityIndex>(sQuery, new { _strAreasID = id});
+                return dbConnection.Query<agileMaturityIndex>(sQuery, new { _strAreasID = id });
             }
         }
-        
+
 
         public string ScoreSave(ScoreSave _scoreSave)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                int affectedRows=0;
+                int affectedRows = 0;
                 for (int i = 0; i < _scoreSave.ScoreCrdID.Length; i++)
                 {
 
@@ -130,9 +130,9 @@ namespace PCIapi.Model
                     string sQuery = @"INSERT INTO TrnsProjectScore (ProjectID,ScoreCrdID,CreatedDate,CreatedOn,CreatedBy,SaveType )  values(@_strProjectID,@_strScoreCrdID,@_strDate,GETDATE(),1,@_strSaveType)";
 
                     dbConnection.Open();
-                     affectedRows += dbConnection.Execute(sQuery, new { _strProjectID = _scoreSave.ProjectID, _strScoreCrdID = _scoreSave.ScoreCrdID[i], _strDate = _scoreSave.Date, _strSaveType = _scoreSave.SaveType });
+                    affectedRows += dbConnection.Execute(sQuery, new { _strProjectID = _scoreSave.ProjectID, _strScoreCrdID = _scoreSave.ScoreCrdID[i], _strDate = _scoreSave.Date, _strSaveType = _scoreSave.SaveType });
                     dbConnection.Close();
-                   
+
                 }
                 if (affectedRows > 0)
                 {
@@ -152,7 +152,7 @@ namespace PCIapi.Model
             {
                 string sQuery = @"SELECT ScoreCrdID, ScoreValue  from MstScore Where ExcKeyActivityID=@_strExcKeyActivityID and CompID=@_strCompID ";
                 dbConnection.Open();
-                return dbConnection.Query<Score>(sQuery, new { _strExcKeyActivityID = activityID, _strCompID=complianceID });
+                return dbConnection.Query<Score>(sQuery, new { _strExcKeyActivityID = activityID, _strCompID = complianceID });
             }
 
         }
@@ -182,12 +182,34 @@ namespace PCIapi.Model
 
 
         }
-        
-     
+        public IEnumerable<ScoreType> getAuditListDetails(string ProjectName)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT tps.CreatedDate,pm.ProjectManager,tps.SaveType
+                                FROM [dbo].[MstProjectMaster] pm
+                                JOIN [dbo].[TrnsProjectScore] tps
+                                ON pm.ProjectID=tps.ProjectID
+                                GROUP BY tps.CreatedDate,pm.ProjectManager,tps.SaveType
+                                ORDER BY tps.CreatedDate";
+                dbConnection.Open();
+                return dbConnection.Query<ScoreType>(sQuery, new { _strprojectName = ProjectName });
             }
         }
 
+        
+    }
+    public class ScoreType
+    {
 
-    
+        public DateTime CreatedDate { get; set; }
+        public string ProjectManager { get; set; }
+        public string SaveType { get; set; }
+
+    }
+}
+
+
+
 
 
