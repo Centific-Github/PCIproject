@@ -190,6 +190,7 @@ namespace PCIapi.Model
                                 FROM [dbo].[MstProjectMaster] pm
                                 JOIN [dbo].[TrnsProjectScore] tps
                                 ON pm.ProjectID=tps.ProjectID
+                                WHERE pm.ProjectName=@_strprojectName                                
                                 GROUP BY tps.CreatedDate,pm.ProjectManager,tps.SaveType
                                 ORDER BY tps.CreatedDate";
                 dbConnection.Open();
