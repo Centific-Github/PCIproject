@@ -125,14 +125,14 @@ namespace PCIapi.Model
                 int affectedRows = 0;
                 for (int i = 0; i < _scoreSave.ScoreCrdID.Length; i++)
                 {
-
-
-                    string sQuery = @"INSERT INTO TrnsProjectScore (ProjectID,ScoreCrdID,CreatedDate,CreatedOn,CreatedBy,SaveType )  values(@_strProjectID,@_strScoreCrdID,@_strDate,GETDATE(),1,@_strSaveType)";
-
+                    var p = new DynamicParameters();
+                    p.Add("ProjectID", _scoreSave.ProjectID);
+                    p.Add("saveType", _scoreSave.SaveType);
+                    p.Add("ScoreCrdID", _scoreSave.ScoreCrdID[i]);
+                    p.Add("CreatedDate", _scoreSave.Date);
                     dbConnection.Open();
-                    affectedRows += dbConnection.Execute(sQuery, new { _strProjectID = _scoreSave.ProjectID, _strScoreCrdID = _scoreSave.ScoreCrdID[i], _strDate = _scoreSave.Date, _strSaveType = _scoreSave.SaveType });
+                    affectedRows += dbConnection.Execute("sp_MstScoreSaveandUpdate", p, commandType: CommandType.StoredProcedure);
                     dbConnection.Close();
-
                 }
                 if (affectedRows > 0)
                 {
