@@ -55,20 +55,22 @@ namespace PCIapi.Model
                 return dbConnection.Query<MstScore>(sQuery, new { _strHeadingID = ID });
             }
         }
-        public IEnumerable<Ceremony> getScoresByCeremonyDetails(int ID,int ActivityID)
+        public IEnumerable<Ceremony> getScoresByCeremonyDetails(int ID)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"select mc.CeremDesc,mga.ActivityDesc,mcp.CompValue,s.ScoreValue
+                string sQuery = @"select mc.CeremDesc,mgai.ActivityID,mga.ActivityDesc,mcp.CompValue,s.ScoreValue
                  from MstScore s  
                  Join MstGovKeyActivity mga
                  on s.ActivityID=mga.ActivityID
+                 Join MstGovKeyActivity mgai
+                 on s.ActivityID=mgai.ActivityID
                  Join MstCeremony mc
                  on s.CeremID=mc.CeremID
                  Join MstCompliance mcp on
                  s.CompID=mcp.CompID";
                 dbConnection.Open();
-                return dbConnection.Query<Ceremony>(sQuery, new { _strCeremID = ID , _strActivityID = ActivityID });
+                return dbConnection.Query<Ceremony>(sQuery, new { _strCeremID = ID  });
             }
         }
 

@@ -50,9 +50,9 @@ namespace PCIapi.Controllers
 
         [HttpGet]
         [Route("ScoresByCeremony")]
-        public IEnumerable<Ceremony> GetScoresByCeremonyDetails(int ID,int ActivityID)
+        public IEnumerable<Ceremony> GetScoresByCeremonyDetails(int ID)
         {
-            return manageScoreController.getScoresByCeremonyDetails(ID, ActivityID);
+            return manageScoreController.getScoresByCeremonyDetails(ID);
         }
         [HttpGet]
         [Route("ScoresByAmi")]
