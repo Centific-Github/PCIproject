@@ -55,7 +55,7 @@ namespace PCIapi.Model
                 return dbConnection.Query<MstScore>(sQuery, new { _strHeadingID = ID });
             }
         }
-        public IEnumerable<Ceremony> getScoresByCeremonyDetails(int ID)
+        public IEnumerable<Ceremony> getScoresByCeremonyDetails(int ID,int ActivityID)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -68,7 +68,7 @@ namespace PCIapi.Model
                  Join MstCompliance mcp on
                  s.CompID=mcp.CompID";
                 dbConnection.Open();
-                return dbConnection.Query<Ceremony>(sQuery, new { _strCeremID = ID });
+                return dbConnection.Query<Ceremony>(sQuery, new { _strCeremID = ID , _strActivityID = ActivityID });
             }
         }
 
