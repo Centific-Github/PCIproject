@@ -59,11 +59,14 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT CeremID AS CeremID,ActivityID  AS ActivityID ,ActivityDesc as  ActivityDesc
-                FROM MstCeremony
-                CROSS JOIN MstGovKeyActivity
-                Where
-                 CeremID = @_strCeremID   ";
+                string sQuery = @"select distinct mga.ActivityID,mga.ActivityDesc
+                 from MstScore s  
+                 Join MstGovKeyActivity mga
+                 on s.ActivityID=mga.ActivityID
+                 Join MstCeremony mc
+                 on s.CeremID=mc.CeremID
+                 Where
+                s. CeremID = @_strCeremID   ";
                 dbConnection.Open();
                 return dbConnection.Query<Ceremony>(sQuery, new { _strCeremID = ID });
             }
@@ -73,7 +76,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"select mea.ExcKeyActivityID,mea.ExcKeyActivityDesc
+                string sQuery = @"select  distinct mea.ExcKeyActivityID,mea.ExcKeyActivityDesc
                  from MstScore s 
 				 join MstKeyAreas mka on
 				 s.AreasID = mka.AreasID
@@ -88,20 +91,14 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"select ami.AreasDesc,amih.HeadingDesc,amid.KeyActivitiesDesc
+                string sQuery = @"select  distinct amid.KeyActivitiesID,amid.KeyActivitiesDesc
                  from MstScore amis  
                  Join MstKeyAreas ami
                  on amis.AreasID=ami.AreasID
-                 Join MstAglMtyHeading amih
-                 on amis.HeadingID=amih.HeadingID
                  Join MstAglMtyKeyActivities amid
                  on amis.KeyActivitiesID=amid.KeyActivitiesID
                   WHERE              
                 ami.AreasID = @_strAreasID ";
-
-
-
-
                 dbConnection.Open();
                 return dbConnection.Query<agileMaturityIndex>(sQuery, new { _strAreasID = id });
             }
