@@ -212,8 +212,8 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
     public class LatestAuditDetails
     {
         public int AreasID { get; set; }
-        public string ExcKeyActivityDesc { get; set; }
-        public int ComplianceID { get; set; }
+        public int ExcKeyActivityID { get; set; }
+        public int CompID { get; set; }
         public decimal ScoreValue { get; set; }
 
 
