@@ -112,6 +112,12 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.getAuditListDetails(ProjectName);
         }
+        [HttpGet]
+        [Route("LatestAuditlist")]
+        public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID)
+        {
+            return manageScoreController.getLatestauditdetails(ProjectID, SaveType, AreasID);
+        }
 
 
     }

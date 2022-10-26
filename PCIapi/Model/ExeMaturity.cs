@@ -5,6 +5,6 @@
 
         public int ExcKeyActivityID { get; set; }       
         public string ExcKeyActivityDesc { get; set; }       
-        public string ScoreDesc { get; set; }      
+         
     }
 }

@@ -59,14 +59,12 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"select mc.CeremDesc,mga.ActivityID,mga.ActivityDesc,mcp.CompValue,s.ScoreValue
+                string sQuery = @"select mc.CeremDesc,mga.ActivityID,mga.ActivityDesc
                  from MstScore s  
                  Join MstGovKeyActivity mga
                  on s.ActivityID=mga.ActivityID
                  Join MstCeremony mc
-                 on s.CeremID=mc.CeremID
-                 Join MstCompliance mcp on
-                 s.CompID=mcp.CompID ";
+                 on s.CeremID=mc.CeremID";
                 dbConnection.Open();
                 return dbConnection.Query<Ceremony>(sQuery, new { _strCeremID = ID });
             }
@@ -76,16 +74,13 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"select mea.ExcKeyActivityID,mea.ExcKeyActivityDesc,msd.ScoreDesc
+                string sQuery = @"select mea.ExcKeyActivityID,mea.ExcKeyActivityDesc
                  from MstScore s 
 				 join MstKeyAreas mka on
 				 s.AreasID = mka.AreasID
                  Join MstExcKeyActivities mea
                  on s.ExcKeyActivityID=mea.ExcKeyActivityID 				 
-                 Join MstCompliance mcp on
-                 s.CompID=mcp.CompID
-				 join MstScoreCriteria msd on
-				 s.ScoreID=msd.ScoreID where s.AreasID=@_strAreasID";
+                 where s.AreasID=@_strAreasID";
                 dbConnection.Open();
                 return dbConnection.Query<ExeMaturity>(sQuery, new { _strAreasID = ID });
             }
@@ -94,7 +89,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"select ami.AreasDesc,amih.HeadingDesc,amid.KeyActivitiesDesc,amicp.CompValue,amisd.ScoreDesc,amis.ScoreValue
+                string sQuery = @"select ami.AreasDesc,amih.HeadingDesc,amid.KeyActivitiesDesc
                  from MstScore amis  
                  Join MstKeyAreas ami
                  on amis.AreasID=ami.AreasID
@@ -102,10 +97,6 @@ namespace PCIapi.Model
                  on amis.HeadingID=amih.HeadingID
                  Join MstAglMtyKeyActivities amid
                  on amis.KeyActivitiesID=amid.KeyActivitiesID
-                 Join MstCompliance amicp on
-                 amis.CompID=amicp.CompID
-                 Join MstScoreCriteria amisd on
-                 amis.ScoreID = amisd.ScoreID
                   WHERE              
                 ami.AreasID = @_strAreasID ";
 
@@ -197,8 +188,17 @@ namespace PCIapi.Model
                 return dbConnection.Query<ScoreType>(sQuery, new { _strprojectName = ProjectName });
             }
         }
+       
+public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID)
+        {
+            using (IDbConnection dbConnection = Connection) { var p = new DynamicParameters(); p.Add("@ProjectID", ProjectID); p.Add("@SaveType", SaveType); p.Add("@AreasID", AreasID); dbConnection.Open(); return dbConnection.Query<LatestAuditDetails>("GetAuditDetailBySaveDraft", p, commandType: CommandType.StoredProcedure); 
+            }
 
-        
+        }
+
+
+
+
     }
     public class ScoreType
     {
@@ -206,6 +206,16 @@ namespace PCIapi.Model
         public DateTime CreatedDate { get; set; }
         public string ProjectManager { get; set; }
         public string SaveType { get; set; }
+
+    }
+    public class LatestAuditDetails
+    {
+        public int AreasID { get; set; }
+        public string ExcKeyActivityDesc { get; set; }
+        public int ComplianceID { get; set; }
+        public decimal ScoreValue { get; set; }
+
+
 
     }
 }
