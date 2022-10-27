@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PCIapi.Model;
+using System;
 using System.Collections.Generic;
 
 
@@ -118,7 +119,12 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.getLatestauditdetails(ProjectID, SaveType, AreasID);
         }
-
+        [HttpGet]
+        [Route("GetShowdetails")]
+        public IEnumerable<Showdetails> GetShowdetails(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
+        {
+            return manageScoreController.GetShowDetails(ProjectID, CreatedDate, SaveType, PcicmpID);
+        }
 
     }
 }

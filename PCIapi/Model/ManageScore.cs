@@ -173,12 +173,12 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT tps.CreatedDate,pm.ProjectManager,tps.SaveType
+                string sQuery = @"SELECT tps.CreatedDate,pm.ProjectManager,tps.SaveType,pm.ProjectID
                                 FROM [dbo].[MstProjectMaster] pm
                                 JOIN [dbo].[TrnsProjectScore] tps
                                 ON pm.ProjectID=tps.ProjectID
                                 WHERE pm.ProjectName=@_strprojectName                                
-                                GROUP BY tps.CreatedDate,pm.ProjectManager,tps.SaveType
+                                GROUP BY tps.CreatedDate,pm.ProjectManager,tps.SaveType,pm.ProjectID
                                 ORDER BY tps.CreatedDate";
                 dbConnection.Open();
                 return dbConnection.Query<ScoreType>(sQuery, new { _strprojectName = ProjectName });
@@ -198,7 +198,25 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
             }
 
         }
+        public IEnumerable<Showdetails> GetShowDetails(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
 
+
+
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@ProjectID", ProjectID);
+                p.Add("@SaveType", SaveType);
+                p.Add("@CreatedDate", CreatedDate);
+                p.Add("@PcicmpID", PcicmpID);
+                dbConnection.Open();
+                return dbConnection.Query<Showdetails>("sp_showDetails", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+
+        
 
 
 

@@ -7,4 +7,11 @@
         public string ExcKeyActivityDesc { get; set; }       
          
     }
+    public class Showdetails
+    {
+        public string AreasDesc { get; set; }
+        public string ActivityDesc { get; set; }
+        public string CompValue { get; set; }
+        public int ScoreValue { get; set; }
+    }
 }
