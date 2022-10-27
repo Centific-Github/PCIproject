@@ -59,12 +59,11 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"select mc.CeremDesc,mga.ActivityID,mga.ActivityDesc
-                 from MstScore s  
-                 Join MstGovKeyActivity mga
-                 on s.ActivityID=mga.ActivityID
-                 Join MstCeremony mc
-                 on s.CeremID=mc.CeremID";
+                string sQuery = @"SELECT CeremID AS CeremID,ActivityID  AS ActivityID ,ActivityDesc as  ActivityDesc
+                FROM MstCeremony
+                CROSS JOIN MstGovKeyActivity
+                Where
+                 CeremID = @_strCeremID   ";
                 dbConnection.Open();
                 return dbConnection.Query<Ceremony>(sQuery, new { _strCeremID = ID });
             }
@@ -191,15 +190,12 @@ namespace PCIapi.Model
        
 public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID)
         {
-            using (IDbConnection dbConnection = Connection) 
-            { 
-                var p = new DynamicParameters();
-                p.Add("@ProjectID", ProjectID); 
+            using (IDbConnection dbConnection = Connection) { var p = new DynamicParameters();
+                p.Add("@ProjectID", ProjectID);
                 p.Add("@SaveType", SaveType);
                 p.Add("@AreasID", AreasID);
-                dbConnection.Open(); 
-                var result = dbConnection.Query<LatestAuditDetails>("GetAuditDetailBySaveDraft", p, commandType: CommandType.StoredProcedure);
-                return result;
+                dbConnection.Open();
+                return dbConnection.Query<LatestAuditDetails>("GetAuditDetailBySaveDraft", p, commandType: CommandType.StoredProcedure); 
             }
 
         }
