@@ -187,7 +187,9 @@ namespace PCIapi.Model
        
 public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID)
         {
-            using (IDbConnection dbConnection = Connection) { var p = new DynamicParameters();
+            using (IDbConnection dbConnection = Connection) 
+            {
+                var p = new DynamicParameters();
                 p.Add("@ProjectID", ProjectID);
                 p.Add("@SaveType", SaveType);
                 p.Add("@AreasID", AreasID);
