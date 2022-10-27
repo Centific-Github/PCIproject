@@ -35,7 +35,7 @@ namespace PCIapi.Controllers
         {
             return manageUsers.getUsers(id);
         }
-        [Authorize]
+        
         [HttpPost]
         public userType Post([FromBody] userType _userType)
         {
@@ -67,7 +67,7 @@ namespace PCIapi.Controllers
             }
             return true;
         }
-        [Authorize]
+        
         [HttpGet]
         [Route("CheckEmailId")]
         public string CheckEmailId( string CheckEmailId)
@@ -77,7 +77,7 @@ namespace PCIapi.Controllers
              
                
         }
-        [Authorize]
+        
         [HttpGet]
 
         [Route("CheckUserName")]
