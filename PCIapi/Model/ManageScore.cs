@@ -191,7 +191,15 @@ namespace PCIapi.Model
        
 public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID)
         {
-            using (IDbConnection dbConnection = Connection) { var p = new DynamicParameters(); p.Add("@ProjectID", ProjectID); p.Add("@SaveType", SaveType); p.Add("@AreasID", AreasID); dbConnection.Open(); return dbConnection.Query<LatestAuditDetails>("GetAuditDetailBySaveDraft", p, commandType: CommandType.StoredProcedure); 
+            using (IDbConnection dbConnection = Connection) 
+            { 
+                var p = new DynamicParameters();
+                p.Add("@ProjectID", ProjectID); 
+                p.Add("@SaveType", SaveType);
+                p.Add("@AreasID", AreasID);
+                dbConnection.Open(); 
+                var result = dbConnection.Query<LatestAuditDetails>("GetAuditDetailBySaveDraft", p, commandType: CommandType.StoredProcedure);
+                return result;
             }
 
         }
@@ -211,8 +219,8 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
     public class LatestAuditDetails
     {
         public int AreasID { get; set; }
-        public string ExcKeyActivityDesc { get; set; }
-        public int ComplianceID { get; set; }
+        public int ExcKeyActivityID { get; set; }
+        public int CompID { get; set; }
         public decimal ScoreValue { get; set; }
 
 
