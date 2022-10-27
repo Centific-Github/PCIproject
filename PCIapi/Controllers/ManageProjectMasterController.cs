@@ -73,7 +73,14 @@ namespace PCIapi.Controllers
                 return 0;
         }
 
+        [HttpPut]
+        [Route("updatemanagedetails")]
+        public string put([FromBody] projectMasterUpadteDto projectMaster)
+        {
+            return manageProjectMaster.updateProjectmanager(projectMaster.ProjectID, projectMaster.ProjectName, projectMaster.ProjectManager);
 
+
+        }
     }
 }
   

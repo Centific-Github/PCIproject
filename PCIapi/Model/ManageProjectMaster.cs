@@ -92,6 +92,25 @@ namespace PCIapi.Model
 
             }
         }
+        public string updateProjectmanager(int id, string projectName, string projectManager)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"update MstProjectMaster set ProjectName=@_strProjectName,ProjectManager=@_strProjectManager where ProjectID =@_strProjectID";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectName = projectName, _strProjectManager = projectManager, _strProjectID = id });
+                if (affectedRows ==1)
+                {
+                    return "Updated Successfully";
+                }
+                else
+                {
+                    return " Updated Unsuccessfully ";
+                }
+
+            }
+
+        }
 
 
 
@@ -113,6 +132,15 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+    }
+    public class projectMasterUpadteDto
+    {
+
+
+
+        public int ProjectID { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
     }
 
 }
