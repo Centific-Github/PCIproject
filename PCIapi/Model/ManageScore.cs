@@ -223,7 +223,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
     }
     public class ScoreType
     {
-
+        public int ProjectID { get; set; }
         public DateTime CreatedDate { get; set; }
         public string ProjectManager { get; set; }
         public string SaveType { get; set; }
