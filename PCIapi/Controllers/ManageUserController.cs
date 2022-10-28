@@ -77,20 +77,20 @@ namespace PCIapi.Controllers
             else
                 return 0;
         }
-        
 
-        //[Authorize]
 
-        //[HttpPut("{id}")]
-        //public bool Put(int id, [FromBody] userType _userType)
-        //{
-        //    if (manageUsers.getUsers(_userType) == null)
-        //    {
-        //        // update statement
-        //    }
-        //    return true;
-        //}
-        
+        [Authorize]
+
+        [HttpPut("{id}")]
+        public bool Put(int id, [FromBody] userType _userType)
+        {
+            if (manageUsers.getUsers(_userType) == null)
+            {
+                // update statement
+            }
+            return true;
+        }
+
         [HttpGet]
         [Route("CheckEmailId")]
         public string CheckEmailId( string CheckEmailId)
