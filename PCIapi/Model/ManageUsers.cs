@@ -31,27 +31,27 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,FirstName,LastName from MstLogintbl where LoginID=@_LoginId";
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,FirstName,LastName,IsBlocked from MstLogintbl where LoginID=@_LoginId";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery, new { _LoginId = id }).FirstOrDefault();
             }
         }
-        public userType getUsers(userType _userType)
+        public userTypeDTO getUsers(userType _userType)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sQuery = @"SELECT LoginID, EmailID, UserName from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
                 dbConnection.Open();
-                return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
+                return dbConnection.Query<userTypeDTO>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
         }
-        public int insertUsers(userType _userType)
+        public int insertUsers(userTypeDTO _userTypeDTO)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userType.EmailID, _strUserName = _userType.UserName, _strPassword = _userType.Password, _strFirsttName = _userType.FirstName, _strLastName = _userType.LastName });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName });
                 return affectedRows;
             }
         }
@@ -104,7 +104,22 @@ namespace PCIapi.Model
             public string UserName { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
-            
+            public int IsBlocked { get; set; }
+
+
+        }
+        public class userTypeDTO
+        {
+
+            public string EmailID { get; set; }
+            public string Password { get; set; }
+            public string UserName { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+           
+          
+
+
         }
 
     }

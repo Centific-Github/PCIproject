@@ -35,38 +35,61 @@ namespace PCIapi.Controllers
         {
             return manageUsers.getUsers(id);
         }
-        
+
+        //[HttpPost]
+        //public userType post([FromBody] userType _userType)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (_userType == null)
+        //        {
+        //            userType ouserType = new userType();
+        //            return ouserType;
+        //        }
+        //        else
+        //        {
+        //            _userType = manageUsers.getUsers(_userType);
+        //            return userType;
+        //        }
+        //    }
+        //    else
+        //        return null;
+        //}
         [HttpPost]
-        public userType Post([FromBody] userType _userType)
+        [Route("insert")]
+        public int Insert([FromBody] userTypeDTO _userTypeDto)
         {
             if (ModelState.IsValid)
             {
-                if (_userType == null)
+                if (_userTypeDto == null)
                 {
-                    userType ouserType = new userType();
-                    return ouserType;
+
+
+
+                    return 0;
                 }
                 else
                 {
-                    _userType = manageUsers.getUsers(_userType);
-                    return _userType;
+                    var affectedRows = manageUsers.insertUsers(_userTypeDto);
+                    return affectedRows;
                 }
             }
             else
-                return null;
+                return 0;
         }
         
-        [Authorize]
 
-        [HttpPut("{id}")]
-        public bool Put(int id, [FromBody] userType _userType)
-        {
-            if (manageUsers.getUsers(_userType) == null)
-            {
-                // update statement
-            }
-            return true;
-        }
+        //[Authorize]
+
+        //[HttpPut("{id}")]
+        //public bool Put(int id, [FromBody] userType _userType)
+        //{
+        //    if (manageUsers.getUsers(_userType) == null)
+        //    {
+        //        // update statement
+        //    }
+        //    return true;
+        //}
         
         [HttpGet]
         [Route("CheckEmailId")]
