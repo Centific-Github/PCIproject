@@ -23,38 +23,39 @@ namespace PCIapi.Controllers
             _configuration = configuration;
             manageUsers = new ManageUsers(_configuration);
         }
-        [Authorize]
+       
 
         [HttpGet]
         public IEnumerable<userType> get()
         {
             return manageUsers.getUsers();
         }
+       
         [HttpGet("{id}")]
         public userType get(int id)
         {
             return manageUsers.getUsers(id);
         }
 
-        //[HttpPost]
-        //public userType post([FromBody] userType _userType)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (_userType == null)
-        //        {
-        //            userType ouserType = new userType();
-        //            return ouserType;
-        //        }
-        //        else
-        //        {
-        //            _userType = manageUsers.getUsers(_userType);
-        //            return userType;
-        //        }
-        //    }
-        //    else
-        //        return null;
-        //}
+        [HttpPost]
+        public userType post([FromBody] userType _userType)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_userType == null)
+                {
+                    userType ouserType = new userType();
+                    return ouserType;
+                }
+                else
+                {
+                    _userType = manageUsers.getUsers(_userType);
+                    return _userType;
+                }
+            }
+            else
+                return null;
+        }
         [HttpPost]
         [Route("insert")]
         public int Insert([FromBody] userTypeDTO _userTypeDto)
