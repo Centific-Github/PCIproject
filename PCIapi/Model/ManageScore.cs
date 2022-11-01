@@ -215,38 +215,44 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
         {
             var result = GetShowDetails(ProjectID, CreatedDate, SaveType, PcicmpID);
             var obj = new List<ShowDetailsResponse>();
-            var objr = new ShowDetailsResponse();
+            var objr = new ChildrenShowDetailsResponse();
+            var objparent = new ShowDetailsResponse();
             string areadesc = "";
             string activityDesc = "";
            
+
             foreach (var record in result)
             {
                 if (areadesc == "") 
                 { 
-                    areadesc = record.AreasDesc; 
-                    objr.AreasDesc = areadesc;
+                    areadesc = record.AreasDesc;
+                    objparent.AreasDesc = areadesc;
                    activityDesc  = record.ActivityDesc;
-                   objr.ActivityDesc.Add(activityDesc);
-                    objr.CompValue.Add(record.CompValue); 
-                    objr.ScoreValue.Add(record.ScoreValue);
-                    objr.TotalScore += record.ScoreValue;
+                   objr.ActivityDesc = (activityDesc);
+                    objr.CompValue = (record.CompValue);
+                     objr.ScoreValue = (record.ScoreValue);
+                    objparent.ChildrenShowDetails.Add(objr);
+                    objparent.TotalScore += record.ScoreValue;
                     continue;
                 }
                 if (areadesc == record.AreasDesc)
-                { 
-                    objr.ActivityDesc.Add(record.ActivityDesc);
-                    objr.CompValue.Add(record.CompValue);
-                    objr.ScoreValue.Add(record.ScoreValue);
-                    objr.TotalScore += record.ScoreValue;
+                {
+                    objr = new ChildrenShowDetailsResponse();
+                    objr.ActivityDesc = (record.ActivityDesc);
+                    objr.CompValue = (record.CompValue);
+                    objr.ScoreValue = (record.ScoreValue);
+                    objparent.ChildrenShowDetails.Add(objr);
+                    objparent.TotalScore += record.ScoreValue;
                 } 
-                else { obj.Add(objr);
+                else { obj.Add(objparent);
                     areadesc = record.AreasDesc;
-                    objr = new ShowDetailsResponse(); 
-                    objr.AreasDesc = areadesc;
-                    objr.ActivityDesc.Add(record.ActivityDesc);
-                    objr.CompValue.Add(record.CompValue);
-                    objr.ScoreValue.Add(record.ScoreValue); 
-                    objr.TotalScore += record.ScoreValue;
+                    objr = new ChildrenShowDetailsResponse();
+                    objparent = new ShowDetailsResponse();
+                    objparent.AreasDesc = areadesc;
+                    objr.ActivityDesc = (record.ActivityDesc);
+                    objr.CompValue = (record.CompValue);
+                    objr.ScoreValue = (record.ScoreValue);
+                    objparent.TotalScore += record.ScoreValue;
                 }
             }
 
