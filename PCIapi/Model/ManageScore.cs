@@ -154,7 +154,7 @@ namespace PCIapi.Model
             }
 
         }
-        public IEnumerable<Score> GetScoreceremone(int activityID, int complianceID)
+        public IEnumerable<Score>GetScoreceremone(int activityID, int complianceID)
 
 
 
@@ -225,7 +225,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 { 
                     areadesc = record.AreasDesc; 
                     objr.AreasDesc = areadesc;
-                    activityDesc = record.ActivityDesc;
+                   activityDesc  = record.ActivityDesc;
                    objr.ActivityDesc.Add(activityDesc);
                     objr.CompValue.Add(record.CompValue); 
                     objr.ScoreValue.Add(record.ScoreValue);
@@ -247,21 +247,17 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objr.ScoreValue.Add(record.ScoreValue); 
                     objr.TotalScore += record.ScoreValue;
                 }
-
             }
 
             return obj;
 
 
         }
-
-
-
-
-
-
-
-    }
+ }
+  
+    
+    
+    
     public class ScoreType
     {
         public int ProjectID { get; set; }

@@ -5,9 +5,9 @@ namespace PCIapi.Model
     public class ExeMaturity
     {
 
-        public int ExcKeyActivityID { get; set; }       
-        public string ExcKeyActivityDesc { get; set; }       
-         
+        public int ExcKeyActivityID { get; set; }
+        public string ExcKeyActivityDesc { get; set; }
+
     }
     public class Showdetails
     {
@@ -18,10 +18,21 @@ namespace PCIapi.Model
     }
     public class ShowDetailsResponse
     {
+
         public string AreasDesc { get; set; }
-        public List<string> ActivityDesc { get; set; }
-        public List<string> CompValue { get; set; }
-        public List<decimal> ScoreValue { get; set; }
-        public decimal TotalScore   { get; set; }
+
+        private List<string> _activityDesc = new List<string>();
+        private List<string> _compValue = new List<string>();
+        private List<decimal> _scoreValue = new List<decimal>();
+        public List<string> ActivityDesc { get { return _activityDesc; } set { _activityDesc = value; } }
+
+        public List<string> CompValue { get { return _compValue; } set { _compValue = value; } }
+
+        public List<decimal> ScoreValue { get { return _scoreValue; } set { _scoreValue = value; } }
+
+        public decimal TotalScore { get; set; }
+
+
+
     }
 }
