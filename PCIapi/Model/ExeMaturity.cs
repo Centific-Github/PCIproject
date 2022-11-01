@@ -1,4 +1,6 @@
-﻿namespace PCIapi.Model
+﻿using System.Collections.Generic;
+
+namespace PCIapi.Model
 {
     public class ExeMaturity
     {
@@ -13,5 +15,13 @@
         public string ActivityDesc { get; set; }
         public string CompValue { get; set; }
         public decimal ScoreValue { get; set; }
+    }
+    public class ShowDetailsResponse
+    {
+        public string AreasDesc { get; set; }
+        public List<string> ActivityDesc { get; set; }
+        public List<string> CompValue { get; set; }
+        public List<decimal> ScoreValue { get; set; }
+        public decimal TotalScore   { get; set; }
     }
 }

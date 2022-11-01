@@ -199,10 +199,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
 
         }
         public IEnumerable<Showdetails> GetShowDetails(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
-
-
-
-        {
+         {
             using (IDbConnection dbConnection = Connection)
             {
                 var p = new DynamicParameters();
@@ -214,9 +211,26 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 return dbConnection.Query<Showdetails>("sp_showDetails", p, commandType: CommandType.StoredProcedure);
             }
         }
+        public IEnumerable <ShowDetailsResponse> GetShowDetailsResponse(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
+        {
+            var result = GetShowDetails(ProjectID, CreatedDate, SaveType, PcicmpID);
+            IEnumerable <ShowDetailsResponse> objShowDetailsResponse = new ShowDetailsResponse();
+            //objShowDetailsResponse.AreasDesc
+               
+            //List<string> AreasDesc = new List<string>();
+            string [] in result = new string [] { }
+            foreach(string a in result )
+            {
+                System.Console.WriteLine(a);
+                
+            }
 
 
-        
+        }
+
+
+
+
 
 
 
