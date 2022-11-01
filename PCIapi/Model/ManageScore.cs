@@ -214,16 +214,43 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
         public IEnumerable <ShowDetailsResponse> GetShowDetailsResponse(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
         {
             var result = GetShowDetails(ProjectID, CreatedDate, SaveType, PcicmpID);
-            IEnumerable <ShowDetailsResponse> objShowDetailsResponse = new ShowDetailsResponse();
-            //objShowDetailsResponse.AreasDesc
-               
-            //List<string> AreasDesc = new List<string>();
-            string [] in result = new string [] { }
-            foreach(string a in result )
+            var obj = new List<ShowDetailsResponse>();
+            var objr = new ShowDetailsResponse();
+            string areadesc = "";
+            string activityDesc = "";
+           
+            foreach (var record in result)
             {
-                System.Console.WriteLine(a);
-                
+                if (areadesc == "") 
+                { 
+                    areadesc = record.AreasDesc; 
+                    objr.AreasDesc = areadesc;
+                    activityDesc = record.ActivityDesc;
+                   objr.ActivityDesc.Add(activityDesc);
+                    objr.CompValue.Add(record.CompValue); 
+                    objr.ScoreValue.Add(record.ScoreValue);
+                    objr.TotalScore += record.ScoreValue;
+                    continue;
+                }
+                if (areadesc == record.AreasDesc)
+                { 
+                    objr.ActivityDesc.Add(record.ActivityDesc);
+                    objr.CompValue.Add(record.CompValue);
+                    objr.ScoreValue.Add(record.ScoreValue);
+                    objr.TotalScore += record.ScoreValue;
+                } 
+                else { obj.Add(objr);
+                    objr = new ShowDetailsResponse(); 
+                    objr.AreasDesc = areadesc;
+                    objr.ActivityDesc.Add(record.ActivityDesc);
+                    objr.CompValue.Add(record.CompValue);
+                    objr.ScoreValue.Add(record.ScoreValue); 
+                    objr.TotalScore += record.ScoreValue;
+                }
+
             }
+
+            return obj;
 
 
         }
