@@ -240,6 +240,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objr.TotalScore += record.ScoreValue;
                 } 
                 else { obj.Add(objr);
+                    areadesc = record.AreasDesc;
                     objr = new ShowDetailsResponse(); 
                     objr.AreasDesc = areadesc;
                     objr.ActivityDesc.Add(record.ActivityDesc);
