@@ -118,7 +118,7 @@ namespace PCIapi.Model
                     p.Add("ScoreCrdID", _scoreSave.ScoreCrdID[i]);
                     p.Add("CreatedDate", _scoreSave.Date);
                     p.Add("PcicmpId", _scoreSave.PcicmpID);
-                    p.Add("ActivityId", _scoreSave.ActivityId);
+                    p.Add("ActivityId", _scoreSave.ActivityId[i]);
 
                     dbConnection.Open();
                     affectedRows += dbConnection.Execute("sp_MstScoreSaveandUpdate", p, commandType: CommandType.StoredProcedure);
