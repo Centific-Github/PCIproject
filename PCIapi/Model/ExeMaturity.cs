@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PCIapi.Model
 {
@@ -15,6 +16,7 @@ namespace PCIapi.Model
         public string ActivityDesc { get; set; }
         public string CompValue { get; set; }
         public decimal ScoreValue { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
     public class ShowDetailsResponse
     {
@@ -24,6 +26,7 @@ namespace PCIapi.Model
         public List<ChildrenShowDetailsResponse> ChildrenShowDetails { get { return _childrenShowDetails; } set { _childrenShowDetails = value; } }
 
         public decimal TotalScore { get; set; }
+
 
 
 
@@ -41,5 +44,6 @@ namespace PCIapi.Model
         public string ActivityDesc { get; set; }
         public string CompValue { get; set; }
         public decimal ScoreValue { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

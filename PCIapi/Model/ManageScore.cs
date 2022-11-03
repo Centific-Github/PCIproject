@@ -209,7 +209,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 p.Add("@ProjectID", ProjectID);
                 p.Add("@SaveType", SaveType);
                 p.Add("@CreatedDate", CreatedDate);
-                p.Add("@PcicmpID", PcicmpID);
+                p.Add("@PcicmpID", PcicmpID);                
                 dbConnection.Open();
                 return dbConnection.Query<Showdetails>("sp_showDetails", p, commandType: CommandType.StoredProcedure);
             }
@@ -236,6 +236,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                    objr.ActivityDesc = (activityDesc);
                     objr.CompValue = (record.CompValue);
                      objr.ScoreValue = (record.ScoreValue);
+                    objr.CreatedDate = (record.CreatedDate);
                     objparent.ChildrenShowDetails.Add(objr);
                     objparent.TotalScore += record.ScoreValue;
                     continue;
@@ -246,6 +247,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objr.ActivityDesc = (record.ActivityDesc);
                     objr.CompValue = (record.CompValue);
                     objr.ScoreValue = (record.ScoreValue);
+                    objr.CreatedDate = (record.CreatedDate);
                     objparent.ChildrenShowDetails.Add(objr);
                     objparent.TotalScore += record.ScoreValue;
                 } 
@@ -258,6 +260,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objr.ActivityDesc = (record.ActivityDesc);
                     objr.CompValue = (record.CompValue);
                     objr.ScoreValue = (record.ScoreValue);
+                    objr.CreatedDate = (record.CreatedDate);
                     objparent.TotalScore += record.ScoreValue;
                 }
             }
