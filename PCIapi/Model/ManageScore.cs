@@ -221,10 +221,12 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
             var objr = new ChildrenShowDetailsResponse();
             var objparent = new ShowDetailsResponse();
             string areadesc = "";
+            bool isOnlyProject = true;
             string activityDesc = "";
            
 
             foreach (var record in result)
+
             {
                 if (areadesc == "") 
                 { 
@@ -248,6 +250,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objparent.TotalScore += record.ScoreValue;
                 } 
                 else { obj.Add(objparent);
+                    isOnlyProject = false;
                     areadesc = record.AreasDesc;
                     objr = new ChildrenShowDetailsResponse();
                     objparent = new ShowDetailsResponse();
@@ -258,8 +261,12 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objparent.TotalScore += record.ScoreValue;
                 }
             }
-
+            if (isOnlyProject)
+            {
+                obj.Add(objparent);
+            }
             return obj;
+
 
 
         }
