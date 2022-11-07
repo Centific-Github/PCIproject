@@ -234,7 +234,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objparent.AreasDesc = areadesc;
                    activityDesc  = record.ActivityDesc;
                    objr.ActivityDesc = (activityDesc);
-                    objr.CompValue = (record.CompValue);
+                    objr.CompValue = (record.CompValue);            
                      objr.ScoreValue = (record.ScoreValue);
                     objr.CreatedDate = (record.CreatedDate);
                     objparent.ChildrenShowDetails.Add(objr);
@@ -261,6 +261,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objr.CompValue = (record.CompValue);
                     objr.ScoreValue = (record.ScoreValue);
                     objr.CreatedDate = (record.CreatedDate);
+                    objparent.ChildrenShowDetails.Add(objr);
                     objparent.TotalScore += record.ScoreValue;
                 }
             }
