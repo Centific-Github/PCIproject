@@ -115,9 +115,9 @@ namespace PCIapi.Controllers
         }
         [HttpGet]
         [Route("LatestAuditlist")]
-        public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID)
+        public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID ,int PcicmpID)
         {
-            return manageScoreController.getLatestauditdetails(ProjectID, SaveType, AreasID);
+            return manageScoreController.getLatestauditdetails(ProjectID, SaveType, AreasID, PcicmpID);
         }
         [HttpGet]
         [Route("GetShowdetailsResponse")]

@@ -188,7 +188,7 @@ namespace PCIapi.Model
             }
         }
        
-public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID)
+public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID,int PcicmpID)
         {
             using (IDbConnection dbConnection = Connection) 
             {
@@ -196,6 +196,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 p.Add("@ProjectID", ProjectID);
                 p.Add("@SaveType", SaveType);
                 p.Add("@AreasID", AreasID);
+                p.Add("@PcicmpID", PcicmpID);
                 dbConnection.Open();
                 return dbConnection.Query<LatestAuditDetails>("GetAuditDetailBySaveDraft", p, commandType: CommandType.StoredProcedure); 
             }
@@ -289,10 +290,11 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
     }
     public class LatestAuditDetails
     {
-        public int AreasID { get; set; }
-        public int ExcKeyActivityID { get; set; }
+        public int AreasID  { get; set; }
+        public int  Activityid { get; set; }
         public int CompID { get; set; }
         public decimal ScoreValue { get; set; }
+        
 
 
 
