@@ -49,7 +49,7 @@ namespace PCIapi.Controllers
         [HttpGet("{id}")]
         public IEnumerable<projectMaster> get(int id)
         {
-            return manageProjectMaster.getProjectDetails();
+            return manageProjectMaster.getProjectDetails(id);
         }
 
         [HttpPost]
