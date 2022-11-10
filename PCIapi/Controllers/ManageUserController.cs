@@ -114,7 +114,7 @@ namespace PCIapi.Controllers
         }
         [Authorize]
         [HttpDelete("{id}")]
-        public bool Delete(int id)
+        public bool Delete (int id)
         {
             return true;
         }

@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 
 namespace PCIapi.Model
 /// <summary>
@@ -135,7 +134,7 @@ namespace PCIapi.Model
                 }
             }
         }
-        public IEnumerable<Score> GetScoreExc(int activityID, int complianceID)
+        public IEnumerable<Score> GetScoreExc(int activityID, decimal complianceID)
 
         {
             using (IDbConnection dbConnection = Connection)
@@ -202,7 +201,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
             }
 
         }
-        public IEnumerable<Showdetails> GetShowDetails(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
+        public IEnumerable<Showdetails> GetShowDetails(int ProjectID, DateTime CreatedDate, int SaveType,  int PcicmpID  )
          {
             using (IDbConnection dbConnection = Connection)
             {

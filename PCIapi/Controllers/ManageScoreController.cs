@@ -90,7 +90,7 @@ namespace PCIapi.Controllers
         }
         [HttpGet]
         [Route("GetScoreExm")]
-        public IEnumerable<Score> GetScoreExc(int activityID,int complianceID)
+        public IEnumerable<Score> GetScoreExc(int activityID,decimal complianceID)
         {
             return manageScoreController.GetScoreExc(activityID, complianceID);
         }
