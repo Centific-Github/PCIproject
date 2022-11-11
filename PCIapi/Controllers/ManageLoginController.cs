@@ -84,7 +84,7 @@ namespace PCIapi.Controllers
             }
 
         }
-        [Authorize]
+      
         [HttpPut]
         [Route("NewPassword")]
         public string NewPassword([FromBody] UpdateResetPassword resetPassword)
