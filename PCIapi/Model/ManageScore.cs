@@ -130,7 +130,7 @@ namespace PCIapi.Model
                 }
                 else
                 {
-                    return "Issuing Saving the Data";
+                    return "The audit for same date is already submitted";
                 }
             }
         }
