@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using PCIapi.Model;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -13,6 +14,7 @@ namespace PCIapi.Controllers
     [ApiController]
     public class ManageLoginController : Controller
     {
+
         //jwt
         //private IUserRepository _userRepository;
         //private ItokenHandler _tokenHandler;
@@ -23,9 +25,11 @@ namespace PCIapi.Controllers
         //}
         private IConfiguration _configuration;
         private readonly ManageLogin manageLogin;
-        public ManageLoginController(IConfiguration configuration)
+        private readonly ILogger<ManageLoginController> _logger;
+        public ManageLoginController(IConfiguration configuration,ILogger<ManageLoginController> logger)
         {
             _configuration = configuration;
+            _logger = logger;
             manageLogin = new ManageLogin(_configuration);
         }
 
@@ -73,7 +77,13 @@ namespace PCIapi.Controllers
         [HttpPost]
         [Route("Login")]
         public string Login([FromBody] UserLogin userLogin)
+
         {
+            _logger.LogDebug("Hey, this is a DEBUG message.");
+            _logger.LogInformation("Hey, this is an INFO message.");
+            _logger.LogWarning("Hey, this is a WARNING message.");
+            _logger.LogError("Hey, this is an ERROR message.");
+
             if (ModelState.IsValid)
             {
                 return manageLogin.IsUserValid(userLogin.Username, userLogin.Password);

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PCIapi
 {
@@ -24,6 +26,10 @@ namespace PCIapi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+        .ConfigureLogging(builder =>
+        {
+            builder.AddLog4Net("log4net.config");
+        });
     }
 }
