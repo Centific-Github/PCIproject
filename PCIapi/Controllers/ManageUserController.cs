@@ -112,6 +112,22 @@ namespace PCIapi.Controllers
 
 
         }
+        [HttpGet]
+
+
+
+        [Route("CheckEmployeeID")]
+        public string CheckEmployeeID(string Checkemployeeid)
+        {
+
+
+
+            return manageUsers.getcheckingEmployeeID(Checkemployeeid);
+
+
+
+
+        }
         [Authorize]
         [HttpDelete("{id}")]
         public bool Delete (int id)

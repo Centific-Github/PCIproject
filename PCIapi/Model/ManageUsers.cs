@@ -22,7 +22,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,FirstName,LastName,IsBlocked from MstLogintbl";
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,FirstName,LastName,IsBlocked from MstLogintbl";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery);
             }
@@ -31,7 +31,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,FirstName,LastName,IsBlocked from MstLogintbl where LoginID=@_LoginId";
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,FirstName,LastName,IsBlocked from MstLogintbl where LoginID=@_LoginId";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery, new { _LoginId = id }).FirstOrDefault();
             }
@@ -40,7 +40,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, UserName from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
+                string sQuery = @"SELECT LoginID, EmailID, UserName,EmployeeID from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
@@ -49,9 +49,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName)";
+                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID,_strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName });
                 return affectedRows;
             }
         }
@@ -91,6 +91,26 @@ namespace PCIapi.Model
 
             }
         }
+        public string getcheckingEmployeeID(string employeeid)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select 1 from  MstLogintbl  where EmployeeID = @_strEmployeeID";
+                dbConnection.Open();
+                var result = dbConnection.Query<string>(sQuery, new { _strEmployeeID = employeeid });
+                if (result.Count() > 0)
+                {
+                    return "EmployeeID exist";
+                }
+                else
+                {
+                    return "EmployeeID doesnot exist";
+                }
+
+
+
+            }
+        }
 
         public class userType
         {
@@ -101,6 +121,7 @@ namespace PCIapi.Model
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public int IsBlocked { get; set; }
+            public string EmployeeID { get; set; }
 
 
         }
@@ -111,8 +132,9 @@ namespace PCIapi.Model
             public string Password { get; set; }
             public string UserName { get; set; }
             public string FirstName { get; set; }
-            public string LastName { get; set; }           
-          
+            public string LastName { get; set; }
+            public string EmployeeID { get; set; }
+
         }
 
     }
