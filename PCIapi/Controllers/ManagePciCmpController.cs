@@ -32,5 +32,25 @@ namespace PCIapi.Controllers
         {
             return managePciCmp.getPciDetails(id);
         }
+        [HttpPost]
+        [Route("insert")]
+        public int InsertPcicmp([FromBody] pcicmpi _Pcicmp)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_Pcicmp == null)
+                {
+
+                    return 0;
+                }
+                else
+                {
+                    var affectedRows = managePciCmp.insertPcicmpDetails(_Pcicmp);
+                    return affectedRows;
+                }
+            }
+            else
+                return 0;
+        }
     }
 }

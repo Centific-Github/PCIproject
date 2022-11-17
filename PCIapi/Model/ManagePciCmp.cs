@@ -34,11 +34,27 @@ namespace PCIapi.Model
                 return dbConnection.Query<pciCmp>(sQuery, new { _PcicmpID = id });
             }
         }
+        public int insertPcicmpDetails(pcicmpi _Pcicmp)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"INSERT INTO MstPcicmp (PcicmpName )  values(@_strPcicmpName)";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new { _strPcicmpName = _Pcicmp.PcicmpName });
+                return affectedRows;
+
+            }
+
+        }
     }
 
     public class pciCmp
     {
         public int PcicmpID { get; set; }
         public string PcicmpName { get; set; }
+    }
+    public class pcicmpi
+    {
+        public string PcicmpName { get; set; }  
     }
 }
