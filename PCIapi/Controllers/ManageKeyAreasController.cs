@@ -35,7 +35,26 @@ namespace PCIapi.Controllers
         {
             return oManageKeyAreas.getKeyAreaDeatails(id);
         }
+        [HttpPost]
+        [Route("insertkeyareas")]
+        public int InsertKeyAreas([FromBody] InsertKeyAreas _insertKeyAreas)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_insertKeyAreas == null)
+                {
 
+                    return 0;
+                }
+                else
+                {
+                    var affectedRows = oManageKeyAreas.insertkeyareas(_insertKeyAreas);
+                    return affectedRows;
+                }
+            }
+            else
+                return 0;
+        }
 
     }
 }

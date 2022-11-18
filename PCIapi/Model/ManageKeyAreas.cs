@@ -35,12 +35,29 @@ namespace PCIapi.Model
                 return dbConnection.Query<keyAreas>(sQuery, new { _AreasID = id });
             }
         }
+        public int insertkeyareas(InsertKeyAreas _insertKeyAreas)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"INSERT INTO MstKeyAreas ( AreasDesc)  values(@_strAreasDesc)";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new { _strAreasDesc = _insertKeyAreas.AreasDesc});
+                return affectedRows;
+
+            }
+
+        }
 
     }
 
     public class keyAreas
     {
         public int AreasID { get; set; }
+        public string AreasDesc { get; set; }
+    }
+
+    public class InsertKeyAreas
+    {
         public string AreasDesc { get; set; }
     }
 }
