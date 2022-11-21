@@ -7,6 +7,7 @@
         public bool IsReset { get; set; }
         public bool IsBlocked { get; set; }
         public bool IsAdmin { get; set; }
+        public string Roles { get; set; }
 
 
 

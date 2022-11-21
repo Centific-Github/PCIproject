@@ -49,9 +49,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,IsAdmin,Roles,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID,@_strIsAdmin,@_strRoles)";
+                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,IsAdmin,Roles,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID,@_strIsAdmin,@_strRoles)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName, _strIsAdmin = _userTypeDTO.IsAdmin, _strRoles = _userTypeDTO.Roles });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID,_strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName, _strIsAdmin = _userTypeDTO.IsAdmin, _strRoles = _userTypeDTO.Roles });
                 return affectedRows;
             
                
@@ -110,7 +110,24 @@ namespace PCIapi.Model
                 }
             }
         }
-        
+        public string getcheckingIsAdmin(string username)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select 1 from MstLogintbl where Username=@_strUserName or EmployeeID=@_strUserName and IsAdmin=1";
+                dbConnection.Open();
+                var result = dbConnection.Query<string>(sQuery, new { _strUserName = username });
+                if (result.Count() > 0 || result.Count() < 0)
+                {
+                    return "IsAdmin exist";
+                }
+                else
+                {
+                    return "IsAdmin doesnot exist";
+                }
+            }
+        }
+
 
         public class userType
         {
