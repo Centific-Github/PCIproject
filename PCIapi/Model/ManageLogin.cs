@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -8,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Mail;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Text;
 
 namespace PCIapi.Model
@@ -202,11 +204,13 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
             }
            
         }
+
+        
         public UserModel getUsers( string UserName,  string Password)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT  EmailID, UserName,IsReset,IsBlocked from MstLogintbl Where (UserName=@_strUsername OR EmployeeID = @_strUsername) AND Password=@_strPassword";
+                string sQuery = @"SELECT  EmailID, UserName,IsReset,IsBlocked  from MstLogintbl Where (UserName=@_strUsername OR EmployeeID = @_strUsername) AND Password=@_strPassword";
                 dbConnection.Open();
                 return dbConnection.Query<UserModel>(sQuery, new { _strUsername= UserName, _strPassword = Password }).FirstOrDefault();
             }

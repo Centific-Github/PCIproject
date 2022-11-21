@@ -6,6 +6,7 @@
         public string EmailId { get; set; }
         public bool IsReset { get; set; }
         public bool IsBlocked { get; set; }
+        public bool IsAdmin { get; set; }
 
 
 
