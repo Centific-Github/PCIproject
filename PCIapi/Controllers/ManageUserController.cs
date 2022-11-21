@@ -132,14 +132,7 @@ namespace PCIapi.Controllers
 
 
 
-        [Route("CheckIsAdmin")]
-        public string CheckIsAdmin(string CheckIsAdmin)
-        {
-
-            return manageUsers.getcheckingIsAdmin(CheckIsAdmin);
-
-
-        }
+        
         [Authorize]
         [HttpDelete("{id}")]
         public bool Delete (int id)

@@ -49,9 +49,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,IsAdmin,Roles,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID,@_strIsAdmin,@_strRoles)";
+                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,IsAdmin,Roles,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID,@_strIsAdmin,@_strRoles)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID,_strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName, _strIsAdmin = _userTypeDTO.IsAdmin, _strRoles = _userTypeDTO.Roles });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName, _strIsAdmin = _userTypeDTO.IsAdmin, _strRoles = _userTypeDTO.Roles });
                 return affectedRows;
             
                
