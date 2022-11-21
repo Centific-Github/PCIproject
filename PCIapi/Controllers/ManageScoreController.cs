@@ -125,7 +125,44 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.GetShowDetailsResponse(ProjectID, CreatedDate, SaveType, PcicmpID);
         }
+        [HttpPost]
+        [Route("InsertScore")]
+        public string InsertScore([FromBody] Scores _scores)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_scores == null)
+                {
+                    return "please pass the parameter";
+                }
+                else
+                {
+                     return  manageScoreController.InsertScore(_scores);
+                   
+                }
+            }
+            else
+                return "Invalid model";
+        }
+        [HttpPost]
+        [Route("InsertKeyActivities")]
+        public string InsertKeyActivities([FromBody] AreasbyKeyActivities _AreasbyKeyActivities)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_AreasbyKeyActivities == null)
+                {
+                    return "please pass the parameter";
+                }
+                else
+                {
+                    return manageScoreController.InsertKeyActivities(_AreasbyKeyActivities);
 
+                }
+            }
+            else
+                return "Invalid model";
+        }
     }
 }
 

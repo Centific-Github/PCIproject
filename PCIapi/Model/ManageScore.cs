@@ -214,6 +214,59 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 return dbConnection.Query<Showdetails>("sp_showDetails", p, commandType: CommandType.StoredProcedure);
             }
         }
+        public string InsertScore(Scores _scores)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                int affectedRows = 0;
+                
+                    var p = new DynamicParameters();
+                    p.Add("ActivityID", _scores.ActivityID);
+                    p.Add("AreasID", _scores.AreasID);
+                    p.Add("PcicmpID", _scores.PcicmpID);
+                    p.Add("ScoreValue", _scores.ScoreValue);
+                    p.Add("CompID", _scores.CompID);
+                    dbConnection.Open();
+                    affectedRows += dbConnection.Execute("CreateUpdateScore", p, commandType: CommandType.StoredProcedure);
+                    dbConnection.Close();
+            
+                     if (affectedRows > 0)
+                           {
+                                return " Saved Data Successful";
+
+                            }
+                     else
+                           {
+                                 return "Issuing the data";
+                     }
+            }
+        }
+        public string InsertKeyActivities(AreasbyKeyActivities _AreasbyKeyActivities)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                int affectedRows = 0;
+
+                var p = new DynamicParameters();
+                p.Add("KeyActivities", _AreasbyKeyActivities.KeyActivities);
+                p.Add("PcicmpID", _AreasbyKeyActivities.PcicmpID);
+               
+                dbConnection.Open();
+                affectedRows += dbConnection.Execute("SP_InsertActivities", p, commandType: CommandType.StoredProcedure);
+                dbConnection.Close();
+
+                if (affectedRows > 0)
+                {
+                    return " Saved Data Successful";
+
+                }
+                else
+                {
+                    return "Issuing the data";
+                }
+            }
+        }
+
         public IEnumerable <ShowDetailsResponse> GetShowDetailsResponse(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
         {
             var result = GetShowDetails(ProjectID, CreatedDate, SaveType, PcicmpID);
@@ -297,6 +350,20 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
 
 
 
+    }
+    public class Scores
+    {
+        public int ActivityID { get; set; }
+        public int AreasID { get; set; }
+        public int PcicmpID { get; set; }
+        public decimal ScoreValue { get; set; }
+        public int CompID { get; set; }
+    }
+
+public class AreasbyKeyActivities
+    {
+        public string KeyActivities { get; set; }
+        public int PcicmpID { get; set; }
     }
 }
 
