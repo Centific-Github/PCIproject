@@ -22,7 +22,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,IsAdmin,FirstName,LastName,IsBlocked from MstLogintbl";
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,IsAdmin,Roles,FirstName,LastName,IsBlocked from MstLogintbl";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery);
             }
@@ -31,7 +31,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,IsAdmin,FirstName,LastName,IsBlocked from MstLogintbl where LoginID=@_LoginId";
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,IsAdmin,Roles,FirstName,LastName,IsBlocked from MstLogintbl where LoginID=@_LoginId";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery, new { _LoginId = id }).FirstOrDefault();
             }
@@ -40,7 +40,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, UserName,EmployeeID ,IsAdmin from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
+                string sQuery = @"SELECT LoginID, EmailID, UserName,EmployeeID ,IsAdmin ,Roles from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
@@ -49,10 +49,12 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,IsAdmin,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID,@_strIsAdmin)";
+                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,IsAdmin,Roles,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID,@_strIsAdmin,@_strRoles)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID,_strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName, _strIsAdmin = _userTypeDTO.IsAdmin });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID,_strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName, _strIsAdmin = _userTypeDTO.IsAdmin, _strRoles = _userTypeDTO.Roles });
                 return affectedRows;
+            
+               
             }
         }
         public string getcheckingEmailID(string emailID)
@@ -108,23 +110,7 @@ namespace PCIapi.Model
                 }
             }
         }
-        public string getcheckingIsAdmin(string username)
-        {
-            using (IDbConnection dbConnection = Connection)
-            {
-                string sQuery = @"select 1 from MstLogintbl where Username=@_strUserName or EmployeeID=@_strUserName and IsAdmin=1";
-                dbConnection.Open();
-                var result = dbConnection.Query<string>(sQuery, new { _strUserName = username });
-                if (result.Count() > 0|| result.Count() < 0)
-                {
-                    return "IsAdmin exist";
-                }
-                else 
-                {
-                    return "IsAdmin doesnot exist";
-                }
-            }
-        }
+        
 
         public class userType
         {
@@ -137,6 +123,8 @@ namespace PCIapi.Model
             public int IsBlocked { get; set; }
             public string EmployeeID { get; set; }
             public bool IsAdmin { get; set; }
+            public string Roles { get; set; }
+
 
 
         }
@@ -150,6 +138,7 @@ namespace PCIapi.Model
             public string LastName { get; set; }
             public string EmployeeID { get; set; }
             public bool IsAdmin { get; set; }
+            public string Roles { get; set; }
 
         }
 
