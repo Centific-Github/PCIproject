@@ -35,17 +35,31 @@ namespace PCIapi.Model
                 return dbConnection.Query<keyAreas>(sQuery, new { _AreasID = id });
             }
         }
-        public int insertkeyareas(InsertKeyAreas _insertKeyAreas)
+       
+        public string InsertKeyareas(InsertKeyAreas _insertKeyAreas)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT INTO MstKeyAreas ( AreasDesc)  values(@_strAreasDesc)";
+                int affectedRows = 0;
+
+                var p = new DynamicParameters();
+                p.Add("AreasDesc", _insertKeyAreas.AreasDesc);
+                p.Add("PcicmpID", _insertKeyAreas.PcicmpID);
+
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strAreasDesc = _insertKeyAreas.AreasDesc});
-                return affectedRows;
+                affectedRows += dbConnection.Execute("InsertKeyAreas", p, commandType: CommandType.StoredProcedure);
+                dbConnection.Close();
 
+                if (affectedRows > 0)
+                {
+                    return " Saved Data Successful";
+
+                }
+                else
+                {
+                    return "Issuing the data";
+                }
             }
-
         }
 
     }
@@ -59,5 +73,6 @@ namespace PCIapi.Model
     public class InsertKeyAreas
     {
         public string AreasDesc { get; set; }
+        public int PcicmpID { get; set; }
     }
 }
