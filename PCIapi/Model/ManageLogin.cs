@@ -182,26 +182,39 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
 
             return (new JwtSecurityTokenHandler().WriteToken(token));
         }
-        public string IsUserValid(string Username,string password)
+        public IsAdminORNot IsUserValid(string Username, string password)
         {
+            IsAdminORNot oIsAdminORNot = new IsAdminORNot();
+        
             var IsValid = CheckingUser(Username, password);
-           if(IsValid == 2)
+
+            if (IsValid == 2)
             {
-                return "Invalid Username";
+                oIsAdminORNot.ErrorMassege = "Invalid Username";
             }
            else if(IsValid == 3)
             {
-                return "Invali Password";
+                oIsAdminORNot.ErrorMassege= "Invalid Password";
             }
            else if(IsValid == 4)
             {
-                return "User Is Blocked";
+                oIsAdminORNot.ErrorMassege = "User Is Blocked";
             }
-            else
+           else 
+
             {
-                var result = getUsers(Username,password);
-                return CreateToken(result);
+                if( IsValid == 5)
+                {
+                    oIsAdminORNot.IsAdmin = true;
+                }
+                else
+                {
+                    oIsAdminORNot.IsAdmin = false;  
+                }
+                var result = getUsers(Username, password);
+                oIsAdminORNot.Token = CreateToken(result);
             }
+            return oIsAdminORNot;
            
         }
 
@@ -210,7 +223,7 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT  EmailID, UserName,IsReset,IsBlocked ,Roles from MstLogintbl Where (UserName=@_strUsername OR EmployeeID = @_strUsername) AND Password=@_strPassword";
+                string sQuery = @"SELECT  EmailID, UserName,IsReset,IsBlocked from MstLogintbl Where (UserName=@_strUsername OR EmployeeID = @_strUsername) AND Password=@_strPassword";
                 dbConnection.Open();
                 return dbConnection.Query<UserModel>(sQuery, new { _strUsername= UserName, _strPassword = Password }).FirstOrDefault();
             }

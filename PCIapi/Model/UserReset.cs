@@ -1,4 +1,7 @@
-﻿namespace PCIapi.Model
+﻿using System;
+using System.Threading.Tasks;
+
+namespace PCIapi.Model
 {
     public class UserEmailID
     {
@@ -10,6 +13,7 @@
     {
         public string Username { get; set; }
         public string Password { get; set; }
+
 
     }
     public class ResetPassword

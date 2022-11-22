@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PCIapi.Model;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace PCIapi.Controllers
 {
@@ -26,7 +30,7 @@ namespace PCIapi.Controllers
         private IConfiguration _configuration;
         private readonly ManageLogin manageLogin;
         private readonly ILogger<ManageLoginController> _logger;
-        public ManageLoginController(IConfiguration configuration,ILogger<ManageLoginController> logger)
+        public ManageLoginController(IConfiguration configuration, ILogger<ManageLoginController> logger)
         {
             _configuration = configuration;
             _logger = logger;
@@ -73,12 +77,14 @@ namespace PCIapi.Controllers
             else
                 return "Invalid Model";
         }
-      
+
         [HttpPost]
         [Route("Login")]
-        public string Login([FromBody] UserLogin userLogin)
+        public IsAdminORNot Login([FromBody] UserLogin userLogin)
+
 
         {
+            IsAdminORNot OIsAdminORNot = new IsAdminORNot();
             _logger.LogDebug("Hey, this is a DEBUG message.");
             _logger.LogInformation("Hey, this is an INFO message.");
             _logger.LogWarning("Hey, this is a WARNING message.");
@@ -90,11 +96,12 @@ namespace PCIapi.Controllers
             }
             else
             {
-                return "Invalid Model";
+                OIsAdminORNot.ErrorMassege = "InValid Model";
+                return OIsAdminORNot;
             }
 
         }
-      
+
         [HttpPut]
         [Route("NewPassword")]
         public string NewPassword([FromBody] UpdateResetPassword resetPassword)
@@ -108,7 +115,7 @@ namespace PCIapi.Controllers
                 else
                 {
                     return manageLogin.UpdateNewPassword(resetPassword.EmailID, resetPassword.Password, resetPassword.OldPassword);
-                   
+
                 }
             }
             else
@@ -161,9 +168,9 @@ namespace PCIapi.Controllers
             return manageLogin.getLoginDetails(UserName);
         }
     }
+    
 
-   
+ 
 }
-
 
 
