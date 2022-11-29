@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Net.Mail;
-using static PCIapi.Model.ManageUsers;
 
 namespace PCIapi.Model
 {
@@ -20,13 +19,12 @@ namespace PCIapi.Model
         public ManageUsers(IConfiguration configuration) : base(configuration)
         {
 
-      
-        
-        
-            _configuration = configuration;
-        
+            
+                _configuration = configuration;
+            
 
-    }
+
+        }
         public IEnumerable<userType> getUsers()
         {
             using (IDbConnection dbConnection = Connection)
@@ -58,10 +56,10 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,IsAdmin,Roles,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID,@_strIsAdmin,@_strRoles)";
+                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,Roles,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID,@_strRoles)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID,_strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName, _strIsAdmin = _userTypeDTO.IsAdmin, _strRoles = _userTypeDTO.Roles });
-                if (affectedRows > 0)
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID, _strRoles = _userTypeDTO.Roles, _strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName });
+                 if (affectedRows > 0)
                 {
                     WelcomeMail(_userTypeDTO);
                     return " User inserted successfully";
@@ -74,42 +72,41 @@ namespace PCIapi.Model
 
 
 
+            
             }
+
         }
         public void WelcomeMail(userTypeDTO _userTypeDTO)
         {
-            
-                MailMessage mailMessage = new MailMessage(_configuration["Mail:EmailID"], _userTypeDTO.EmailID);
-                mailMessage.Subject = "Reset Password";
-                mailMessage.IsBodyHtml = true;
-                string emailbody = "<html>" +
-                   "<head>" +
-                   "<title>HTML email template</title>" +
-                   "<meta name=\"viewport\" content=\"width = 375, initial-scale = -1\">" +
-                   "</head>" +
-                   " <body style=\"background-color: #ffffff; font-size: 16px;\">" +
-                   "<center>" +
-                   "      <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"height:100%; width:600px;\">" +
-                   "<tr>" +
-                   " <td align=\"center\" bgcolor=\"#ffffff\" style=\"padding:30px\">" +
-                   "<p style=\"text-align:left\">Hi " + _userTypeDTO.EmailID + ", <br><br> We received a request to reset the password for your account for this email address. To initiate the password reset process for your account, click the link below.\r\n </p>" +
-                   "<p>\r\n <a target=\"_blank\" style=\"text-decoration:none; background-color: black; border: black 1px solid; color: #fff; padding:10px 10px; display:block;\" href=\"http://localhost:4200/create-new-password\">\r\n<strong>Reset Password</strong></a>\r\n</p>" +
-                
-                   "<p style=\"text-align:left\">\r\nSincerely,<br>The Website Team\r\n</p>" +
-                   "</td>\r\n</tr>\r\n        </tbody>\r\n      </table>\r\n    </center>\r\n  </body>\r\n</html>";
-                mailMessage.Body = emailbody;
-                var smpt = new System.Net.Mail.SmtpClient("smtp.gmail.com")
-                {
-                    Port = 587,
-                    Credentials = new System.Net.NetworkCredential(_configuration["Mail:EmailID"], _configuration["Mail:Password"]),
-                    EnableSsl = true
-                };
-                smpt.Send(mailMessage);
 
-            }
-   
-           
-        
+            MailMessage mailMessage = new MailMessage(_configuration["Mail:EmailID"], _userTypeDTO.EmailID);
+            mailMessage.Subject = "Welcome Mail";
+            mailMessage.IsBodyHtml = true;
+            string emailbody = "<html>" +
+               "<head>" +
+               "<title>HTML email template</title>" +
+               "<meta name=\"viewport\" content=\"width = 375, initial-scale = -1\">" +
+               "</head>" +
+               " <body style=\"background-color: #ffffff; font-size: 16px;\">" +
+               "<center>" +
+               "      <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"height:100%; width:600px;\">" +
+               "<tr>" +
+               " <td align=\"center\" bgcolor=\"#ffffff\" style=\"padding:30px\">" +
+               "<p style=\"text-align:left\">Hi " + _userTypeDTO.EmailID + ", <br><br> \r\n </p>" +
+               "<p>\r\n <a target=\"_blank\" style=\"text-decoration:none; background-color: black; border: black 1px solid; color: #fff; padding:10px 10px; display:block;\" href=\"http://localhost:4200/Login\">\r\n<strong>Welcome TO PCI</strong></a>\r\n</p>" +
+
+               "<p style=\"text-align:left\">\r\nSincerely,<br>The Website Team\r\n</p>" +
+               "</td>\r\n</tr>\r\n        </tbody>\r\n      </table>\r\n    </center>\r\n  </body>\r\n</html>";
+            mailMessage.Body = emailbody;
+            var smpt = new System.Net.Mail.SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new System.Net.NetworkCredential(_configuration["Mail:EmailID"], _configuration["Mail:Password"]),
+                EnableSsl = true
+            };
+            smpt.Send(mailMessage);
+
+        }
         public string getcheckingEmailID(string emailID)
         {
             using (IDbConnection dbConnection = Connection)
@@ -207,7 +204,7 @@ namespace PCIapi.Model
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string EmployeeID { get; set; }
-            public bool IsAdmin { get; set; }
+           
             public string Roles { get; set; }
 
         }
