@@ -46,6 +46,7 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
             }      
 
         }
+       
         public string UpdateNewPassword(string emailID, string password,string oldpassword)
         {
             using (IDbConnection dbConnection = Connection)
@@ -158,12 +159,12 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
                 return Status;
             }
         }
-        public string CreateToken(UserModel users)
+        public string CreateToken(UserModel users) 
         {
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"]));
 
-            var claims = new List<Claim>();
+            var claims = new List<Claim>(); 
             claims.Add(new Claim(ClaimTypes.Name, users.UserName));
             claims.Add(new Claim(ClaimTypes.Email, users.EmailId));
 

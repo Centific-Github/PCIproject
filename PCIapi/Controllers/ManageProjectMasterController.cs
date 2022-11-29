@@ -17,9 +17,15 @@ namespace PCIapi.Controllers
             manageProjectMaster = new ManageProjectMaster(_configuration);
         }
         [HttpGet]
-        public IEnumerable<projectMaster> get()
+        public IEnumerable<projectMaster> Get()
         {
             return manageProjectMaster.getProjectDetails();
+        }
+        [HttpGet]
+        [Route("CheckProjectCountDetails")]
+        public IEnumerable<Projectcount> get()
+        {
+            return manageProjectMaster.getProjectCount();
         }
         [HttpGet]
         [Route("CheckProjectCode")]

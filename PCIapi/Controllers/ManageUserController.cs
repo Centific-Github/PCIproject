@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PCIapi.Model;
 using System.Collections.Generic;
+using System.Net.Mail;
 using static PCIapi.Model.ManageUsers;
 
 namespace PCIapi.Controllers
@@ -11,6 +12,10 @@ namespace PCIapi.Controllers
     /// Following code has been written by: rajib Basu
     /// date: 19-Sept-2022
     /// </summary>
+    /// 
+  
+
+   
     [Route("api/[controller]")]
     [ApiController]
     public class ManageUserController : ControllerBase
@@ -23,7 +28,29 @@ namespace PCIapi.Controllers
             _configuration = configuration;
             manageUsers = new ManageUsers(_configuration);
         }
-       
+
+        [Authorize]
+        [HttpGet]
+        [Route("Send")]
+        public int WelcomeMail()
+        {
+            MailMessage mailMessage = new MailMessage(_configuration["Mail:EmailID"], "hemasri.duvvuru@pacteraedge.com");
+            mailMessage.Subject = "Test Subject";
+            mailMessage.Body = "Test";
+            var smpt = new System.Net.Mail.SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new System.Net.NetworkCredential(_configuration["Mail:EmailID"], _configuration["Mail:Password"]),
+                EnableSsl = true
+            };
+
+
+
+            smpt.Send(mailMessage);
+            return 0;
+
+
+        }
 
         [HttpGet]
         public IEnumerable<userType> get()
@@ -58,25 +85,25 @@ namespace PCIapi.Controllers
         }
         [HttpPost]
         [Route("insert")]
-        public int Insert([FromBody] userTypeDTO _userTypeDto)
+        public string Insert([FromBody] userTypeDTO _userTypeDto)
         {
             if (ModelState.IsValid)
             {
                 if (_userTypeDto == null)
                 {
-
-
-
-                    return 0;
+                    return "please pass the parameter"; 
                 }
                 else
                 {
                     var affectedRows = manageUsers.insertUsers(_userTypeDto);
                     return affectedRows;
+
+
+
                 }
             }
             else
-                return 0;
+                return null;
         }
 
 

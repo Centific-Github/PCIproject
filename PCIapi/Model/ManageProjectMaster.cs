@@ -52,6 +52,15 @@ namespace PCIapi.Model
             }
 
         }
+        public IEnumerable<Projectcount> getProjectCount()
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"  SELECT  COUNT(ProjectManager) FROM MstProjectMaster   ";
+                dbConnection.Open();
+                return dbConnection.Query<Projectcount>(sQuery);
+            }
+        }
         public string getcheckingProjectCode(string ProjectCode)
         {
             using (IDbConnection dbConnection = Connection)
@@ -141,6 +150,11 @@ namespace PCIapi.Model
         public int ProjectID { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
+    }
+    public class Projectcount
+    {
+        public string ProjectManager { get; set; }
+
     }
 
 }
