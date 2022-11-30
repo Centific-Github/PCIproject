@@ -23,7 +23,7 @@ namespace PCIapi.Model
             {
                 string sQuery = @"SELECT AreasID, AreasDesc FROM MstKeyAreas";
                 dbConnection.Open();
-                return dbConnection.Query<keyAreas>(sQuery);
+                return dbConnection.Query<keyAreas>(sQuery);             
             }
         }     
         public IEnumerable<keyAreas> getKeyAreaDeatails(int id)
