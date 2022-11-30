@@ -25,7 +25,7 @@ namespace PCIapi.Model
                 dbConnection.Open();
                 return dbConnection.Query<keyAreas>(sQuery);
             }
-        }
+        }     
         public IEnumerable<keyAreas> getKeyAreaDeatails(int id)
         {
             using (IDbConnection dbConnection = Connection)
