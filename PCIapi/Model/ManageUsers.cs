@@ -92,7 +92,7 @@ namespace PCIapi.Model
                "      <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"height:100%; width:600px;\">" +
                "<tr>" +
                " <td align=\"center\" bgcolor=\"#ffffff\" style=\"padding:30px\">" +
-               "<p style=\"text-align:left\">Hi " + _userTypeDTO.EmailID + ", <br><br> \r\n </p>" +
+               "<p style=\"text-align:left\">Hi " + _userTypeDTO.EmailID  + ", <br><br> Dear Employee, Welcome to PCI tool. You have been registered to the PCI portal successfully. \r\n </p>" +
                "<p>\r\n <a target=\"_blank\" style=\"text-decoration:none; background-color: black; border: black 1px solid; color: #fff; padding:10px 10px; display:block;\" href=\"http://localhost:4200/Login\">\r\n<strong>Welcome TO PCI</strong></a>\r\n</p>" +
 
                "<p style=\"text-align:left\">\r\nSincerely,<br>The Website Team\r\n</p>" +
