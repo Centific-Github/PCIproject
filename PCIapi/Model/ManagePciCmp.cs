@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Microsoft.Extensions.Configuration;
-
+using System.Linq;
 
 namespace PCIapi.Model
 {
@@ -43,6 +43,24 @@ namespace PCIapi.Model
                 var affectedRows = dbConnection.Execute(sQuery, new { _strPcicmpName = _Pcicmp.PcicmpName });
                 return affectedRows;
 
+            }
+
+        }
+        public string getcheckingPcicmpName(string PcicmpName)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select 1 from  MstPcicmp  where PcicmpName = @_strPcicmpName";
+                dbConnection.Open();
+                var result = dbConnection.Query<int>(sQuery, new { _strPcicmpName = PcicmpName });
+                if (result.Count() > 0)
+                {
+                    return "PcicmpName exist";
+                }
+                else
+                {
+                    return "PcicmpName doesnot exist";
+                }
             }
 
         }

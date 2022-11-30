@@ -32,6 +32,15 @@ namespace PCIapi.Controllers
         {
             return managePciCmp.getPciDetails(id);
         }
+        [HttpGet]
+        [Route("CheckpcicmpName")]
+        public string CheckPcicmpName(string PcicmpName)
+        {
+
+            return managePciCmp.getcheckingPcicmpName(PcicmpName);
+
+
+        }
         [HttpPost]
         [Route("insert")]
         public int InsertPcicmp([FromBody] pcicmpi _Pcicmp)
