@@ -1,10 +1,13 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
+using static System.Net.WebRequestMethods;
 
 namespace PCIapi.Model
 {
@@ -15,6 +18,9 @@ namespace PCIapi.Model
     public class ManageUsers : DBconnection
     {
         private IConfiguration _configuration;
+        private string emailID;
+
+        public string OTP { get; private set; }
 
         public ManageUsers(IConfiguration configuration) : base(configuration)
         {
@@ -56,9 +62,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,Roles,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID,@_strRoles)";
+                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID, _strRoles = _userTypeDTO.Roles, _strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID,  _strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName });
                  if (affectedRows > 0)
                 {
                     WelcomeMail(_userTypeDTO);
@@ -76,9 +82,40 @@ namespace PCIapi.Model
             }
 
         }
-        public void WelcomeMail(userTypeDTO _userTypeDTO)
+       
+        public int UpdateLoginOtp(string emailID, string OTP)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"UPDATE MstLogintbl SET OTP = @_strOTP where EmailID = @_strEmailID";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = emailID, _strOTP = OTP });
+                return affectedRows;
+            }
+
+        }
+
+        public string CreateOtp(int length)
         {
 
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < length--)
+            {
+                res.Append(valid[rnd.Next(valid.Length)]);
+            }
+            return res.ToString();
+        }
+        public void WelcomeMail(userTypeDTO _userTypeDTO)
+        {
+            
+                var OTP = CreateOtp(8);
+                var roweffected = UpdateLoginOtp(emailID, OTP);
+                if (roweffected > 0)
+            { 
+
+            }
             MailMessage mailMessage = new MailMessage(_configuration["Mail:EmailID"], _userTypeDTO.EmailID);
             mailMessage.Subject = "Welcome Mail";
             mailMessage.IsBodyHtml = true;
@@ -92,8 +129,9 @@ namespace PCIapi.Model
                "      <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"height:100%; width:600px;\">" +
                "<tr>" +
                " <td align=\"center\" bgcolor=\"#ffffff\" style=\"padding:30px\">" +
-               "<p style=\"text-align:left\">Hi " + _userTypeDTO.EmailID  + ", <br><br> Dear Employee, Welcome to PCI tool. You have been registered to the PCI portal successfully. \r\n </p>" +
+               "<p style=\"text-align:left\">Hi " + _userTypeDTO.UserName + ", <br><br> Dear Employee, Welcome to PCI tool. You have been registered to the PCI portal successfully. \r\n </p>" +
                "<p>\r\n <a target=\"_blank\" style=\"text-decoration:none; background-color: black; border: black 1px solid; color: #fff; padding:10px 10px; display:block;\" href=\"http://localhost:4200/Login\">\r\n<strong>Welcome TO PCI</strong></a>\r\n</p>" +
+                                  "  <p style=\"text-align:left\">Your  8 digit OTP is : " + OTP + "" +
 
                "<p style=\"text-align:left\">\r\nSincerely,<br>The Website Team\r\n</p>" +
                "</td>\r\n</tr>\r\n        </tbody>\r\n      </table>\r\n    </center>\r\n  </body>\r\n</html>";
@@ -190,7 +228,6 @@ namespace PCIapi.Model
             public int IsBlocked { get; set; }
             public string EmployeeID { get; set; }
             public bool IsAdmin { get; set; }
-            public string Roles { get; set; }
 
 
 
@@ -204,8 +241,8 @@ namespace PCIapi.Model
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string EmployeeID { get; set; }
-           
-            public string Roles { get; set; }
+            public string OTP { get;  set; }
+
 
         }
 
