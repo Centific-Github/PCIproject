@@ -21,12 +21,7 @@ namespace PCIapi.Controllers
         {
             return manageProjectMaster.getProjectDetails();
         }
-        [HttpGet]
-        [Route("CheckProjectCountDetails")]
-        public IEnumerable<Projectcount> get()
-        {
-            return manageProjectMaster.getProjectCount();
-        }
+        
         [HttpGet]
         [Route("CheckProjectCode")]
         public string CheckProjectCode(string CheckProjectCode)

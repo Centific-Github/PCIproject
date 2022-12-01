@@ -44,7 +44,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,IsAdmin,Roles,FirstName,LastName,IsBlocked from MstLogintbl where LoginID=@_LoginId";
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,IsAdmin,FirstName,LastName,IsBlocked from MstLogintbl where LoginID=@_LoginId";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery, new { _LoginId = id }).FirstOrDefault();
             }
@@ -53,7 +53,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, UserName,EmployeeID ,IsAdmin ,Roles from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
+                string sQuery = @"SELECT LoginID, EmailID, UserName,EmployeeID ,IsAdmin  from MstLogintbl Where EmailID=@_strEmailID AND Password=@_strPassword";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery, new { _strEmailID = _userType.EmailID, _strPassword = _userType.Password }).FirstOrDefault();
             }
