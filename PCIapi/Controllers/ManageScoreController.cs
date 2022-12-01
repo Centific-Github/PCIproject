@@ -17,7 +17,7 @@ namespace PCIapi.Controllers
     {
         private IConfiguration _configuration;
 
-
+               
         private readonly ManageScore manageScoreController;
         public ManageScoreController(IConfiguration configuration)
         {
