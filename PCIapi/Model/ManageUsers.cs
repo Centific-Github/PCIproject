@@ -35,7 +35,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,IsAdmin,Roles,FirstName,LastName,IsBlocked from MstLogintbl";
+                string sQuery = @"SELECT LoginID, EmailID, Password, UserName,EmployeeID,IsAdmin,FirstName,LastName,IsBlocked from MstLogintbl";
                 dbConnection.Open();
                 return dbConnection.Query<userType>(sQuery);
             }
