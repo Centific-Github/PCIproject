@@ -55,5 +55,11 @@ namespace PCIapi.Controllers
             else
                 return "Invalid model";
         }
+        [HttpGet]
+        [Route("AreasbypcicmpID")]
+        public IEnumerable<AreasbyID> getAreasByID(int PcicmpID)
+        {
+            return oManageKeyAreas.getAreasByID(PcicmpID);
+        }
     }
 }

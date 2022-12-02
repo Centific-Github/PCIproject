@@ -61,7 +61,17 @@ namespace PCIapi.Model
                 }
             }
         }
+        public IEnumerable<AreasbyID> getAreasByID(int PcicmpID)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@PcicmpID", PcicmpID);
+                dbConnection.Open();
+                return dbConnection.Query<AreasbyID>("SP_GetAreas", p, commandType: CommandType.StoredProcedure);
+            }
 
+        }
     }
 
     public class keyAreas
@@ -74,5 +84,10 @@ namespace PCIapi.Model
     {
         public string AreasDesc { get; set; }
         public int PcicmpID { get; set; }
+    }
+    public class AreasbyID
+    {
+        public string AreasDesc { get; set; }
+
     }
 }

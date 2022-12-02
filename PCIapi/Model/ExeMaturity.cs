@@ -46,4 +46,23 @@ namespace PCIapi.Model
         public decimal ScoreValue { get; set; }
         public DateTime CreatedDate { get; set; }
     }
+    
+    public class ChildrenAreasList
+    {
+      
+        public string AreasDesc { get; set; }
+
+    }
+    public class PciNamesWithAreaDesc
+    {
+        public string PcicmpName { get; set;}
+        private  List<ChildrenAreasList> _childrenAreasList = new List<ChildrenAreasList>();
+        public List<ChildrenAreasList> ChildrenShowDetails { get { return _childrenAreasList; } set { _childrenAreasList = value; } }
+
+    }
+    public class PciAreaModel
+    {
+        public string PcicmpName { get; set; }
+        public string AreasDesc { get; set; }
+    }
 }

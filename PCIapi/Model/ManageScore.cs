@@ -327,7 +327,76 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
 
 
         }
- }
+        public IEnumerable<PciAreaModel> GetShowDetailsCategory()
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+               
+               
+                dbConnection.Open();
+                return dbConnection.Query<PciAreaModel>("GetPcinamewithareas", commandType: CommandType.StoredProcedure);
+            }
+        }
+        public IEnumerable<PciNamesWithAreaDesc> GetpcinameswithAreaDesc( )
+        {
+            var result = GetShowDetailsCategory();
+            var obj = new List<PciNamesWithAreaDesc>();
+            var objr = new List<ChildrenAreasList>();
+            var objc = new ChildrenAreasList();
+            var objparent = new PciNamesWithAreaDesc();
+            string PcicmpName = "";
+
+
+            foreach (var record in result)
+
+            {
+                if (PcicmpName == "")
+                {
+                    PcicmpName = record.PcicmpName;
+                    objparent.PcicmpName = PcicmpName;
+                    
+                    objc.AreasDesc = (record.AreasDesc);
+                    objr.Add(objc);
+                    
+                    continue;
+                }
+                if (PcicmpName == record.PcicmpName)
+                {
+                    
+                    objc = new ChildrenAreasList();
+                    objc.AreasDesc = (record.AreasDesc);
+                    objr.Add(objc);
+
+                }
+                else
+                {
+                    
+                    objparent.ChildrenShowDetails = objr;
+
+                    obj.Add(objparent);
+
+                    PcicmpName = record.PcicmpName;
+                    objc = new ChildrenAreasList();
+                    objr = new List<ChildrenAreasList>();
+
+                    objparent = new PciNamesWithAreaDesc();
+                    objparent.PcicmpName = PcicmpName;
+                    objc.AreasDesc = (record.AreasDesc);
+                    objr.Add(objc);
+                    
+                }
+            }
+
+            objparent.ChildrenShowDetails = objr;
+            obj.Add(objparent);
+
+            return obj;
+
+
+
+        }
+    }
+}
   
     
     
@@ -360,12 +429,12 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
         public int CompID { get; set; }
     }
 
-public class AreasbyKeyActivities
+    public class AreasbyKeyActivities
     {
         public string KeyActivities { get; set; }
         public int PcicmpID { get; set; }
     }
-}
+
 
 
 
