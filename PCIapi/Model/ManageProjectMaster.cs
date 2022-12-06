@@ -52,7 +52,19 @@ namespace PCIapi.Model
             }
 
         }
-      
+        public int userCount(int _ProjectMangerCount)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"Select count(ProjectManager) as ProjectMangerCount From MstProjectMaster";
+                dbConnection.Open();
+                var affectedRows = dbConnection.Execute(sQuery, new { count = _ProjectMangerCount});
+                return affectedRows;
+
+            }
+
+        }
+
         public string getcheckingProjectCode(string ProjectCode)
         {
             using (IDbConnection dbConnection = Connection)
@@ -93,14 +105,14 @@ namespace PCIapi.Model
 
             }
         }
-        public string updateProjectmanager(int id, string projectName, string projectManager)
+        public string updateProjectmanager(int id, string projectName, string projectManager, DateTime startDate, DateTime endDate)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"update MstProjectMaster set ProjectName=@_strProjectName,ProjectManager=@_strProjectManager where ProjectID =@_strProjectID";
+                string sQuery = @"update MstProjectMaster set ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,StartDate=@_strStartDate,EndDate=@_strEndDate where ProjectID =@_strProjectID";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectName = projectName, _strProjectManager = projectManager, _strProjectID = id });
-                if (affectedRows ==1)
+                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectName = projectName, _strProjectManager = projectManager, _strProjectID = id, _strStartDate = startDate, _strEndDate = endDate });
+                if (affectedRows == 1)
                 {
                     return "Updated Successfully";
                 }
@@ -118,7 +130,7 @@ namespace PCIapi.Model
     }
     public class projectMasterDto
     {
-       
+
         public string ProjectCode { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
@@ -142,10 +154,12 @@ namespace PCIapi.Model
         public int ProjectID { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
     public class Projectcount
     {
-        public string ProjectManager { get; set; }
+        public int ProjectMangerCount { get; set; }
 
     }
 

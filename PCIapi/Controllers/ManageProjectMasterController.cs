@@ -46,6 +46,13 @@ namespace PCIapi.Controllers
 
 
         }
+        [HttpGet]
+        [Route("count")]
+        public int userCount(int _ProjectMangerCount)
+        {
+            return manageProjectMaster.userCount(_ProjectMangerCount);
+        }
+
 
         [HttpGet("{id}")]
         public IEnumerable<projectMaster> get(int id)
@@ -78,7 +85,7 @@ namespace PCIapi.Controllers
         [Route("updatemanagedetails")]
         public string put([FromBody] projectMasterUpadteDto projectMaster)
         {
-            return manageProjectMaster.updateProjectmanager(projectMaster.ProjectID, projectMaster.ProjectName, projectMaster.ProjectManager);
+            return manageProjectMaster.updateProjectmanager(projectMaster.ProjectID, projectMaster.ProjectName, projectMaster.ProjectManager, projectMaster.StartDate, projectMaster.EndDate);
 
 
         }
