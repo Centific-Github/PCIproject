@@ -48,9 +48,9 @@ namespace PCIapi.Controllers
         }
         [HttpGet]
         [Route("count")]
-        public int userCount(int _ProjectMangerCount)
+        public IEnumerable<Projectcount> ProjectCount( )
         {
-            return manageProjectMaster.userCount(_ProjectMangerCount);
+            return manageProjectMaster.ProjectCount();
         }
 
 
