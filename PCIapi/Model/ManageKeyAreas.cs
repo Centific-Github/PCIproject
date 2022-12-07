@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using Microsoft.Extensions.Configuration;
-
+using System.Linq;
 
 namespace PCIapi.Model
 {
-  /// <summary>
-  /// following code is written by Monisree Sai Raji
-  /// date : 20-09-2022
-  /// <summary>
-  
+    /// <summary>
+    /// following code is written by Monisree Sai Raji
+    /// date : 20-09-2022
+    /// <summary>
+
     public class ManageKeyAreas : DBconnection
     {
         public ManageKeyAreas(IConfiguration configuration) : base(configuration)
@@ -23,9 +23,9 @@ namespace PCIapi.Model
             {
                 string sQuery = @"SELECT AreasID, AreasDesc FROM MstKeyAreas";
                 dbConnection.Open();
-                return dbConnection.Query<keyAreas>(sQuery);             
+                return dbConnection.Query<keyAreas>(sQuery);
             }
-        }     
+        }
         public IEnumerable<keyAreas> getKeyAreaDeatails(int id)
         {
             using (IDbConnection dbConnection = Connection)
@@ -35,7 +35,7 @@ namespace PCIapi.Model
                 return dbConnection.Query<keyAreas>(sQuery, new { _AreasID = id });
             }
         }
-       
+
         public string InsertKeyareas(InsertKeyAreas _insertKeyAreas)
         {
             using (IDbConnection dbConnection = Connection)
@@ -72,8 +72,24 @@ namespace PCIapi.Model
             }
 
         }
+        public string getcheckingKeyAreas(string AreasDesc)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"select 1 from  MstKeyAreas  where AreasDesc = @_strAreasDesc";
+                dbConnection.Open();
+                var result = dbConnection.Query<string>(sQuery, new { _strAreasDesc = AreasDesc });
+                if (result.Count() > 0)
+                {
+                    return "KeyArea exist";
+                }
+                else
+                {
+                    return "KeyArea doesnot exist";
+                }
+            }
+        }
     }
-
     public class keyAreas
     {
         public int AreasID { get; set; }

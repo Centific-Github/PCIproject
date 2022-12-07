@@ -61,5 +61,14 @@ namespace PCIapi.Controllers
         {
             return oManageKeyAreas.getAreasByID(PcicmpID);
         }
+        [HttpGet]
+        [Route("CheckKeyAreas")]
+        public string getcheckingKeyAreas(string AreasDesc)
+        {
+
+            return oManageKeyAreas.getcheckingKeyAreas(AreasDesc);
+
+
+        }
     }
 }
