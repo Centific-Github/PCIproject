@@ -83,13 +83,13 @@ namespace PCIapi.Model
 
         }
        
-        public int UpdateLoginOtp(string emailID, string OTP)
+        public int UpdateLoginOtp(string emailID, string Password)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"UPDATE MstLogintbl SET OTP = @_strOTP where EmailID = @_strEmailID";
+                string sQuery = @"UPDATE MstLogintbl SET Password = @_strPassword where EmailID = @_strEmailID";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = emailID, _strOTP = OTP });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = emailID, _strPassword = OTP });
                 return affectedRows;
             }
 
@@ -111,7 +111,7 @@ namespace PCIapi.Model
         {
             
                 var OTP = CreateOtp(8);
-                var roweffected = UpdateLoginOtp(emailID, OTP);
+                var roweffected = UpdateLoginOtp(_userTypeDTO.EmailID, OTP);
                 if (roweffected > 0)
             { 
 
