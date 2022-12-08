@@ -169,6 +169,12 @@ namespace PCIapi.Controllers
             else
                 return "Invalid model";
         }
+        [HttpGet]
+        [Route("ActivitiesbypcicmpID")]
+        public IEnumerable<ActivitiesByID> getActivitiesByID(int PcicmpID)
+        {
+            return manageScoreController.getActivitiesByID(PcicmpID);
+        }
     }
 }
 

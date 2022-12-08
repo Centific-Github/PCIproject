@@ -395,6 +395,17 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
 
 
         }
+        public IEnumerable<ActivitiesByID> getActivitiesByID(int PcicmpID)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@PcicmpID", PcicmpID);
+                dbConnection.Open();
+                return dbConnection.Query<ActivitiesByID>("SP_GetActivities", p, commandType: CommandType.StoredProcedure);
+            }
+
+        }
     }
 }
   
@@ -434,6 +445,10 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
         public string KeyActivities { get; set; }
         public int PcicmpID { get; set; }
     }
+public class ActivitiesByID
+{
+    public string KeyActivities { get; set; }
+}
 
 
 
