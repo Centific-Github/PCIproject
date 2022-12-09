@@ -395,17 +395,85 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
 
 
         }
-        public IEnumerable<ActivitiesByID> getActivitiesByID(int PcicmpID)
+        public IEnumerable<PciActivityModel> GetShowDetailsKeyActivities()
         {
             using (IDbConnection dbConnection = Connection)
             {
-                var p = new DynamicParameters();
-                p.Add("@PcicmpID", PcicmpID);
+
+
                 dbConnection.Open();
-                return dbConnection.Query<ActivitiesByID>("SP_GetActivities", p, commandType: CommandType.StoredProcedure);
+                return dbConnection.Query<PciActivityModel>("GetPcinamewithactivities", commandType: CommandType.StoredProcedure);
+            }
+        }
+        public IEnumerable<PciNamesWithActivityDesc> GetpcinameswithActivityDesc()
+        {
+            var result = GetShowDetailsKeyActivities();
+            var obj = new List<PciNamesWithActivityDesc>();
+            var objr = new List<ChildrenActivityList>();
+            var objc = new ChildrenActivityList();
+            var objparent = new PciNamesWithActivityDesc();
+            string PcicmpName = "";
+
+
+            foreach (var record in result)
+
+            {
+                if (PcicmpName == "")
+                {
+                    PcicmpName = record.PcicmpName;
+                    objparent.PcicmpName = PcicmpName;
+
+                    objc.ActivitiesDesc = (record.ActivitiesDesc);
+                    objr.Add(objc);
+
+                    continue;
+                }
+                if (PcicmpName == record.PcicmpName)
+                {
+
+                    objc = new ChildrenActivityList();
+                    objc.ActivitiesDesc = (record.ActivitiesDesc);
+                    objr.Add(objc);
+
+                }
+                else
+                {
+
+                    objparent.ChildrenShowDetails = objr;
+
+                    obj.Add(objparent);
+
+                    PcicmpName = record.PcicmpName;
+                    objc = new ChildrenActivityList();
+                    objr = new List<ChildrenActivityList>();
+
+                    objparent = new PciNamesWithActivityDesc();
+                    objparent.PcicmpName = PcicmpName;
+                    objc.ActivitiesDesc = (record.ActivitiesDesc);
+                    objr.Add(objc);
+
+                }
             }
 
+            objparent.ChildrenShowDetails = objr;
+            obj.Add(objparent);
+
+            return obj;
+
+
         }
+
+            public IEnumerable<ActivitiesByID> getActivitiesByID(int PcicmpID)
+            {
+                   using (IDbConnection dbConnection = Connection)
+                   {
+                     var p = new DynamicParameters();
+                     p.Add("@PcicmpID", PcicmpID);
+                     dbConnection.Open();
+                     return dbConnection.Query<ActivitiesByID>("SP_GetActivities", p, commandType: CommandType.StoredProcedure);
+                   }
+
+            }
     }
 }
   

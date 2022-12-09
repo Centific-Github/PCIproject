@@ -131,6 +131,12 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.GetpcinameswithAreaDesc();
         }
+        [HttpGet]
+        [Route("GetshowdetailsByKeyActivities")]
+        public IEnumerable<PciNamesWithActivityDesc> GetDetailsbyKeyActivities()
+        {
+            return manageScoreController.GetpcinameswithActivityDesc();
+        }
         [HttpPost]
         [Route("InsertScore")]
         public string InsertScore([FromBody] Scores _scores)
