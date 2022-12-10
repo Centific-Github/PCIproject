@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Permissions;
 
 namespace PCIapi.Model
 {
@@ -17,7 +18,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate FROM MstProjectMaster ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate,GroupName,BusinessUnit,Account,ContactDetails FROM MstProjectMaster ";
                 dbConnection.Open();
                 return dbConnection.Query<projectMaster>(sQuery);
             }
@@ -26,7 +27,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate FROM MstProjectMaster WHERE ProjectID=@_Projectid ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate,GroupName,BusinessUnit,Account,ContactDetails FROM MstProjectMaster WHERE ProjectID=@_Projectid ";
                 dbConnection.Open();
                 return dbConnection.Query<projectMaster>(sQuery, new { _Projectid = id });
             }
@@ -35,18 +36,20 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate  FROM MstProjectMaster WHERE ProjectCode=@_strProjectCode AND ProjectName=@_strProjectName AND ProjectManager=@_strProjectManager ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate,GroupName,BusinessUnit,Account,ContactDetails  FROM MstProjectMaster WHERE ProjectCode=@_strProjectCode AND ProjectName=@_strProjectName AND ProjectManager=@_strProjectManager ";
                 dbConnection.Open();
-                return dbConnection.Query<projectMaster>(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager, _strStartDate = _projectMaster.StartDate, _strEndDate = _projectMaster.EndDate });
+                return dbConnection.Query<projectMaster>(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager, _strStartDate = _projectMaster.StartDate, _strEndDate = _projectMaster.EndDate, _strGroupName = _projectMaster.GroupName, _strBusinessUnit = _projectMaster.BusinessUnit, _strAccount = _projectMaster.Account, _strContactDetails = _projectMaster.ContactDetails });
+               
+
             }
         }
         public int insertProjectDetails(projectMasterDto _projectMaster)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT INTO MstProjectMaster (ProjectCode,ProjectName,ProjectManager,StartDate,EndDate )  values(@_strProjectCode,@_strProjectName,@_strProjectManager,@_strStartDate,@_strEndDate)";
+                string sQuery = @"INSERT INTO MstProjectMaster (ProjectCode,ProjectName,ProjectManager,StartDate,EndDate ,GroupName,BusinessUnit,Account,ContactDetails)  values(@_strProjectCode,@_strProjectName,@_strProjectManager,@_strStartDate,@_strEndDate,@_strGroupName,@_strBusinessUnit,@_strAccount,@_strContactDetails)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager, _strStartDate = _projectMaster.StartDate, _strEndDate = _projectMaster.EndDate });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager, _strStartDate = _projectMaster.StartDate, _strEndDate = _projectMaster.EndDate, _strGroupName = _projectMaster.GroupName, _strBusinessUnit = _projectMaster.BusinessUnit, _strAccount = _projectMaster.Account, _strContactDetails = _projectMaster.ContactDetails });
                 return affectedRows;
 
             }
@@ -135,6 +138,10 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string GroupName { get; set; }
+        public string BusinessUnit { get; set; }
+        public string Account { get; set; }
+        public int ContactDetails { get; set; }
     }
     public class projectMaster
     {
@@ -144,6 +151,10 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string GroupName { get; set; }
+        public string BusinessUnit { get; set; }
+        public string Account { get; set; }
+        public int ContactDetails { get; set; }
     }
     public class projectMasterUpadteDto
     {
@@ -155,6 +166,10 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string GroupName { get; set; }
+        public string BusinessUnit { get; set; }
+        public string Account { get; set; }
+        public int ContactDetails { get; set; }
     }
     public class Projectcount
     {
