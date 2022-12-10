@@ -65,4 +65,22 @@ namespace PCIapi.Model
         public string PcicmpName { get; set; }
         public string AreasDesc { get; set; }
     }
+    public class ChildrenActivityList
+    {
+
+        public string ActivitiesDesc { get; set; }
+
+    }
+    public class PciNamesWithActivityDesc
+    {
+        public string PcicmpName { get; set; }
+        private List<ChildrenActivityList> _childrenActivityList = new List<ChildrenActivityList>();
+        public List<ChildrenActivityList> ChildrenShowDetails { get { return _childrenActivityList; } set { _childrenActivityList = value; } }
+
+    }
+    public class PciActivityModel
+    {
+        public string PcicmpName { get; set; }
+        public string ActivitiesDesc { get; set; }
+    }
 }

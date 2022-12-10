@@ -131,6 +131,12 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.GetpcinameswithAreaDesc();
         }
+        [HttpGet]
+        [Route("GetshowdetailsByKeyActivities")]
+        public IEnumerable<PciNamesWithActivityDesc> GetDetailsbyKeyActivities()
+        {
+            return manageScoreController.GetpcinameswithActivityDesc();
+        }
         [HttpPost]
         [Route("InsertScore")]
         public string InsertScore([FromBody] Scores _scores)
@@ -168,6 +174,12 @@ namespace PCIapi.Controllers
             }
             else
                 return "Invalid model";
+        }
+        [HttpGet]
+        [Route("ActivitiesbypcicmpID")]
+        public IEnumerable<ActivitiesByID> getActivitiesByID(int PcicmpID)
+        {
+            return manageScoreController.getActivitiesByID(PcicmpID);
         }
     }
 }
