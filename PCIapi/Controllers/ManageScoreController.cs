@@ -181,6 +181,12 @@ namespace PCIapi.Controllers
         {
             return manageScoreController.getActivitiesByID(PcicmpID);
         }
+        [HttpGet]
+        [Route("ActivitiesbyareaspcicmpID")]
+        public IEnumerable<ActivitiesByAreapcicmpID> getActivitiesByareaspcicmpID(int PcicmpID , int AreasID)
+        {
+            return manageScoreController.getActivitiesByareaspcicmpID(PcicmpID,AreasID);
+        }
     }
 }
 
