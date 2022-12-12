@@ -482,7 +482,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 p.Add("@PcicmpID", PcicmpID);
                 p.Add("@AreasID", AreasID);
                 dbConnection.Open();
-                return dbConnection.Query<ActivitiesByAreapcicmpID>("keyAreas_activities", p, commandType: CommandType.StoredProcedure);
+                return dbConnection.Query<ActivitiesByAreapcicmpID>("keyAreasactivities", p, commandType: CommandType.StoredProcedure);
             }
 
         }
@@ -531,7 +531,9 @@ public class ActivitiesByID
 }
 public class ActivitiesByAreapcicmpID
 {
+    public int ActivityID { get; set; }
     public string Activitydesc { get; set; }
+    
 }
 
 
