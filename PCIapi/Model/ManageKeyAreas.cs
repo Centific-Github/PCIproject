@@ -103,7 +103,9 @@ namespace PCIapi.Model
     }
     public class AreasbyID
     {
+        public int AreasID { get; set; }
         public string AreasDesc { get; set; }
+       
 
     }
 }
