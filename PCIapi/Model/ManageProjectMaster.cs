@@ -87,7 +87,7 @@ namespace PCIapi.Model
 
             }
         }
-        public string getcheckingProjectNmae(string ProjectName)
+        public string getcheckingProjectNmae(string  ProjectName)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -107,7 +107,7 @@ namespace PCIapi.Model
 
             }
         }
-        public string updateProjectmanager(int id, string projectName, string projectManager, DateTime startDate, DateTime endDate,string SBUName, string AccountName)
+        public string updateProjectmanager(int id, string projectName, string projectManager, DateTime startDate, DateTime endDate,string ? SBUName, string ? AccountName)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -138,8 +138,8 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string SBUName { get; set; }
-        public string AccountName { get; set; }
+        public string ? SBUName { get; set; }
+        public string ? AccountName { get; set; }
 
     }
     public class projectMaster
@@ -150,8 +150,8 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string SBUName { get; set; }
-        public string AccountName { get; set; }
+        public  string ? SBUName { get; set; }
+        public string ? AccountName { get; set; }
 
 
     }
@@ -165,8 +165,8 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string SBUName { get; set; }
-        public string AccountName { get; set; }
+        public string ? SBUName { get; set; }
+        public string ? AccountName { get; set; }
 
     }
     public class Projectcount

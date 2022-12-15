@@ -68,7 +68,7 @@ namespace PCIapi.Model
                 var p = new DynamicParameters();
                 p.Add("@PcicmpID", PcicmpID);
                 dbConnection.Open();
-                return dbConnection.Query<AreasbyID>("SP_GetAreas", p, commandType: CommandType.StoredProcedure);
+                return dbConnection.Query<AreasbyID>("Sp_GetAreas", p, commandType: CommandType.StoredProcedure);
             }
 
         }
