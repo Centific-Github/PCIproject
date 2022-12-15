@@ -85,7 +85,7 @@ namespace PCIapi.Controllers
         [Route("updatemanagedetails")]
         public string put([FromBody] projectMasterUpadteDto projectMaster)
         {
-            return manageProjectMaster.updateProjectmanager(projectMaster.ProjectID, projectMaster.ProjectName, projectMaster.ProjectManager, projectMaster.StartDate, projectMaster.EndDate);
+            return manageProjectMaster.updateProjectmanager(projectMaster.ProjectID, projectMaster.ProjectName, projectMaster.ProjectManager, projectMaster.StartDate, projectMaster.EndDate, projectMaster.SBUName, projectMaster.AccountName);
 
 
         }

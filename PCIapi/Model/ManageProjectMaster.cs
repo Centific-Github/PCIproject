@@ -18,7 +18,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate FROM MstProjectMaster ";
+                string sQuery = @"SELECT ProjectID ,ProjectCode,ProjectName,ProjectManager,StartDate,EndDate,SBUName,AccountName FROM MstProjectMaster ";
                 dbConnection.Open();
                 return dbConnection.Query<projectMaster>(sQuery);
             }
@@ -47,9 +47,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT INTO MstProjectMaster (ProjectCode,ProjectName,ProjectManager,StartDate,EndDate )";
+                string sQuery = @"INSERT INTO MstProjectMaster (ProjectCode,ProjectName,ProjectManager,StartDate,EndDate,SBUName,AccountName )";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager, _strStartDate = _projectMaster.StartDate, _strEndDate = _projectMaster.EndDate });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectCode = _projectMaster.ProjectCode, _strProjectName = _projectMaster.ProjectName, _strProjectManager = _projectMaster.ProjectManager, _strStartDate = _projectMaster.StartDate, _strEndDate = _projectMaster.EndDate, _strSBUName = _projectMaster.SBUName, _strAccountName = _projectMaster.AccountName });
                 return affectedRows;
 
             }
@@ -107,13 +107,13 @@ namespace PCIapi.Model
 
             }
         }
-        public string updateProjectmanager(int id, string projectName, string projectManager, DateTime startDate, DateTime endDate)
+        public string updateProjectmanager(int id, string projectName, string projectManager, DateTime startDate, DateTime endDate,string SBUName, string AccountName)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"update MstProjectMaster set ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,StartDate=@_strStartDate,EndDate=@_strEndDate where ProjectID =@_strProjectID";
+                string sQuery = @"update MstProjectMaster set ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,StartDate=@_strStartDate,EndDate=@_strEndDate,SBUName=_strSBUName,AccountName=@_strAccountName where ProjectID =@_strProjectID";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectName = projectName, _strProjectManager = projectManager, _strProjectID = id, _strStartDate = startDate, _strEndDate = endDate });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectName = projectName, _strProjectManager = projectManager, _strProjectID = id, _strStartDate = startDate, _strEndDate = endDate, _strSBUName = SBUName, _strAccountName = AccountName });
                 if (affectedRows == 1)
                 {
                     return "Updated Successfully";
@@ -138,7 +138,9 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-       
+        public string SBUName { get; set; }
+        public string AccountName { get; set; }
+
     }
     public class projectMaster
     {
@@ -148,7 +150,10 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-       
+        public string SBUName { get; set; }
+        public string AccountName { get; set; }
+
+
     }
     public class projectMasterUpadteDto
     {
@@ -160,7 +165,9 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-       
+        public string SBUName { get; set; }
+        public string AccountName { get; set; }
+
     }
     public class Projectcount
     {
