@@ -46,9 +46,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT INTO MstProjectMaster (SBUName,AccountName,ProjectName,ProjectManager,ProjectStartDate,ProjectEndDate,ProjectType )values(@_strSBUName,@_strAccountName,@_strProjectName,@_strProjectManager,@_strProjectStartDate,@_strProjectEndDate,@_strProjectType)";
+                string sQuery = @"INSERT INTO MstProjectDetails (SBUName,AccountName,ProjectId,ProjectName,ProjectManager,ProjectStartDate,ProjectEndDate,ProjectType )values(@_strSBUName,@_strAccountName,@_strProjectId,@_strProjectName,@_strProjectManager,@_strProjectStartDate,@_strProjectEndDate,@_strProjectType)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strSBUName = _projectDetails.SBUName, _strAccountName = _projectDetails.AccountName, _strProjectName = _projectDetails.ProjectName, _strProjectManager = _projectDetails.ProjectManager, _strProjectStartDate = _projectDetails.ProjectStartDate, _strProjectEndDate = _projectDetails.ProjectEndDate, _strProjectType= _projectDetails.ProjectType });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strSBUName = _projectDetails.SBUName, _strAccountName = _projectDetails.AccountName, _strProjectId= _projectDetails.ProjectId, _strProjectName = _projectDetails.ProjectName,  _strProjectManager = _projectDetails.ProjectManager, _strProjectStartDate = _projectDetails.ProjectStartDate, _strProjectEndDate = _projectDetails.ProjectEndDate, _strProjectType= _projectDetails.ProjectType });
                 return affectedRows;
 
             }
@@ -82,9 +82,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"update MstProjectDetails set SBUName=@_strSBUName,AccountName=@_strAccountName, ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,ProjectStartDate=@_strStartDate,ProjectendDate=@_strEndDate,ProjectType=@_strProjectType where ProjectID =@_strProjectID";
+                string sQuery = @"update MstProjectDetails set SBUName=@_strSBUName,AccountName=@_strAccountName,ProjectId=@_strProjectId ,ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,ProjectStartDate=@_strStartDate,ProjectendDate=@_strEndDate,ProjectType=@_strProjectType where ProjectID =@_strProjectID";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strSBUName = SBUName, _strAccountName = AccountName,_strProjectName = projectName, _strProjectManager = projectManager, _strProjectID = id, _strStartDate = ProjectStartDate, _strEndDate = ProjectendDate, _strProjectType= ProjectType });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strSBUName = SBUName, _strAccountName = AccountName, _strProjectId= id, _strProjectName = projectName, _strProjectManager = projectManager,  _strStartDate = ProjectStartDate, _strEndDate = ProjectendDate, _strProjectType= ProjectType });
                 if (affectedRows == 1)
                 {
                     return "Updated Successfully";
