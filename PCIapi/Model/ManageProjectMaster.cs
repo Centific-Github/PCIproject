@@ -138,7 +138,7 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string ? SBUName { get; set; }
+        public string[] ? SBUName { get; set; }
         public string ? AccountName { get; set; }
 
     }
