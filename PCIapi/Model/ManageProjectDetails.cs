@@ -22,7 +22,7 @@ namespace PCIapi.Model
                 return dbConnection.Query<projectDetails>(sQuery);
             }
         }
-        public IEnumerable<projectDetails> getProjectdetails(int id)
+        public IEnumerable<projectDetails> getProjectdetails(string id)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -78,7 +78,7 @@ namespace PCIapi.Model
 
             }
         }
-        public string UpdateProjectmanager(string SBUName, string AccountName,int id, string projectName, string projectManager, DateTime ProjectStartDate, DateTime ProjectendDate,string ProjectType)
+        public string UpdateProjectmanager(string SBUName, string AccountName,string id, string projectName, string projectManager, DateTime ProjectStartDate, DateTime ProjectendDate,string ProjectType)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -108,7 +108,7 @@ namespace PCIapi.Model
 
             public string SBUName { get; set; }
             public string AccountName { get; set; }
-            public int ProjectId { get; set; }
+            public string ProjectId { get; set; }
             public string ProjectName { get; set; }
             public string ProjectManager { get; set; }
             public DateTime ProjectStartDate { get; set; }
