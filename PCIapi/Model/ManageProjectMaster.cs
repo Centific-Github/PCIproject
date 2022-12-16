@@ -111,7 +111,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"update MstProjectMaster set ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,StartDate=@_strStartDate,EndDate=@_strEndDate,SBUName=_strSBUName,AccountName=@_strAccountName where ProjectID =@_strProjectID";
+                string sQuery = @"update MstProjectMaster set ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,StartDate=@_strStartDate,EndDate=@_strEndDate,SBUName=@_strSBUName,AccountName=@_strAccountName where ProjectID =@_strProjectID";
                 dbConnection.Open();
                 var affectedRows = dbConnection.Execute(sQuery, new { _strProjectName = projectName, _strProjectManager = projectManager, _strProjectID = id, _strStartDate = startDate, _strEndDate = endDate, _strSBUName = SBUName, _strAccountName = AccountName });
                 if (affectedRows == 1)
