@@ -78,13 +78,13 @@ namespace PCIapi.Model
 
             }
         }
-        public string UpdateProjectmanager(string SBUName, string AccountName,string id, string projectName, string projectManager, DateTime ProjectStartDate, DateTime ProjectendDate,string ProjectType)
+        public string UpdateProjectmanager(string SBUName, string AccountName,string id, string projectName, string projectManager, DateTime ProjectStartDate, DateTime ProjectEndDate, string ProjectType)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"update MstProjectDetails set SBUName=@_strSBUName,AccountName=@_strAccountName,ProjectId=@_strProjectId ,ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,ProjectStartDate=@_strStartDate,ProjectendDate=@_strEndDate,ProjectType=@_strProjectType where ProjectID =@_strProjectID";
+                string sQuery = @"update MstProjectDetails set SBUName=@_strSBUName,AccountName=@_strAccountName,ProjectId=@_strProjectId ,ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,ProjectStartDate=@_strProjectStartDate,ProjectEndDate=@_strProjectEndDate,ProjectType=@_strProjectType where ProjectID =@_strProjectID";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strSBUName = SBUName, _strAccountName = AccountName, _strProjectId= id, _strProjectName = projectName, _strProjectManager = projectManager,  _strStartDate = ProjectStartDate, _strEndDate = ProjectendDate, _strProjectType= ProjectType });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strSBUName = SBUName, _strAccountName = AccountName, _strProjectId= id, _strProjectName = projectName, _strProjectManager = projectManager, _strProjectStartDate = ProjectStartDate, _strProjectEndDate = ProjectEndDate, _strProjectType= ProjectType });
                 if (affectedRows == 1)
                 {
                     return "Updated Successfully";
