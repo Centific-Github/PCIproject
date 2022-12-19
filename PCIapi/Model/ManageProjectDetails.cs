@@ -82,7 +82,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"update MstProjectDetails set ProjectID=@_strProjectID ,SBUName=@_strSBUName,AccountName=@_strAccountName,ProjectCode = @_strProjectCode,ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,ProjectStartDate=@_strProjectStartDate,ProjectEndDate=@_strProjectEndDate,ProjectType=@_strProjectType where ProjectID =@_strProjectID";
+                string sQuery = @"update MstProjectDetails set SBUName=@_strSBUName,AccountName=@_strAccountName,ProjectCode = @_strProjectCode,ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,ProjectStartDate=@_strProjectStartDate,ProjectEndDate=@_strProjectEndDate,ProjectType=@_strProjectType where ProjectID =@_strProjectID";
                 dbConnection.Open();
                 var affectedRows = dbConnection.Execute(sQuery, new { _strProjectID = id,_strSBUName = SBUName, _strAccountName = AccountName, _strProjectCode = ProjectCode, _strProjectName = projectName, _strProjectManager = projectManager, _strProjectStartDate = ProjectStartDate, _strProjectEndDate = ProjectEndDate, _strProjectType= ProjectType });
                 if (affectedRows == 1)
