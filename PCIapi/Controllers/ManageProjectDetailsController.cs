@@ -41,7 +41,7 @@ namespace PCIapi.Controllers
 
 
         [HttpGet("{id}")]
-        public IEnumerable<projectDetails> get(string id)
+        public IEnumerable<projectDetails> get(int id)
         {
             return manageProjectDetails.getProjectdetails(id);
         }
@@ -71,7 +71,7 @@ namespace PCIapi.Controllers
         [Route("updatemanagedetails")]
         public string put([FromBody] projectDetails projectDetails)
         {
-            return manageProjectDetails.UpdateProjectmanager(projectDetails.SBUName, projectDetails.AccountName,projectDetails.ProjectId, projectDetails.ProjectName, projectDetails.ProjectManager, projectDetails.ProjectStartDate, projectDetails.ProjectEndDate, projectDetails.ProjectType);
+            return manageProjectDetails.UpdateProjectmanager(projectDetails.ProjectID,projectDetails.SBUName, projectDetails.AccountName,projectDetails.ProjectCode, projectDetails.ProjectName, projectDetails.ProjectManager, projectDetails.ProjectStartDate, projectDetails.ProjectEndDate, projectDetails.ProjectType);
 
 
         }
