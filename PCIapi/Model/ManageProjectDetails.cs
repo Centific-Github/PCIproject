@@ -42,22 +42,22 @@ namespace PCIapi.Model
 
             }
         }
-        public int insertProjectDetails(projectDetails _projectDetails)
+        public int insertProjectDetails(projectDetailsDTO _projectDetailsDTO)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT INTO MstProjectDetails (ProjectID,SBUName,AccountName,ProjectCode,ProjectName,ProjectManager,ProjectStartDate,ProjectEndDate,ProjectType )values(@_strProjectID,@_strSBUName,@_strAccountName,@_strProjectCode,@_strProjectName,@_strProjectManager,@_strProjectStartDate,@_strProjectEndDate,@_strProjectType)";
+                string sQuery = @"INSERT INTO MstProjectDetails (SBUName,AccountName,ProjectCode,ProjectName,ProjectManager,ProjectStartDate,ProjectEndDate,ProjectType )values(@_strSBUName,@_strAccountName,@_strProjectCode,@_strProjectName,@_strProjectManager,@_strProjectStartDate,@_strProjectEndDate,@_strProjectType)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectID = _projectDetails.ProjectID, _strSBUName = _projectDetails.SBUName, _strAccountName = _projectDetails.AccountName, _strProjectCode = _projectDetails.ProjectCode, _strProjectName = _projectDetails.ProjectName,  _strProjectManager = _projectDetails.ProjectManager, _strProjectStartDate = _projectDetails.ProjectStartDate, _strProjectEndDate = _projectDetails.ProjectEndDate, _strProjectType= _projectDetails.ProjectType });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strSBUName = _projectDetailsDTO.SBUName, _strAccountName = _projectDetailsDTO.AccountName, _strProjectCode = _projectDetailsDTO.ProjectCode, _strProjectName = _projectDetailsDTO.ProjectName, _strProjectManager = _projectDetailsDTO.ProjectManager, _strProjectStartDate = _projectDetailsDTO.ProjectStartDate, _strProjectEndDate = _projectDetailsDTO.ProjectEndDate, _strProjectType = _projectDetailsDTO.ProjectType });
                 return affectedRows;
 
             }
 
         }
-        
 
-            
-        
+
+
+
         public string getcheckProjectName(string ProjectName)
         {
             using (IDbConnection dbConnection = Connection)
@@ -78,13 +78,13 @@ namespace PCIapi.Model
 
             }
         }
-        public string UpdateProjectmanager(int id,string SBUName, string AccountName,string ProjectCode, string projectName, string projectManager, DateTime ProjectStartDate, DateTime ProjectEndDate, string ProjectType)
+        public string UpdateProjectmanager(int id, string SBUName, string AccountName, string ProjectCode, string projectName, string projectManager, DateTime ProjectStartDate, DateTime ProjectEndDate, string ProjectType)
         {
             using (IDbConnection dbConnection = Connection)
             {
                 string sQuery = @"update MstProjectDetails set SBUName=@_strSBUName,AccountName=@_strAccountName,ProjectCode = @_strProjectCode,ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,ProjectStartDate=@_strProjectStartDate,ProjectEndDate=@_strProjectEndDate,ProjectType=@_strProjectType where ProjectID =@_strProjectID";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectID = id,_strSBUName = SBUName, _strAccountName = AccountName, _strProjectCode = ProjectCode, _strProjectName = projectName, _strProjectManager = projectManager, _strProjectStartDate = ProjectStartDate, _strProjectEndDate = ProjectEndDate, _strProjectType= ProjectType });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectID = id, _strSBUName = SBUName, _strAccountName = AccountName, _strProjectCode = ProjectCode, _strProjectName = projectName, _strProjectManager = projectManager, _strProjectStartDate = ProjectStartDate, _strProjectEndDate = ProjectEndDate, _strProjectType = ProjectType });
                 if (affectedRows == 1)
                 {
                     return "Updated Successfully";
@@ -101,24 +101,36 @@ namespace PCIapi.Model
 
 
     }
-    
-
-       public class projectDetails
-        {
-            public int ProjectID { get; set; }
-            public string SBUName { get; set; }
-            public string AccountName { get; set; }
-            public string ProjectCode { get; set; }
-            public string ProjectName { get; set; }
-            public string ProjectManager { get; set; }
-            public DateTime ProjectStartDate { get; set; }
-            public DateTime ProjectEndDate { get; set; }
-            public string ProjectType { get; set; }
 
 
+    public class projectDetails
+    {
+        public int ProjectID { get; set; }
+        public string SBUName { get; set; }
+        public string AccountName { get; set; }
+        public string ProjectCode { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
+        public DateTime ProjectStartDate { get; set; }
+        public DateTime ProjectEndDate { get; set; }
+        public string ProjectType { get; set; }
 
-        }
+
+
     }
+    public class projectDetailsDTO
+    {
+        public string SBUName { get; set; }
+        public string AccountName { get; set; }
+        public string ProjectCode { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
+        public DateTime ProjectStartDate { get; set; }
+        public DateTime ProjectEndDate { get; set; }
+        public string ProjectType { get; set; }
+
+    }
+}
 
 
 

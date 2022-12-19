@@ -48,18 +48,18 @@ namespace PCIapi.Controllers
 
         [HttpPost]
         [Route("insert")]
-        public int Insert([FromBody] projectDetails _projectDetails)
+        public int Insert([FromBody] projectDetailsDTO _projectDetailsDTO)
         {
             if (ModelState.IsValid)
             {
-                if (_projectDetails == null)
+                if (_projectDetailsDTO == null)
                 {
 
                     return 0;
                 }
                 else
                 {
-                    var affectedRows = manageProjectDetails.insertProjectDetails(_projectDetails);
+                    var affectedRows = manageProjectDetails.insertProjectDetails(_projectDetailsDTO);
                     return affectedRows;
                 }
             }
