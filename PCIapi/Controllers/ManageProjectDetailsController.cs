@@ -75,6 +75,12 @@ namespace PCIapi.Controllers
 
 
         }
+        [HttpGet]
+        [Route("GetProjectDetails")]
+        public IEnumerable<SpProjectDetails> GetProjectDetails()
+        {
+            return manageProjectDetails.GetProjectDetails();
+        }
     }
 }
    

@@ -94,8 +94,17 @@ namespace PCIapi.Model
                     return " Updated Unsuccessfully ";
                 }
 
+
             }
 
+        }
+        public IEnumerable<SpProjectDetails> GetProjectDetails()
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                return dbConnection.Query<SpProjectDetails>("sp_GetProjectDetails", commandType: CommandType.StoredProcedure);
+            }
         }
 
 
@@ -129,6 +138,16 @@ namespace PCIapi.Model
         public DateTime ProjectEndDate { get; set; }
         public string ProjectType { get; set; }
 
+    }
+    public class SpProjectDetails
+    {
+        public string SBUName { get; set; }
+        public string AccountName { get; set; }
+        public string ProjectCode { get; set; }
+        public string ProjectName { get; set; }
+        public DateTime ProjectStartDate { get; set; }
+        public DateTime ProjectEndDate { get; set; }
+        public int AuditStatus { get; set; }
     }
 }
 
