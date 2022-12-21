@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PCIapi.Model;
+using System;
 using System.Collections.Generic;
 
 namespace PCIapi.Controllers
@@ -44,6 +45,12 @@ namespace PCIapi.Controllers
         public IEnumerable<projectDetails> get(int id)
         {
             return manageProjectDetails.getProjectdetails(id);
+        }
+        [HttpGet]
+        [Route("detailsbydate")]
+        public IEnumerable<ProjectDetailsByDate> getProjectdetailsbydate(DateTime ProjectStartDate, DateTime ProjectEndDate)
+        {
+            return manageProjectDetails.getProjectdetailsbydate(ProjectStartDate, ProjectEndDate);
         }
 
         [HttpPost]

@@ -31,6 +31,15 @@ namespace PCIapi.Model
                 return dbConnection.Query<projectDetails>(sQuery, new { _Projectid = id });
             }
         }
+        public IEnumerable<ProjectDetailsByDate> getProjectdetailsbydate(DateTime ProjectStartDate, DateTime ProjectEndDate)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT SBUName ,AccountName,ProjectCode,ProjectName,ProjectManager,ProjectStartDate,ProjectEndDate,ProjectType FROM MstProjectDetails WHERE ProjectStartDate=@_ProjectStartDate AND ProjectEndDate=@_ProjectEndDate ";
+                dbConnection.Open();
+                return dbConnection.Query<ProjectDetailsByDate>(sQuery, new { _ProjectStartDate = ProjectStartDate, _ProjectEndDate= ProjectEndDate }) ;
+            }
+        }
         public IEnumerable<projectDetails> getProjectDetails(projectDetails _projectDetails)
         {
             using (IDbConnection dbConnection = Connection)
@@ -106,7 +115,15 @@ namespace PCIapi.Model
                 return dbConnection.Query<SpProjectDetails>("sp_GetProjectDetails", commandType: CommandType.StoredProcedure);
             }
         }
-
+        public IEnumerable<projectDetails> getProjectfilterDetails()
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                string sQuery = @"SELECT SBUName ,AccountName,ProjectCode,ProjectName,ProjectManager,ProjectStartDate,ProjectEndDate,ProjectType FROM MstProjectDetails ";
+                dbConnection.Open();
+                return dbConnection.Query<projectDetails>(sQuery);
+            }
+        }
 
 
     }
@@ -149,6 +166,26 @@ namespace PCIapi.Model
         public DateTime ProjectEndDate { get; set; }
         public int AuditStatus { get; set; }
     }
+    public class ProjectfilterDetails
+    {
+        public string SBUName { get; set; }
+        public string AccountName { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
+        public int AuditStatus { get; set; }
+    }
+    public class ProjectDetailsByDate
+    {
+        public string SBUName { get; set; }
+        public string AccountName { get; set; }
+        public string ProjectCode { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
+        public DateTime ProjectStartDate { get; set; }
+        public DateTime ProjectEndDate { get; set; }
+        public int AuditStatus { get; set; }
+    }
+
 }
 
 
