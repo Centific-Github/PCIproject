@@ -35,7 +35,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT SBUName ,AccountName,ProjectCode,ProjectName,ProjectManager,ProjectStartDate,ProjectEndDate,ProjectType FROM MstProjectDetails WHERE ProjectStartDate=@_ProjectStartDate AND ProjectEndDate=@_ProjectEndDate ";
+                string sQuery = @"SELECT SBUName ,AccountName,ProjectCode,ProjectName,ProjectManager,ProjectStartDate,ProjectEndDate,ProjectType FROM MstProjectDetails WHERE ProjectStartDate >= @_ProjectStartDate AND ProjectEndDate<=@_ProjectEndDate";
                 dbConnection.Open();
                 return dbConnection.Query<ProjectDetailsByDate>(sQuery, new { _ProjectStartDate = ProjectStartDate, _ProjectEndDate= ProjectEndDate }) ;
             }
