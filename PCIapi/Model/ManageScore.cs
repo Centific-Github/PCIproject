@@ -171,6 +171,19 @@ namespace PCIapi.Model
 
 
         }
+        public IEnumerable<Scorebyactivity> getscorevaluebyactivities(int PcicmpID,int Activityid,decimal Complianceid)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@PcicmpID", PcicmpID);
+                p.Add("@Activityid", Activityid);
+                p.Add("@Complianceid", Complianceid);
+                dbConnection.Open();
+                return dbConnection.Query<Scorebyactivity>("SP_Getscorebyactivities", p, commandType: CommandType.StoredProcedure);
+            }
+
+        }
         public IEnumerable<ScoreType> getAuditListDetails(string ProjectName)
         {
             using (IDbConnection dbConnection = Connection)
@@ -534,6 +547,11 @@ public class ActivitiesByAreapcicmpID
     public int ActivityID { get; set; }
     public string Activitydesc { get; set; }
     
+}
+public class Scorebyactivity
+{
+    public int ScoreCrdID { get; set; }
+    public decimal ScoreValue { get; set;}
 }
 
 
