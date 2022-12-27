@@ -126,14 +126,14 @@ namespace PCIapi.Model
              
                 dbConnection.Open();
 
-                var result = dbConnection.QueryMultiple("EXEC SpDashBoard @SBUName,@AccountName,@ProjectName,@AuditSatus,@StartDate,@EndDate", new
+                var result = dbConnection.QueryMultiple("EXEC SpDashBoard @SBUName=@SBUNameValue,@AccountName=@AccountNameValue,@ProjectName=@AccountNameValue,@AuditSatus=@AuditSatusValue,@StartDate=@StartDateValue,@EndDate=@EndDateValue", new
                 {
-                    SBUName = SUBName,
-                    AccountName = AccountName,
-                    ProjectName = ProjectName,
-                    AuditSatus = AuditSatus,
-                    StartDate = StartDate,
-                    EndDate = EndDate,
+                    SBUNameValue = SUBName,
+                    AccountNameValue = AccountName,
+                    ProjectNameValue = ProjectName,
+                    AuditSatusValue = AuditSatus,
+                    StartDateValue = StartDate,
+                    EndDateValue = EndDate,
                 });
 
                 dashBoard.projectTotalCount = result.Read<ProjectTotalCount>().First();
