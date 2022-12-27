@@ -109,9 +109,9 @@ namespace PCIapi.Controllers
         }
         [HttpGet]
         [Route("ScoresBykeyActivities")]
-        public IEnumerable<Scorebyactivity> getscorevaluebyactivities(int PcicmpID ,int Activityid, decimal Complianceid)
+        public IEnumerable<Scorebyactivity> getscorevaluebyactivities(int Activityid, decimal Complianceid)
         {
-            return manageScoreController.getscorevaluebyactivities(PcicmpID, Activityid, Complianceid);
+            return manageScoreController.getscorevaluebyactivities(Activityid, Complianceid);
         }
         [HttpGet]
         [Route("Projectname")]
