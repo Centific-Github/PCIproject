@@ -126,7 +126,7 @@ namespace PCIapi.Model
              
                 dbConnection.Open();
 
-                var result = dbConnection.QueryMultiple("EXEC SpDashBoard @SBUName=@SBUNameValue,@AccountName=@AccountNameValue,@ProjectName=@AccountNameValue,@AuditSatus=@AuditSatusValue,@StartDate=@StartDateValue,@EndDate=@EndDateValue", new
+                var result = dbConnection.QueryMultiple("EXEC SpDashBoard @SBUName=@SBUNameValue,@AccountName=@AccountNameValue,@ProjectName=@ProjectNameValue,@AuditSatus=@AuditSatusValue,@StartDate=@StartDateValue,@EndDate=@EndDateValue", new
                 {
                     SBUNameValue = SUBName,
                     AccountNameValue = AccountName,
