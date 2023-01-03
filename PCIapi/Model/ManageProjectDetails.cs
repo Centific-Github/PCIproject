@@ -88,13 +88,13 @@ namespace PCIapi.Model
 
             }
         }
-        public string UpdateProjectmanager(int id, string SBUName, string AccountName, string ProjectCode, string projectName, string projectManager, DateTime ProjectStartDate, DateTime ProjectEndDate, string ProjectType)
+        public string UpdateProjectmanager(int id, string projectName, string projectManager, DateTime ProjectStartDate, DateTime ProjectEndDate)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"update MstProjectDetails set SBUName=@_strSBUName,AccountName=@_strAccountName,ProjectCode = @_strProjectCode,ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,ProjectStartDate=@_strProjectStartDate,ProjectEndDate=@_strProjectEndDate,ProjectType=@_strProjectType where ProjectDetailsID =@_strProjectDetailsID";
+                string sQuery = @"update MstProjectDetails set ProjectName=@_strProjectName,ProjectManager=@_strProjectManager ,ProjectStartDate=@_strProjectStartDate,ProjectEndDate=@_strProjectEndDate where ProjectDetailsID =@_strProjectDetailsID";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectDetailsID = id, _strSBUName = SBUName, _strAccountName = AccountName, _strProjectCode = ProjectCode, _strProjectName = projectName, _strProjectManager = projectManager, _strProjectStartDate = ProjectStartDate, _strProjectEndDate = ProjectEndDate, _strProjectType = ProjectType });
+                var affectedRows = dbConnection.Execute(sQuery, new { _strProjectDetailsID = id, _strProjectName = projectName, _strProjectManager = projectManager, _strProjectStartDate = ProjectStartDate, _strProjectEndDate = ProjectEndDate });
                 if (affectedRows == 1)
                 {
                     return "Updated Successfully";
@@ -105,7 +105,11 @@ namespace PCIapi.Model
                 }
 
 
+
+
             }
+
+
 
         }
         public IEnumerable<SpProjectDetails> GetProjectDetails()
@@ -217,7 +221,15 @@ public class ProjectDetailsByDate
     public DateTime ProjectEndDate { get; set; }
     public int AuditStatus { get; set; }
 }
-public class ProjectTotalCount
+    public class projectDetailsUpdate
+    {
+        public int ProjectDetailsID { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
+        public DateTime ProjectStartDate { get; set; }
+        public DateTime ProjectEndDate { get; set; }
+    }
+    public class ProjectTotalCount
 {
     public int TotalProjects { get; set; }
 }

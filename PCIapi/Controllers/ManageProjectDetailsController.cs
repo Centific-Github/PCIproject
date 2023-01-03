@@ -77,9 +77,9 @@ namespace PCIapi.Controllers
 
         [HttpPut]
         [Route("updatemanagedetails")]
-        public string put([FromBody] projectDetails projectDetails)
+        public string put([FromBody] projectDetailsUpdate projectDetailsUpdate)
         {
-            return manageProjectDetails.UpdateProjectmanager(projectDetails.ProjectDetailsID, projectDetails.SBUName, projectDetails.AccountName,projectDetails.ProjectCode, projectDetails.ProjectName, projectDetails.ProjectManager, projectDetails.ProjectStartDate, projectDetails.ProjectEndDate, projectDetails.ProjectType);
+            return manageProjectDetails.UpdateProjectmanager(projectDetailsUpdate.ProjectDetailsID, projectDetailsUpdate.ProjectName, projectDetailsUpdate.ProjectManager, projectDetailsUpdate.ProjectStartDate, projectDetailsUpdate.ProjectEndDate);
 
 
         }
