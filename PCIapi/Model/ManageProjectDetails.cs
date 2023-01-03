@@ -139,7 +139,7 @@ namespace PCIapi.Model
                 dashBoard.projectTotalCount = result.Read<ProjectTotalCount>().First();
                 dashBoard.auditedProjectCount = result.Read<AuditedProjectCount>().First();
                 dashBoard.unAuditedProjectCount = result.Read<UnAuditedProjectCount>().First();
-                dashBoard.unAuditedProjectCount.UnAuditedProjects = dashBoard.projectTotalCount.TotalProjects - dashBoard.unAuditedProjectCount.UnAuditedProjects;
+                dashBoard.unAuditedProjectCount.UnAuditedProjects = dashBoard.projectTotalCount.TotalProjects - dashBoard.auditedProjectCount.AuditedProjects;
                 dashBoard.projectDetails = result.Read<ProjectDetails>().ToList();               
                 return dashBoard;
         }
