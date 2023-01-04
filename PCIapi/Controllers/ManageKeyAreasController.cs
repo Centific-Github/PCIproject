@@ -6,22 +6,22 @@ using Microsoft.Extensions.Configuration;
 
 namespace PCIapi.Controllers
 {
-  /// <summary>
-  /// following code is written by Monisree Sai Raji
-  /// date : 20-09-2022
-  /// <summary>
+    /// <summary>
+    /// following code is written by Monisree Sai Raji
+    /// date : 20-09-2022
+    /// <summary>
 
     [Route("api/[controller]")]
     [ApiController]
     public class ManageKeyAreasController : Controller
     {
         private IConfiguration _configuration;
-        private ManageKeyAreas oManageKeyAreas ;
+        private ManageKeyAreas oManageKeyAreas;
 
         public ManageKeyAreasController(IConfiguration configuration)
         {
             _configuration = configuration;
-             oManageKeyAreas = new ManageKeyAreas(_configuration);
+            oManageKeyAreas = new ManageKeyAreas(_configuration);
 
         }
 
@@ -35,7 +35,7 @@ namespace PCIapi.Controllers
         {
             return oManageKeyAreas.getKeyAreaDeatails(id);
         }
-        
+
         [HttpPost]
         [Route("InsertKeyareas")]
         public string InsertKeyareas([FromBody] InsertKeyAreas _insertKeyAreas)
@@ -60,6 +60,12 @@ namespace PCIapi.Controllers
         public IEnumerable<AreasbyID> getAreasByID(int PcicmpID)
         {
             return oManageKeyAreas.getAreasByID(PcicmpID);
+        }
+        [HttpGet]
+        [Route("getallAreasbypcicmpID")]
+        public IEnumerable<AreasbyID> getAreasByIDs(int PcicmpID)
+        {
+            return oManageKeyAreas.getAreasByIDs(PcicmpID);
         }
         [HttpGet]
         [Route("CheckKeyAreas")]

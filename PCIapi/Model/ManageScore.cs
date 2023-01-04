@@ -156,7 +156,7 @@ namespace PCIapi.Model
             }
 
         }
-        public IEnumerable<Score>GetScoreceremone(int activityID, int complianceID)
+        public IEnumerable<Score> GetScoreceremone(int activityID, int complianceID)
 
 
 
@@ -169,6 +169,18 @@ namespace PCIapi.Model
             }
 
 
+
+        }
+        public IEnumerable<Scorebyactivity> getscorevaluebyactivities(int Activityid, decimal Complianceid)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Activityid", Activityid);
+                p.Add("@Complianceid", Complianceid);
+                dbConnection.Open();
+                return dbConnection.Query<Scorebyactivity>("SP_Getscorebyactivities", p, commandType: CommandType.StoredProcedure);
+            }
 
         }
         public IEnumerable<ScoreType> getAuditListDetails(string ProjectName)
@@ -186,10 +198,10 @@ namespace PCIapi.Model
                 return dbConnection.Query<ScoreType>(sQuery, new { _strprojectName = ProjectName });
             }
         }
-       
-public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID,int PcicmpID)
+
+        public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID, int PcicmpID)
         {
-            using (IDbConnection dbConnection = Connection) 
+            using (IDbConnection dbConnection = Connection)
             {
                 var p = new DynamicParameters();
                 p.Add("@ProjectID", ProjectID);
@@ -197,19 +209,19 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 p.Add("@AreasID", AreasID);
                 p.Add("@PcicmpID", PcicmpID);
                 dbConnection.Open();
-                return dbConnection.Query<LatestAuditDetails>("GetAuditDetailBySaveDraft", p, commandType: CommandType.StoredProcedure); 
+                return dbConnection.Query<LatestAuditDetails>("GetAuditDetailBySaveDraft", p, commandType: CommandType.StoredProcedure);
             }
 
         }
-        public IEnumerable<Showdetails> GetShowDetails(int ProjectID, DateTime CreatedDate, int SaveType,  int PcicmpID  )
-         {
+        public IEnumerable<Showdetails> GetShowDetails(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
+        {
             using (IDbConnection dbConnection = Connection)
             {
                 var p = new DynamicParameters();
                 p.Add("@ProjectID", ProjectID);
                 p.Add("@SaveType", SaveType);
                 p.Add("@CreatedDate", CreatedDate);
-                p.Add("@PcicmpID", PcicmpID);                
+                p.Add("@PcicmpID", PcicmpID);
                 dbConnection.Open();
                 return dbConnection.Query<Showdetails>("sp_showDetails", p, commandType: CommandType.StoredProcedure);
             }
@@ -219,26 +231,24 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
             using (IDbConnection dbConnection = Connection)
             {
                 int affectedRows = 0;
-                
-                    var p = new DynamicParameters();
-                    p.Add("ActivityID", _scores.ActivityID);
-                    p.Add("AreasID", _scores.AreasID);
-                    p.Add("PcicmpID", _scores.PcicmpID);
-                    p.Add("ScoreValue", _scores.ScoreValue);
-                    p.Add("CompID", _scores.CompID);
-                    dbConnection.Open();
-                    affectedRows += dbConnection.Execute("CreateUpdateScore", p, commandType: CommandType.StoredProcedure);
-                    dbConnection.Close();
-            
-                     if (affectedRows > 0)
-                           {
-                                return " Saved Data Successful";
 
-                            }
-                     else
-                           {
-                                 return "Issuing the data";
-                     }
+                var p = new DynamicParameters();
+                p.Add("ActivityID", _scores.ActivityID);
+                p.Add("ScoreValue", _scores.ScoreValue);
+                p.Add("CompID", _scores.CompID);
+                dbConnection.Open();
+                affectedRows += dbConnection.Execute("CreateUpdateScore", p, commandType: CommandType.StoredProcedure);
+                dbConnection.Close();
+
+                if (affectedRows > 0)
+                {
+                    return " Saved Data Successful";
+
+                }
+                else
+                {
+                    return "Issuing the data";
+                }
             }
         }
         public string InsertKeyActivities(AreasbyKeyActivities _AreasbyKeyActivities)
@@ -250,7 +260,8 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 var p = new DynamicParameters();
                 p.Add("KeyActivities", _AreasbyKeyActivities.KeyActivities);
                 p.Add("PcicmpID", _AreasbyKeyActivities.PcicmpID);
-               
+                p.Add("AreasID", _AreasbyKeyActivities.AreasID);
+
                 dbConnection.Open();
                 affectedRows += dbConnection.Execute("SP_InsertActivities", p, commandType: CommandType.StoredProcedure);
                 dbConnection.Close();
@@ -267,28 +278,28 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
             }
         }
 
-        public IEnumerable <ShowDetailsResponse> GetShowDetailsResponse(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
+        public IEnumerable<ShowDetailsResponse> GetShowDetailsResponse(int ProjectID, DateTime CreatedDate, int SaveType, int PcicmpID)
         {
             var result = GetShowDetails(ProjectID, CreatedDate, SaveType, PcicmpID);
             var obj = new List<ShowDetailsResponse>();
             var objr = new ChildrenShowDetailsResponse();
             var objparent = new ShowDetailsResponse();
             string areadesc = "";
-           
+
             string activityDesc = "";
-           
+
 
             foreach (var record in result)
 
             {
-                if (areadesc == "") 
-                { 
+                if (areadesc == "")
+                {
                     areadesc = record.AreasDesc;
                     objparent.AreasDesc = areadesc;
-                   activityDesc  = record.ActivityDesc;
-                   objr.ActivityDesc = (activityDesc);
-                    objr.CompValue = (record.CompValue);            
-                     objr.ScoreValue = (record.ScoreValue);
+                    activityDesc = record.ActivityDesc;
+                    objr.ActivityDesc = (activityDesc);
+                    objr.CompValue = (record.CompValue);
+                    objr.ScoreValue = (record.ScoreValue);
                     objr.CreatedDate = (record.CreatedDate);
                     objparent.ChildrenShowDetails.Add(objr);
                     objparent.TotalScore += record.ScoreValue;
@@ -303,9 +314,11 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objr.CreatedDate = (record.CreatedDate);
                     objparent.ChildrenShowDetails.Add(objr);
                     objparent.TotalScore += record.ScoreValue;
-                } 
-                else { obj.Add(objparent);
-                   
+                }
+                else
+                {
+                    obj.Add(objparent);
+
                     areadesc = record.AreasDesc;
                     objr = new ChildrenShowDetailsResponse();
                     objparent = new ShowDetailsResponse();
@@ -318,10 +331,10 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objparent.TotalScore += record.ScoreValue;
                 }
             }
-            
-            
-                obj.Add(objparent);
-            
+
+
+            obj.Add(objparent);
+
             return obj;
 
 
@@ -331,13 +344,13 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
         {
             using (IDbConnection dbConnection = Connection)
             {
-               
-               
+
+
                 dbConnection.Open();
                 return dbConnection.Query<PciAreaModel>("GetPcinamewithareas", commandType: CommandType.StoredProcedure);
             }
         }
-        public IEnumerable<PciNamesWithAreaDesc> GetpcinameswithAreaDesc( )
+        public IEnumerable<PciNamesWithAreaDesc> GetpcinameswithAreaDesc()
         {
             var result = GetShowDetailsCategory();
             var obj = new List<PciNamesWithAreaDesc>();
@@ -354,15 +367,15 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 {
                     PcicmpName = record.PcicmpName;
                     objparent.PcicmpName = PcicmpName;
-                    
+
                     objc.AreasDesc = (record.AreasDesc);
                     objr.Add(objc);
-                    
+
                     continue;
                 }
                 if (PcicmpName == record.PcicmpName)
                 {
-                    
+
                     objc = new ChildrenAreasList();
                     objc.AreasDesc = (record.AreasDesc);
                     objr.Add(objc);
@@ -370,7 +383,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 }
                 else
                 {
-                    
+
                     objparent.ChildrenShowDetails = objr;
 
                     obj.Add(objparent);
@@ -383,7 +396,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                     objparent.PcicmpName = PcicmpName;
                     objc.AreasDesc = (record.AreasDesc);
                     objr.Add(objc);
-                    
+
                 }
             }
 
@@ -463,18 +476,18 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
 
         }
 
-            public IEnumerable<ActivitiesByID> getActivitiesByID(int PcicmpID)
+        public IEnumerable<ActivitiesByID> getActivitiesByID(int PcicmpID)
+        {
+            using (IDbConnection dbConnection = Connection)
             {
-                   using (IDbConnection dbConnection = Connection)
-                   {
-                     var p = new DynamicParameters();
-                     p.Add("@PcicmpID", PcicmpID);
-                     dbConnection.Open();
-                     return dbConnection.Query<ActivitiesByID>("SP_GetActivities", p, commandType: CommandType.StoredProcedure);
-                   }
-
+                var p = new DynamicParameters();
+                p.Add("@PcicmpID", PcicmpID);
+                dbConnection.Open();
+                return dbConnection.Query<ActivitiesByID>("SP_GetActivities", p, commandType: CommandType.StoredProcedure);
             }
-        public IEnumerable<ActivitiesByAreapcicmpID> getActivitiesByareaspcicmpID(int PcicmpID ,int AreasID)
+
+        }
+        public IEnumerable<ActivitiesByAreapcicmpID> getActivitiesByareaspcicmpID(int PcicmpID, int AreasID)
         {
             using (IDbConnection dbConnection = Connection)
             {
@@ -488,43 +501,43 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
         }
     }
 }
-  
-    
-    
-    
-    public class ScoreType
-    {
-        public int ProjectID { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string ProjectManager { get; set; }
-        public string SaveType { get; set; }
-
-    }
-    public class LatestAuditDetails
-    {
-        public int AreasID  { get; set; }
-        public int  Activityid { get; set; }
-        public int CompID { get; set; }
-        public decimal ScoreValue { get; set; }
-        
 
 
 
-    }
-    public class Scores
-    {
-        public int ActivityID { get; set; }
-        public int AreasID { get; set; }
-        public int PcicmpID { get; set; }
-        public decimal ScoreValue { get; set; }
-        public int CompID { get; set; }
-    }
 
-    public class AreasbyKeyActivities
-    {
-        public string KeyActivities { get; set; }
-        public int PcicmpID { get; set; }
-    }
+public class ScoreType
+{
+    public int ProjectID { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public string ProjectManager { get; set; }
+    public string SaveType { get; set; }
+
+}
+public class LatestAuditDetails
+{
+    public int AreasID { get; set; }
+    public int Activityid { get; set; }
+    public int CompID { get; set; }
+    public decimal ScoreValue { get; set; }
+
+
+
+
+}
+public class Scores
+{
+    public int ActivityID { get; set; }
+
+    public decimal ScoreValue { get; set; }
+    public int CompID { get; set; }
+}
+
+public class AreasbyKeyActivities
+{
+    public string KeyActivities { get; set; }
+    public int PcicmpID { get; set; }
+    public int AreasID { get; set; }
+}
 public class ActivitiesByID
 {
     public string KeyActivities { get; set; }
@@ -533,7 +546,12 @@ public class ActivitiesByAreapcicmpID
 {
     public int ActivityID { get; set; }
     public string Activitydesc { get; set; }
-    
+
+}
+public class Scorebyactivity
+{
+    public int ScoreCrdID { get; set; }
+    public decimal ScoreValue { get; set; }
 }
 
 
