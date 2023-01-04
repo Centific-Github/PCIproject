@@ -108,6 +108,12 @@ namespace PCIapi.Controllers
             return manageScoreController.GetScoreceremone(activityID, complianceID);
         }
         [HttpGet]
+        [Route("ScoresBykeyActivities")]
+        public IEnumerable<Scorebyactivity> getscorevaluebyactivities(int Activityid, decimal Complianceid)
+        {
+            return manageScoreController.getscorevaluebyactivities(Activityid, Complianceid);
+        }
+        [HttpGet]
         [Route("Projectname")]
         public IEnumerable<ScoreType> getAuditListDetails(string ProjectName)
         {

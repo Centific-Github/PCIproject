@@ -62,6 +62,12 @@ namespace PCIapi.Controllers
             return oManageKeyAreas.getAreasByID(PcicmpID);
         }
         [HttpGet]
+        [Route("getallAreasbypcicmpID")]
+        public IEnumerable<AreasbyID> getAreasByIDs(int PcicmpID)
+        {
+            return oManageKeyAreas.getAreasByIDs(PcicmpID);
+        }
+        [HttpGet]
         [Route("CheckKeyAreas")]
         public string getcheckingKeyAreas(string AreasDesc)
         {
