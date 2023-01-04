@@ -72,17 +72,6 @@ namespace PCIapi.Model
             }
 
         }
-        public IEnumerable<AreasbyID> getAreasByIDs(int PcicmpID)
-        {
-            using (IDbConnection dbConnection = Connection)
-            {
-                var p = new DynamicParameters();
-                p.Add("@PcicmpID", PcicmpID);
-                dbConnection.Open();
-                return dbConnection.Query<AreasbyID>("sp_GetAllAreas", p, commandType: CommandType.StoredProcedure);
-            }
-
-        }
         public string getcheckingKeyAreas(string AreasDesc)
         {
             using (IDbConnection dbConnection = Connection)

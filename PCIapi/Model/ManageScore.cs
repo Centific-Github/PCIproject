@@ -171,18 +171,6 @@ namespace PCIapi.Model
 
 
         }
-        public IEnumerable<Scorebyactivity> getscorevaluebyactivities(int Activityid,decimal Complianceid)
-        {
-            using (IDbConnection dbConnection = Connection)
-            {
-                var p = new DynamicParameters();
-                p.Add("@Activityid", Activityid);
-                p.Add("@Complianceid", Complianceid);
-                dbConnection.Open();
-                return dbConnection.Query<Scorebyactivity>("SP_Getscorebyactivities", p, commandType: CommandType.StoredProcedure);
-            }
-
-        }
         public IEnumerable<ScoreType> getAuditListDetails(string ProjectName)
         {
             using (IDbConnection dbConnection = Connection)
@@ -234,6 +222,8 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 
                     var p = new DynamicParameters();
                     p.Add("ActivityID", _scores.ActivityID);
+                    p.Add("AreasID", _scores.AreasID);
+                    p.Add("PcicmpID", _scores.PcicmpID);
                     p.Add("ScoreValue", _scores.ScoreValue);
                     p.Add("CompID", _scores.CompID);
                     dbConnection.Open();
@@ -260,8 +250,7 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
                 var p = new DynamicParameters();
                 p.Add("KeyActivities", _AreasbyKeyActivities.KeyActivities);
                 p.Add("PcicmpID", _AreasbyKeyActivities.PcicmpID);
-                p.Add("AreasID", _AreasbyKeyActivities.AreasID);
-
+               
                 dbConnection.Open();
                 affectedRows += dbConnection.Execute("SP_InsertActivities", p, commandType: CommandType.StoredProcedure);
                 dbConnection.Close();
@@ -525,7 +514,8 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
     public class Scores
     {
         public int ActivityID { get; set; }
-        
+        public int AreasID { get; set; }
+        public int PcicmpID { get; set; }
         public decimal ScoreValue { get; set; }
         public int CompID { get; set; }
     }
@@ -534,7 +524,6 @@ public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int 
     {
         public string KeyActivities { get; set; }
         public int PcicmpID { get; set; }
-        public int AreasID { get; set; }
     }
 public class ActivitiesByID
 {
@@ -545,11 +534,6 @@ public class ActivitiesByAreapcicmpID
     public int ActivityID { get; set; }
     public string Activitydesc { get; set; }
     
-}
-public class Scorebyactivity
-{
-    public int ScoreCrdID { get; set; }
-    public decimal ScoreValue { get; set;}
 }
 
 

@@ -30,17 +30,21 @@ namespace PCIapi.Controllers
         [Route("CheckProjectName")]
         public string CheckProjectName(string CheckProjectName)
         {
-
-
-
             return manageProjectDetails.getcheckProjectName(CheckProjectName);
+         }
+
+        [HttpGet]
+        [Route("CheckingProjectCode")]
+        public string CheckProjectCode(string CheckProjectCode)
+        {
+
+
+
+            return manageProjectDetails.getcheckProjectCode(CheckProjectCode);
 
 
 
         }
-       
-
-
 
         [HttpGet("{id}")]
         public IEnumerable<projectDetails> get(int id)
@@ -89,13 +93,6 @@ namespace PCIapi.Controllers
         {
             return manageProjectDetails.GetProjectDetails();
         }
-        [HttpGet]
-        [Route("DashBoard")]
-        public DashBoard DashBoard(string SUBName,string AccountName,string ProjectName,string AuditSatus,string StartDate,string EndDate)
-        {
-            return manageProjectDetails.GetDashBoard(SUBName,AccountName,ProjectName,AuditSatus,StartDate,EndDate);
-        }
-
     }
 }
    
