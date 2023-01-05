@@ -95,6 +95,12 @@ namespace PCIapi.Controllers
         {
             return manageProjectDetails.GetDashBoard(SUBName, AccountName, ProjectName, AuditSatus, StartDate, EndDate);
         }
+        [HttpGet]
+        [Route("DashBoardScoreByProjects")]
+        public IEnumerable<DashBoardProjectsResponse> DashBoardScoreByProjects(string SUBName, string AccountName)
+        {
+            return manageProjectDetails.DashBoardScoreByProjects(SUBName, AccountName);
+        }
 
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Permissions;
 
 namespace PCIapi.Model
 {
@@ -150,6 +151,18 @@ namespace PCIapi.Model
         }
 
 
+        public IEnumerable<DashBoardProjectsResponse> DashBoardScoreByProjects(string SUBName, string AccountName)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                var p = new DynamicParameters();
+                p.Add("SBUName", SUBName);
+                p.Add("AccountName", AccountName);
+                return dbConnection.Query<DashBoardProjectsResponse>("SpDashBoardScoreByProjects",p,commandType: CommandType.StoredProcedure);
+             }
+        }
+
 
         public IEnumerable<projectDetails> getProjectfilterDetails()
         {
@@ -260,6 +273,22 @@ namespace PCIapi.Model
 
         private List<ProjectDetails> _projectDetails = new List<ProjectDetails>();
         public List<ProjectDetails> projectDetails { get { return _projectDetails; } set { _projectDetails = value; } }
+
+    }
+
+    public class DashBoardProjects
+    {
+        private List<DashBoardProjectsResponse> _dashBoardProjectsResponse = new List<DashBoardProjectsResponse>();
+        public List<DashBoardProjectsResponse> DashBoardProjectsResponse { get { return _dashBoardProjectsResponse; } set { _dashBoardProjectsResponse = value; } }
+        public decimal PciScore { get; set; }
+    }
+    public class DashBoardProjectsResponse
+    {
+        public string ProjectName { get; set; }
+        public DateTime LastAuditedDate { get; set; }
+        public decimal ExecScore { get; set; }
+        public decimal AgileScore { get; set; }
+        public decimal OrchestranScore { get; set; }
 
     }
 }
