@@ -194,6 +194,7 @@ namespace PCIapi.Model
     }
     public class SpProjectDetails
     {
+        public int ProjectDetailsID { get; set; }
         public string SBUName { get; set; }
         public string AccountName { get; set; }
         public string ProjectCode { get; set; }
