@@ -263,6 +263,8 @@ namespace PCIapi.Model
         public string ProjectName { get; set; }
         public DateTime CreatedDate { get; set; }
         public int SaveType { get; set; }
+
+        public decimal AuditScore { get; set; }
     }
     public class DashBoard
     {
