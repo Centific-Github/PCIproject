@@ -109,7 +109,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                
+
                 int affectedRows = 0;
                 for (int i = 0; i < _scoreSave.ScoreCrdID.Length; i++)
                 {
@@ -501,61 +501,90 @@ namespace PCIapi.Model
             }
 
         }
+        public string MstScore(MstScoreSave _scoreSave)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+
+                int affectedRows = 0;
+                for (int i = 0; i < _scoreSave.ActivityId.Length; i++)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("ActivityId", _scoreSave.ActivityId[i]);
+                    p.Add("CompID", _scoreSave.CompID[i]);
+                    p.Add("ScoreValue", _scoreSave.ScoreValue[i]);
+
+                    dbConnection.Open();
+                    affectedRows += dbConnection.Execute("SP_mstscore", p, commandType: CommandType.StoredProcedure);
+                    dbConnection.Close();
+                }
+                if (affectedRows > 0)
+                {
+                    return " Saved Data Successful";
+
+                }
+                else
+                {
+                    return "The audit for same date is already submitted";
+                }
+            }
+
+        }
     }
-}
 
 
 
 
-public class ScoreType
-{
-    public int ProjectID { get; set; }
-    public DateTime CreatedDate { get; set; }
-    public string ProjectManager { get; set; }
-    public string SaveType { get; set; }
+    public class ScoreType
+    {
+        public int ProjectID { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string ProjectManager { get; set; }
+        public string SaveType { get; set; }
 
-}
-public class LatestAuditDetails
-{
-    public int AreasID { get; set; }
-    public int Activityid { get; set; }
-    public int CompID { get; set; }
-    public decimal ScoreValue { get; set; }
+    }
+    public class LatestAuditDetails
+    {
+        public int AreasID { get; set; }
+        public int Activityid { get; set; }
+        public int CompID { get; set; }
+        public decimal ScoreValue { get; set; }
 
-    public int ScorecrdId { get; set; }
-
-
+        public int ScorecrdId { get; set; }
 
 
-}
-public class Scores
-{
-    public int ActivityID { get; set; }
 
-    public decimal ScoreValue { get; set; }
-    public int CompID { get; set; }
-}
 
-public class AreasbyKeyActivities
-{
-    public string KeyActivities { get; set; }
-    public int PcicmpID { get; set; }
-    public int AreasID { get; set; }
-}
-public class ActivitiesByID
-{
-    public string KeyActivities { get; set; }
-}
-public class ActivitiesByAreapcicmpID
-{
-    public int ActivityID { get; set; }
-    public string Activitydesc { get; set; }
+    }
+    public class Scores
+    {
+        public int ActivityID { get; set; }
 
-}
-public class Scorebyactivity
-{
-    public int ScoreCrdID { get; set; }
-    public decimal ScoreValue { get; set; }
+        public decimal ScoreValue { get; set; }
+        public int CompID { get; set; }
+    }
+
+    public class AreasbyKeyActivities
+    {
+        public string KeyActivities { get; set; }
+        public int PcicmpID { get; set; }
+        public int AreasID { get; set; }
+    }
+    public class ActivitiesByID
+    {
+        public string KeyActivities { get; set; }
+    }
+    public class ActivitiesByAreapcicmpID
+    {
+        public int ActivityID { get; set; }
+        public string Activitydesc { get; set; }
+
+    }
+    public class Scorebyactivity
+    {
+        public int ScoreCrdID { get; set; }
+        public decimal ScoreValue { get; set; }
+    }
 }
 
 

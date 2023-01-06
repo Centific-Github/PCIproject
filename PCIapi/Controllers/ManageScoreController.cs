@@ -88,6 +88,7 @@ namespace PCIapi.Controllers
             else
                 return "Invalid model";
         }
+
         [HttpGet]
         [Route("GetScoreExm")]
         public IEnumerable<Score> GetScoreExc(int activityID, decimal complianceID)
@@ -192,6 +193,25 @@ namespace PCIapi.Controllers
         public IEnumerable<ActivitiesByAreapcicmpID> getActivitiesByareaspcicmpID(int PcicmpID, int AreasID)
         {
             return manageScoreController.getActivitiesByareaspcicmpID(PcicmpID, AreasID);
+        }
+        [HttpPost]
+        [Route("MstScore")]
+        public string Insert([FromBody] MstScoreSave _scoreSave)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_scoreSave == null)
+                {
+                    return "please pass the parameter";
+                }
+                else
+                {
+                    var affectedRows = manageScoreController.MstScore(_scoreSave);
+                    return affectedRows;
+                }
+            }
+            else
+                return "Invalid model";
         }
     }
 }
