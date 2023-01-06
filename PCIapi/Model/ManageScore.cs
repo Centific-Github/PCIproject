@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 
 namespace PCIapi.Model
 /// <summary>
@@ -108,6 +109,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
+                
                 int affectedRows = 0;
                 for (int i = 0; i < _scoreSave.ScoreCrdID.Length; i++)
                 {
@@ -115,7 +117,7 @@ namespace PCIapi.Model
                     p.Add("ProjectID", _scoreSave.ProjectID);
                     p.Add("saveType", _scoreSave.SaveType);
                     p.Add("ScoreCrdID", _scoreSave.ScoreCrdID[i]);
-                    p.Add("CreatedDate", _scoreSave.Date);
+                    p.Add("CreatedDate", _scoreSave.Date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
                     p.Add("PcicmpId", _scoreSave.PcicmpID);
                     p.Add("ActivityId", _scoreSave.ActivityId[i]);
 
@@ -519,6 +521,8 @@ public class LatestAuditDetails
     public int Activityid { get; set; }
     public int CompID { get; set; }
     public decimal ScoreValue { get; set; }
+
+    public int ScorecrdId { get; set; }
 
 
 
