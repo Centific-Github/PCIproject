@@ -10,7 +10,8 @@ namespace PCIapi.Model
         public string Password { get; set; }
         public bool IsReset { get; set; }
         public bool IsBlocked { get; set; }
-        
+        public string EmployeeID { get; set; }
+
 
     }
     public class IsAdminORNot
@@ -18,6 +19,7 @@ namespace PCIapi.Model
         public bool IsAdmin { get; set; }
         public string Token { get; set; }
         public string ErrorMassege { get; set; }
+        public UserModel UserModel {get;set;}
 
     }
 
