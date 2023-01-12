@@ -62,9 +62,9 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,Password,FirstName,LastName) values(@_strEmailID,@_strUserName,@_strPassword,@_strFirsttName,@_strLastName,@_strEmployeeID)";
+                string sQuery = @"INSERT into MstLogintbl ( EmailID, UserName,EmployeeID,Password,FirstName,LastName,SbuName,AccountName) values(@_strEmailID,@_strUserName,@_strEmployeeID,@_strPassword,@_strFirsttName,@_strLastName,@_strSbuName,@_strAccountName)";
                 dbConnection.Open();
-                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID,  _strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName});
+                var affectedRows = dbConnection.Execute(sQuery, new { _strEmailID = _userTypeDTO.EmailID, _strUserName = _userTypeDTO.UserName, _strEmployeeID= _userTypeDTO.EmployeeID,  _strPassword = _userTypeDTO.Password, _strFirsttName = _userTypeDTO.FirstName, _strLastName = _userTypeDTO.LastName, _strSbuName = _userTypeDTO.SbuName, _strAccountName = _userTypeDTO.AccountName });
                  if (affectedRows > 0)
                 {
                     WelcomeMail(_userTypeDTO);
@@ -242,8 +242,8 @@ namespace PCIapi.Model
             public string LastName { get; set; }
             public string EmployeeID { get; set; }
             public string OTP { get;  set; }
-            
-
+            public string SbuName { get; set; }
+            public string AccountName { get; set; }
 
         }
 
