@@ -13,4 +13,10 @@ namespace PCIapi.Model
         public int SaveType { get; set; }
 
     }
+    public class MstScoreSave
+    {
+        public int[] ActivityId { get; set; }
+        public int[]   CompID { get; set; }
+        public decimal[]  ScoreValue { get; set; }
+    }
 }

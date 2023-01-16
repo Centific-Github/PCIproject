@@ -21,7 +21,7 @@ namespace PCIapi.Controllers
         {
             return manageProjectMaster.getProjectDetails();
         }
-        
+
         [HttpGet]
         [Route("CheckProjectCode")]
         public string CheckProjectCode(string CheckProjectCode)
@@ -48,7 +48,7 @@ namespace PCIapi.Controllers
         }
         [HttpGet]
         [Route("count")]
-        public IEnumerable<Projectcount> ProjectCount( )
+        public IEnumerable<Projectcount> ProjectCount()
         {
             return manageProjectMaster.ProjectCount();
         }
@@ -85,12 +85,12 @@ namespace PCIapi.Controllers
         [Route("updatemanagedetails")]
         public string put([FromBody] projectMasterUpadteDto projectMaster)
         {
-            return manageProjectMaster.updateProjectmanager(projectMaster.ProjectID, projectMaster.ProjectName, projectMaster.ProjectManager, projectMaster.StartDate, projectMaster.EndDate, projectMaster.GroupName, projectMaster.SBUName, projectMaster.AccountName);
+            return manageProjectMaster.updateProjectmanager(projectMaster.ProjectID, projectMaster.ProjectName, projectMaster.ProjectManager, projectMaster.StartDate, projectMaster.EndDate, projectMaster.SBUName, projectMaster.AccountName);
 
 
         }
     }
 }
-  
-    
+
+
 

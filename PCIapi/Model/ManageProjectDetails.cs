@@ -1,9 +1,11 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Permissions;
 
 namespace PCIapi.Model
 {
@@ -37,7 +39,7 @@ namespace PCIapi.Model
             {
                 string sQuery = @"SELECT SBUName ,AccountName,ProjectCode,ProjectName,ProjectManager,ProjectStartDate,ProjectEndDate,ProjectType FROM MstProjectDetails WHERE ProjectStartDate >= @_ProjectStartDate AND ProjectEndDate<=@_ProjectEndDate";
                 dbConnection.Open();
-                return dbConnection.Query<ProjectDetailsByDate>(sQuery, new { _ProjectStartDate = ProjectStartDate, _ProjectEndDate= ProjectEndDate }) ;
+                return dbConnection.Query<ProjectDetailsByDate>(sQuery, new { _ProjectStartDate = ProjectStartDate, _ProjectEndDate = ProjectEndDate });
             }
         }
         public IEnumerable<projectDetails> getProjectDetails(projectDetails _projectDetails)
@@ -104,7 +106,11 @@ namespace PCIapi.Model
                 }
 
 
+
+
             }
+
+
 
         }
         public IEnumerable<SpProjectDetails> GetProjectDetails()
@@ -115,6 +121,49 @@ namespace PCIapi.Model
                 return dbConnection.Query<SpProjectDetails>("sp_GetProjectDetails", commandType: CommandType.StoredProcedure);
             }
         }
+
+        public DashBoard GetDashBoard(string SUBName, string AccountName, string ProjectName, string AuditSatus, string StartDate, string EndDate)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+
+                DashBoard dashBoard = new DashBoard();
+
+                dbConnection.Open();
+
+                var result = dbConnection.QueryMultiple("EXEC SpDashBoard @SBUName=@SBUNameValue,@AccountName=@AccountNameValue,@ProjectName=@ProjectNameValue,@AuditSatus=@AuditSatusValue,@StartDate=@StartDateValue,@EndDate=@EndDateValue", new
+                {
+                    SBUNameValue = SUBName,
+                    AccountNameValue = AccountName,
+                    ProjectNameValue = ProjectName,
+                    AuditSatusValue = AuditSatus,
+                    StartDateValue = StartDate,
+                    EndDateValue = EndDate,
+                });
+
+                dashBoard.projectTotalCount = result.Read<ProjectTotalCount>().First();
+                dashBoard.auditedProjectCount = result.Read<AuditedProjectCount>().First();
+                dashBoard.unAuditedProjectCount = result.Read<UnAuditedProjectCount>().First();
+                dashBoard.unAuditedProjectCount.UnAuditedProjects = dashBoard.projectTotalCount.TotalProjects - dashBoard.auditedProjectCount.AuditedProjects;
+                dashBoard.projectDetails = result.Read<ProjectDetails>().ToList();
+                return dashBoard;
+            }
+        }
+
+
+        public IEnumerable<DashBoardProjectsResponse> DashBoardScoreByProjects(string SUBName, string AccountName)
+        {
+            using (IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                var p = new DynamicParameters();
+                p.Add("SBUName", SUBName);
+                p.Add("AccountName", AccountName);
+                return dbConnection.Query<DashBoardProjectsResponse>("SpDashBoardScoreByProjects",p,commandType: CommandType.StoredProcedure);
+             }
+        }
+
+
         public IEnumerable<projectDetails> getProjectfilterDetails()
         {
             using (IDbConnection dbConnection = Connection)
@@ -125,26 +174,7 @@ namespace PCIapi.Model
             }
         }
 
-        public string getcheckProjectCode(string ProjectCode)
-        {
-            using (IDbConnection dbConnection = Connection)
-            {
-                string sQuery = @"select 1 from  MstProjectDetails  where ProjectCode = @_strProjectCode";
-                dbConnection.Open();
-                var result = dbConnection.Query<string>(sQuery, new { _strProjectCode = ProjectCode });
-                if (result.Count() > 0)
-                {
-                    return "ProjectCode exist";
-                }
-                else
-                {
-                    return "ProjectCode doesnot exist";
-                }
 
-
-
-            }
-        }
     }
 
 
@@ -177,6 +207,7 @@ namespace PCIapi.Model
     }
     public class SpProjectDetails
     {
+        public int ProjectDetailsID { get; set; }
         public string SBUName { get; set; }
         public string AccountName { get; set; }
         public string ProjectCode { get; set; }
@@ -211,8 +242,57 @@ namespace PCIapi.Model
         public string ProjectManager { get; set; }
         public DateTime ProjectStartDate { get; set; }
         public DateTime ProjectEndDate { get; set; }
-        }
+    }
+    public class ProjectTotalCount
+    {
+        public int TotalProjects { get; set; }
+    }
+    public class AuditedProjectCount
+    {
+        public int AuditedProjects { get; set; }
+    }
+    public class UnAuditedProjectCount
+    {
+        public int UnAuditedProjects { get; set; }
+    }
 
+    public class ProjectDetails
+    {
+        public string SBUName { get; set; }
+        public string AccountName { get; set; }
+        public string ProjectName { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int SaveType { get; set; }
+
+        public decimal AuditScore { get; set; }
+    }
+    public class DashBoard
+    {
+        public ProjectTotalCount projectTotalCount { get; set; }
+        public AuditedProjectCount auditedProjectCount { get; set; }
+
+        public UnAuditedProjectCount unAuditedProjectCount { get; set; }
+
+        private List<ProjectDetails> _projectDetails = new List<ProjectDetails>();
+        public List<ProjectDetails> projectDetails { get { return _projectDetails; } set { _projectDetails = value; } }
+
+    }
+
+    public class DashBoardProjects
+    {
+        private List<DashBoardProjectsResponse> _dashBoardProjectsResponse = new List<DashBoardProjectsResponse>();
+        public List<DashBoardProjectsResponse> DashBoardProjectsResponse { get { return _dashBoardProjectsResponse; } set { _dashBoardProjectsResponse = value; } }
+        public decimal PciScore { get; set; }
+    }
+    public class DashBoardProjectsResponse
+    {
+        public string ProjectName { get; set; }
+        public DateTime LastAuditedDate { get; set; }
+        public decimal ExecScore { get; set; }
+        public decimal AgileScore { get; set; }
+        public decimal OrchestranScore { get; set; }
+
+    }
 }
 
 

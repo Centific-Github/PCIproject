@@ -213,6 +213,7 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
                     oIsAdminORNot.IsAdmin = false;  
                 }
                 var result = getUsers(Username, password);
+                oIsAdminORNot.UserModel = result;
                 oIsAdminORNot.Token = CreateToken(result);
             }
             return oIsAdminORNot;
@@ -224,7 +225,7 @@ public ManageLogin(IConfiguration configuration) : base(configuration)
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT  EmailID, UserName,IsReset,IsBlocked from MstLogintbl Where (UserName=@_strUsername OR EmployeeID = @_strUsername) AND Password=@_strPassword";
+                string sQuery = @"SELECT  EmailID, UserName,FirstName,LastName,IsReset,IsBlocked,EmployeeID from MstLogintbl Where (UserName=@_strUsername OR EmployeeID = @_strUsername) AND Password=@_strPassword";
                 dbConnection.Open();
                 return dbConnection.Query<UserModel>(sQuery, new { _strUsername= UserName, _strPassword = Password }).FirstOrDefault();
             }

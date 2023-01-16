@@ -17,7 +17,7 @@ namespace PCIapi.Controllers
     {
         private IConfiguration _configuration;
 
-               
+
         private readonly ManageScore manageScoreController;
         public ManageScoreController(IConfiguration configuration)
         {
@@ -88,9 +88,10 @@ namespace PCIapi.Controllers
             else
                 return "Invalid model";
         }
+
         [HttpGet]
         [Route("GetScoreExm")]
-        public IEnumerable<Score> GetScoreExc(int activityID,decimal complianceID)
+        public IEnumerable<Score> GetScoreExc(int activityID, decimal complianceID)
         {
             return manageScoreController.GetScoreExc(activityID, complianceID);
         }
@@ -108,6 +109,12 @@ namespace PCIapi.Controllers
             return manageScoreController.GetScoreceremone(activityID, complianceID);
         }
         [HttpGet]
+        [Route("ScoresBykeyActivities")]
+        public IEnumerable<Scorebyactivity> getscorevaluebyactivities(int Activityid, decimal Complianceid)
+        {
+            return manageScoreController.getscorevaluebyactivities(Activityid, Complianceid);
+        }
+        [HttpGet]
         [Route("Projectname")]
         public IEnumerable<ScoreType> getAuditListDetails(string ProjectName)
         {
@@ -115,7 +122,7 @@ namespace PCIapi.Controllers
         }
         [HttpGet]
         [Route("LatestAuditlist")]
-        public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID ,int PcicmpID)
+        public IEnumerable<LatestAuditDetails> getLatestauditdetails(int ProjectID, int SaveType, int? AreasID, int PcicmpID)
         {
             return manageScoreController.getLatestauditdetails(ProjectID, SaveType, AreasID, PcicmpID);
         }
@@ -149,8 +156,8 @@ namespace PCIapi.Controllers
                 }
                 else
                 {
-                     return  manageScoreController.InsertScore(_scores);
-                   
+                    return manageScoreController.InsertScore(_scores);
+
                 }
             }
             else
@@ -183,9 +190,28 @@ namespace PCIapi.Controllers
         }
         [HttpGet]
         [Route("ActivitiesbyareaspcicmpID")]
-        public IEnumerable<ActivitiesByAreapcicmpID> getActivitiesByareaspcicmpID(int PcicmpID , int AreasID)
+        public IEnumerable<ActivitiesByAreapcicmpID> getActivitiesByareaspcicmpID(int PcicmpID, int AreasID)
         {
-            return manageScoreController.getActivitiesByareaspcicmpID(PcicmpID,AreasID);
+            return manageScoreController.getActivitiesByareaspcicmpID(PcicmpID, AreasID);
+        }
+        [HttpPost]
+        [Route("MstScore")]
+        public string Insert([FromBody] MstScoreSave _scoreSave)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_scoreSave == null)
+                {
+                    return "please pass the parameter";
+                }
+                else
+                {
+                    var affectedRows = manageScoreController.MstScore(_scoreSave);
+                    return affectedRows;
+                }
+            }
+            else
+                return "Invalid model";
         }
     }
 }
