@@ -16,7 +16,7 @@ namespace PCIapi.Model
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string sQuery = @"SELECT EmployeeID,Designation ,Department,JoinDate,EmailID,Status FROM MstUsers ";
+                string sQuery = @"SELECT EmployeeID,Designation ,Department,JoinDate,EmailID,Status,FirstName,LastName FROM MstUsers ";
                 dbConnection.Open();
                 return dbConnection.Query<ManageProfileViewModel>(sQuery);
             }
@@ -33,6 +33,8 @@ public class ManageProfileViewModel
         public DateTime JoinDate { get; set; }
         public string EmailID { get; set; }
         public string Status { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
     }
 }
 
